@@ -50,7 +50,6 @@ const globalJsonLd = JSON.stringify({
 // https://astro.build/config
 export default defineConfig({
   site,
-  base: "/agentic-engineering",
   integrations: [
     starlight({
       title: "Software Mansion Agentic Engineering Guide",
