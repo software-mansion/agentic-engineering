@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
-const site = "http://docs.swmansion.com/agentic-engineering/";
+const site = "https://agentic-engineering.swmansion.com/";
 const repo = `https://github.com/software-mansion/agentic-engineering/`;
 const defaultOgImage = `${site}og-default.png`;
 

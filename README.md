@@ -2,7 +2,7 @@
 
 This book collects practical insights from applying agentic engineering patterns in [Software Mansion's](https://swmansion.com?utm_source=agentic-engineering&utm_medium=readme) own projects and in our clients' work. We’re sharing it publicly so more teams can build with these methods.
 
-You can read the book online at http://docs.swmansion.com/agentic-engineering/.
+You can read the book online at https://agentic-engineering.swmansion.com/.
 
 ## Development
 
