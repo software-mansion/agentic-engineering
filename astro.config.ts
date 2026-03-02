@@ -3,8 +3,8 @@ import starlight from "@astrojs/starlight";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://software-mansion-labs.github.io/ai/",
-  base: "/ai",
+  site: "http://docs.swmansion.com/agentic-engineering/",
+  base: "/agentic-engineering",
   integrations: [
     starlight({
       title: "Software Mansion Agentic Engineering Guide",
