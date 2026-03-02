@@ -5,8 +5,9 @@
   "scripts": {
     "astro": "astro",
     "build": "astro build",
-    "check": "astro check",
+    "check": "prettier --check . && astro check",
     "dev": "astro dev",
+    "lint": "prettier --write . && astro check",
     "preview": "astro preview",
     "start": "astro dev"
   },
@@ -17,6 +18,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.9.3"
   }
 }
