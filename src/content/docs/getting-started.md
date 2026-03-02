@@ -1,5 +1,6 @@
 ---
 title: Getting Started
+description: Set up tools, learn core terminology, and run your first practical agent workflows.
 ---
 
 ## In this chapter you will

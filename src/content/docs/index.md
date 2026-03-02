@@ -1,5 +1,6 @@
 ---
 title: Welcome to the Software Mansion AI Workbook!
+description: Practical guidance for setting up and scaling agentic engineering workflows in real software projects.
 ---
 
 This book collects practical insights from applying agentic engineering patterns in [Software Mansion's](https://swmansion.com?utm_source=ai-workbook&utm_medium=website) own projects and in our clients' work. We are sharing it publicly so more teams can build with these methods.

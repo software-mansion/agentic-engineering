@@ -1,5 +1,6 @@
 ---
 title: Becoming Productive
+description: Apply prompting and execution patterns that improve reliability, speed, and quality at scale.
 ---
 
 ## In this chapter you will

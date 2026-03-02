@@ -1,5 +1,6 @@
 ---
 title: Expanding Horizons
+description: Build deeper mental models for context, model behavior, compaction, and MCP tradeoffs.
 ---
 
 ## In this chapter you will
