@@ -3,6 +3,8 @@ import starlight from "@astrojs/starlight";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://software-mansion-labs.github.io/ai/",
+  base: "/ai",
   integrations: [
     starlight({
       title: "AI Workbook",
