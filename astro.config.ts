@@ -53,11 +53,12 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Software Mansion Agentic Engineering Guide",
+      logo: {
+        src: "./src/assets/logo.svg",
+        replacesTitle: true,
+      },
       description:
         "Practical guidance for setting up and scaling agentic engineering workflows in real software projects.",
-      logo: {
-        src: "./public/favicon.svg",
-      },
       social: [
         {
           icon: "github",
