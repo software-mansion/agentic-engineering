@@ -2,7 +2,7 @@
 title: Welcome to the Software Mansion AI Workbook!
 ---
 
-This book collects practical insights from applying agentic engineering patterns in [Software Mansion's](https://swmansion.com?utm_source=ai-workbook) own projects and in our clients' work. We are sharing it publicly so more teams can build with these methods.
+This book collects practical insights from applying agentic engineering patterns in [Software Mansion's](https://swmansion.com?utm_source=ai-workbook&utm_medium=website) own projects and in our clients' work. We are sharing it publicly so more teams can build with these methods.
 
 :::caution
 Be aware that this document is just a snapshot of the state of the art at the time of the last revision. Things change rapidly in this space.
