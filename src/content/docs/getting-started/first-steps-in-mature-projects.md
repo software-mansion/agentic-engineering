@@ -1,0 +1,163 @@
+---
+title: First steps in mature projects
+---
+
+Large, long-lived repositories require a different onboarding flow than greenfield projects. The first objective is
+predictability, not speed.
+
+## Why mature repos are different
+
+Mature projects predate the agentic engineering era, so their codebases are usually human-centric and not always
+agent-friendly. Here are the high-level factors you should address when applying agents in such repositories:
+
+1. There is usually a lot of institutional knowledge that is not written down.
+    - Often, the practice is to ask colleagues for help on Slack.
+    - Agents cannot do that (yet).
+2. The codebase may have multiple architectural eras mixed together.
+    - Agents can get confused when they accidentally stomp on a rusty code.
+3. The blast radius of a wrong change can be much larger.
+    - Humans don't like writing lots of tests. Projects may heavily depend on manual QA.
+    - The taste of an agent may not match the taste of a human. Models are trained globally once; humans always go
+      through the project fine-tuning.
+4. The feedback loop may not be fast and/or accessible enough.
+    - Many projects defer testing to sophisticated CI. Agents need to run checks locally just in time.
+
+From a distance, these points are strongly correlated. You do not need to address each one separately.
+
+## A first surgical feature delivery in 8 steps
+
+Let’s walk through a concrete case from a mature codebase using Cursor.
+In [Expensify](https://github.com/Expensify/App), tasks can be created inside reports (chats), but there was no single
+place to view all tasks relevant to one user. The feature was a home-screen widget named `Your tasks`, sourcing tasks
+from the self-DM report and rendering only when tasks exist. Here is a rough outline of what was done:
+
+1. Start in **ask** mode and map the current implementation:
+
+   ```md
+   Before proposing changes, map:
+
+   1. where self-DM reportID comes from,
+   2. how tasks are loaded for a reportID,
+   3. where home widgets are implemented.
+      Show exact files and functions.
+   ```
+
+2. Summarize the exploration output using `/summarize` to reclaim context window for planning the feature.
+   Then ask for a plan with strict constraints.
+
+   ```md
+   I want to add a "Your tasks" widget to home screen.
+   Requirements:
+
+   - source: tasks from self DM
+   - visibility: render only when tasks exist
+   - behavior: each task is clickable, like in report view
+   - placement: first widget in right column
+
+   First ask all clarifying questions.
+   Then produce a tests-first plan.
+   Use @TimeSensitiveSection as implementation reference.
+   Keep diffs surgical and avoid unrelated refactors.
+   ```
+
+3. Review the plan in a separate thread or window before implementation.
+    - This often catches hidden coupling assumptions.
+    - If needed, revise the plan before writing any feature code.
+4. Implement tests first.
+    - Add unit tests and acceptance-path coverage before production code.
+    - Fix ESLint/TypeScript issues immediately to keep feedback clean.
+5. Execute implementation steps in parallel when independent.
+    - Keep changes small and traceable.
+    - If reused UI pieces are too tightly coupled to another screen, stop and keep boundaries clean.
+6. Run [Cursor Agent Review](https://cursor.com/docs/agent/review) and then verify manually.
+    - In this case, automated review found an important edge case: deletions are soft deletions, so deleted tasks must
+      be filtered.
+7. Use [Cursor Debug Mode](https://cursor.com/docs/agent/modes#debug) to address the issue.
+    - The agent can add `console.log` statements to help with debugging.
+    - The integrated browser with log access enables the agent to inspect changes on the fly in a closed loop.
+8. Ask the agent to fill the PR template based on actual changes.
+    - Because this prompt was run in the same agent thread, the agent had a lot of useful context from the previous
+      steps, which often produces a high-quality draft for further manual writing.
+   ```md
+   Fill our PR template based only on this branch's changes.
+   Include: scope, test evidence, risks, and follow-up tasks.
+   Do not claim work that was not implemented.
+   ```
+
+This flow is intentionally conservative: ask first, plan explicitly, test first, implement surgically, and verify edge
+cases before broadening scope.
+
+## Rules of thumb
+
+There are a few high-level rules you can follow when you jump into a new largeish project.
+
+### Anchor new code to good existing code
+
+When asking the agent to implement something new, point it to one or two existing components that are already considered
+high quality.
+
+- Ask it to mirror structure, naming, error handling, and test style from those files.
+- Ask it to explain any intentional deviation.
+- Prefer references from the same package/domain to reduce style drift.
+- Optimize changesets: tell the agent to aim for clear, surgical diffs. Avoid large-scale refactoring.
+- Prefer conventional names over clever or ambiguous ones.
+
+This is one of the fastest ways to keep outputs aligned with repository standards.
+
+### Externalize knowledge
+
+When you join an existing codebase, you learn a lot of details up front. The same applies to agents; the difference is
+that you write these details down instead of only remembering them.
+
+- As you repeat the same explanation in reviews or prompts, start accumulating this knowledge privately.
+  Capture hidden constraints, conventions, ownership boundaries, and known pitfalls.
+- The utilities described in the [towards self-improvement](../towards-self-improvement/) don’t have to be immediately
+  shared with the team. You can add `AGENTS.md` and `.agents/skills` to `.gitignore`.
+- If this grows too large, move detailed guidance to separate `*.md` files and keep `AGENTS.md` as an index.
+
+Knowledge in-repo is easier for both agents and humans to reuse.
+
+### Add missing capabilities
+
+Sometimes mature repositories are missing small tools that make agent workflows reliable. A capability that is one
+command away is easier to use correctly than a long prompt instruction. You can accumulate such helpers for your own
+use.
+
+Where to put these? Often in your own skills. They can also be a `Makefile`, a
+[`justfile`](https://just.systems/man/en/), or just a gitignored `local/` directory with a bunch of `*.sh` scripts.
+
+What can these be?
+
+- Scenarios/scripts for repetitive validation flows. You could write a skill that instructs the agent how to perform
+  manual QA of a particular feature.
+- CLI wrappers for internal APIs that allow agents to interactively debug stuff.
+- Focused commands that run builds/tests for a narrow scope or specific configuration.
+- Utilities for doing point-in-time backup and recovery of development databases. This proves to be useful when agents
+  break the database state while debugging.
+
+:::tip
+Agents also like running `ls` in directories and calling `--help`; you can use this to keep supplementary instructions
+close to the code. A skill may just tell the agent about a utility and ask it to call for help.
+:::
+
+## Agent use must be negotiated
+
+In mature teams, maintainers may not accept higher agent autonomy, and that’s reasonable.
+
+First and foremost, always check whether legal or ethical constraints prevent agent use in a particular project:
+
+- The project may have regulatory constraints that forbid uploading the codebase to inference providers.
+- It can also be the other way around: legal teams may forbid incorporating LLM-generated code (which may reproduce
+  open-source code from GitHub) into a proprietary product.
+- There may be a corporate policy mandating the use of a specific agent harness.
+- Maintainers may simply not be comfortable with agent usage.
+
+If that is clear, you can use agents to support your work. In external collaboration, though, behave as a human owner.
+Do not spam reviewers with slop. Consider writing PR descriptions yourself. This also helps ensure you understand the
+code you are about to ship.[^1]
+
+:::note[Remember]
+In the end, you are the one who takes ownership of shipped code.
+:::
+
+[^1]: This is generally a good practice, but this is a good place to repeat it.
