@@ -72,9 +72,33 @@ export default defineConfig({
         },
       ],
       sidebar: [
-        { label: "Getting Started", slug: "getting-started" },
-        { label: "Becoming Productive", slug: "becoming-productive" },
-        { label: "Expanding Horizons", slug: "expanding-horizons" },
+        { label: "Home", slug: "index" },
+        {
+          label: "Getting Started",
+          items: [
+            { slug: "getting-started/glossary" },
+            { slug: "getting-started/what-can-ai-agents-even-do" },
+            { slug: "getting-started/how-to-set-up-a-new-repo" },
+            { slug: "getting-started/first-steps-towards-self-improvement" },
+          ],
+        },
+        {
+          label: "Becoming Productive",
+          items: [
+            { slug: "becoming-productive/prompting-techniques" },
+            { slug: "becoming-productive/closing-the-loop" },
+            { slug: "becoming-productive/going-10x" },
+          ],
+        },
+        {
+          label: "Expanding Horizons",
+          items: [
+            { slug: "expanding-horizons/threads-context-and-caching" },
+            { slug: "expanding-horizons/some-words-about-models" },
+            { slug: "expanding-horizons/a-few-words-about-mcp" },
+            { slug: "expanding-horizons/what-to-read-next" },
+          ],
+        },
       ],
       components: {
         Footer: "./src/components/Footer.astro",

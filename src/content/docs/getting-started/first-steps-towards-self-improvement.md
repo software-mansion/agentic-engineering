@@ -1,0 +1,138 @@
+---
+title: First steps towards self-improvement
+---
+
+## AGENTS.md
+
+An essential aspect of becoming productive while working with agents is to _blend them with code_. Your agents need to adapt to the codebase, and your codebase needs to adapt to the agents. For example, you might not necessarily like the commit message that the agent has just produced.
+
+One way to steer agents toward doing the right things is to have an `AGENTS.md` file in the repository root. This file is read by the agent in each thread.
+
+:::note
+This file is standardized and supported by most agent harnesses (except Claude Code). There are also harness-specific mechanisms, like `CLAUDE.md` or [Cursor Rules](https://cursor.com/docs/context/rules).
+:::
+
+:::tip
+Don’t use the `/init` command of your harness of choice (which is meant to set up such rules files). It tends to produce documents that bring little meaningful value.
+:::
+
+1. Write a minimal `AGENTS.md` file. The goal is just to steer the agent to do the right thing every time. Here is [Marek Kaput](https://github.com/mkaput)’s example template:
+
+   :::tip[Claude Code]
+   In Claude Code, instead of telling the agent to run linters/typecheckers via AGENTS.md rules, set them up as [PostToolUse hooks](https://code.claude.com/docs/en/hooks). Hooks run automatically after each file edit, so the agent gets instant feedback without burning context on lint/typecheck output from explicit tool calls.
+   :::
+
+   ```md
+   # [Project name]
+
+   ## Rules
+
+   - you may be running in parallel with other agents; cooperate to avoid conflicts, but avoid committing changes made by others
+   - add test coverage for new logic and regression fixes where practical
+   - run `npm lint` to format code and run linters; run `npm test` to run tests
+   - ignore any backward compatibility - break stuff everywhere if needed
+
+   ## Git
+
+   - only commit what has changed in the current thread, don't commit parallel agent's work
+   - if you see unexpected changes, leave them as-is
+   - short, imperative commit titles (e.g., "add game server S3 bucket")
+   - detailed commit descriptions telling:
+   - context behind the changes: what, how and why,
+   - manual testing steps,
+   - special considerations.
+   - if commit is meant to fix an issue, add `fix #123` at the end of the commit message.
+   ```
+
+   Here is a good template from the [agents.md](https://agents.md) website:
+
+   ```md
+   # Sample AGENTS.md file
+
+   ## Dev environment tips
+
+   - Use `pnpm dlx turbo run where <project_name>` to jump to a package instead of scanning with `ls`.
+   - Run `pnpm install --filter <project_name>` to add the package to your workspace so Vite, ESLint, and TypeScript can see it.
+   - Use `pnpm create vite@latest <project_name> -- --template react-ts` to spin up a new React + Vite package with TypeScript checks ready.
+   - Check the name field inside each package's package.json to confirm the right name - skip the top-level one.
+
+   ## Testing instructions
+
+   - Find the CI plan in the .github/workflows folder.
+   - Run `pnpm turbo run test --filter <project_name>` to run every check defined for that package.
+   - From the package root you can just call `pnpm test`. The commit should pass all tests before you merge.
+   - To focus on one step, add the Vitest pattern: `pnpm vitest run -t "<test name>"`.
+   - Fix any test or type errors until the whole suite is green.
+   - After moving files or changing imports, run `pnpm lint --filter <project_name>` to be sure ESLint and TypeScript rules still pass.
+   - Add or update tests for the code you change, even if nobody asked.
+
+   ## PR instructions
+
+   - Title format: [<project_name>] <Title>
+   - Always run `pnpm lint` and `pnpm test` before committing.
+   ```
+
+   It is rather important to keep this file relatively short but dense in crucial hints. If a piece of information is one `ls` or `cat` call away, it can be skipped.
+
+   Below, you can see an example of what **NOT** to include.
+
+   ````md
+   message
+
+   # Command Reference
+
+   ```bash
+   # Install dependencies
+   npm install
+
+   # Clean build artifacts
+   npm run clean
+
+   # Type checking
+   npm run typecheck
+
+   # Linting
+   npm run lint
+   ```
+
+   # Structure
+
+   - `src/SCREENS.ts`: Screen name constants
+   - `src/ROUTES.ts`: Route definitions and builders
+   - `src/NAVIGATORS.ts`: Navigator configuration
+   ````
+
+   You can follow these rules from [Claude docs](https://code.claude.com/docs/en/best-practices#write-an-effective-claude-md):
+
+   | ✅ Include                                           | ❌ Exclude                                         |
+   | :--------------------------------------------------- | :------------------------------------------------- |
+   | Bash commands Claude can't guess                     | Anything Claude can figure out by reading code     |
+   | Code style rules that differ from defaults           | Standard language conventions Claude already knows |
+   | Testing instructions and preferred test runners      | Detailed API documentation (link to docs instead)  |
+   | Repository etiquette (branch naming, PR conventions) | Information that changes frequently                |
+   | Architectural decisions specific to your project     | Long explanations or tutorials                     |
+   | Developer environment quirks (required env vars)     | File-by-file descriptions of the codebase          |
+   | Common gotchas or non-obvious behaviors              | Self-evident practices like “write clean code”     |
+
+2. Run `ln -s AGENTS.md CLAUDE.md` because Anthropic refuses to adopt someone else’s standards.
+3. Both the file and symlink should be committed to the repo.
+
+:::tip
+As your codebase and AGENTS.md grow, it will make sense to move chunks of that file into either skills or separate files in the `docs/` directory, while AGENTS.md becomes mostly a table of contents.
+:::
+
+## Skills
+
+Agent Skills is an open standard for extending AI agents with specialized capabilities. Skills package domain-specific knowledge and workflows that agents can use to perform specific tasks.
+
+We can’t tell you upfront what skills you might need without knowing what you’re working on (because skills are domain-specific). Fortunately, you don’t need to worry about where to put skill files or how each harness expects them to be structured. The interactive CLI `npx skills` handles all of that — it pulls skills from the [skills.sh](https://skills.sh/) directory and installs them in the right format for 40+ agent harnesses, including Claude Code, Cursor, Amp, Codex, Gemini CLI, GitHub Copilot, and many more.
+
+![npx skills CLI](../../../assets/skills-cli.png)
+
+:::caution
+Before you try a new skill, always read its entire source and think about its security considerations. Skills are a powerful mechanism partly because they can be insecure. The surrounding ecosystem is still very young, and many skill-based attacks are happening in the wild.
+:::
+
+:::tip
+Skills are meant to be amended by you or your agent to tailor to your project, machine, and taste. Don’t be afraid to fork a skill. If the “upstream” skill is updated, tell your agent to update your fork.
+:::

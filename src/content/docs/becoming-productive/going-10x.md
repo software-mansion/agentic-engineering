@@ -1,0 +1,32 @@
+---
+title: Going 10x
+---
+
+Agentic engineering is like multicore CPUs. Agents aren’t always faster than humans (sometimes they are, for sure). But a single human can control several agents in parallel, and that’s where the productivity speedup comes from. This page contains tips on how to deal with this effectively.
+
+## Conflict management
+
+1. The most popular option is to have each parallel agent run in a Git worktree.
+   1. For this to be efficient, your app needs to be easily bootable with a blank or seeded state from a fresh Git checkout.
+   2. Many harnesses have built-in worktree management features, but models easily handle prompts such as `do this in a /tmp worktree`.
+   3. There's a limitation: each worktree of a single checkout must operate on a different `HEAD` (branch/commit/ref). This might become tedious, especially around the `main` branch…
+2. That’s why you can also try keeping several separate full Git checkouts.
+3. Or, you can go YOLO and actually have multiple agents operate on a single codebase.
+   1. Tell your agents to commit frequently, atomically, and only stage stuff from the current thread.
+   2. Avoid invoking tasks that would write to the same parts of the repository.
+
+## Help! My agents are writing spaghetti!!!
+
+This is where vibe coding starts to diverge from agentic engineering. You, as a human, do serious work, and you must be held responsible for it. Models can make a mess because they are rewarded for task completion during training, not long-term architecture. This is (still) a human’s job.
+
+1. Organize the code in rather small modules with strict boundaries, predictable structure, and well-defined input/output.
+2. Enforce invariants in code, not only in documentation. Strict types, assertions, and tons of tests are your friend here.
+3. Enforce code patterns mechanically. Tell agents to write dedicated linters and CI jobs.
+4. What an agent doesn’t see doesn’t exist. Unlike humans, agents have no memory. Make sure all knowledge is either kept in the repository as files or easily reachable through MCP. Periodically verify this knowledge is actually read by agents.
+
+Sounds familiar, doesn’t it? These are standard practices of large-scale engineering. Agentic engineering just amplifies problems. There is only one tip that applies to working with agents, which you’d be unlikely to adopt when working in 100% human teams:
+
+1. Embrace agents’ taste. Models have their own mindsets. If the codebase aligns with this, agents will be able to guess where something is, how to do something, and whether output fits correctly. Do not enforce your stylistic preferences. Check what libraries agents like to use and consider staying with that.
+
+- [https://openai.com/index/harness-engineering/](https://openai.com/index/harness-engineering/)
+- [https://bits.logic.inc/p/ai-is-forcing-us-to-write-good-code](https://bits.logic.inc/p/ai-is-forcing-us-to-write-good-code)

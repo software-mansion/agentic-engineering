@@ -1,0 +1,93 @@
+---
+title: Prompting Techniques
+---
+
+## A good thread structure
+
+If you want a baseline for what decent threads for non-trivial tasks should look like, try this framework.
+
+:::note
+This is not a strict scheme you must follow exactly. Phases can be optional or merged. This can all be done in a single thread or in many smaller ones, with past thread references (e.g., `@Past Chat` in Cursor, `@@` in Amp), intermediary Markdown files, or a harness’s handoff feature as means of carrying valuable information.
+:::
+
+1. **Brainstorm** - converse with an agent about how a task (or a part of it) can be done. The goal here is to gather information and collect it in one place. You can run several brainstorming sessions at once and produce summary `*.md` files as outcomes.
+2. **Plan** - go into _plan_ mode and work out a good implementation outline with an agent. Talk to it and refine the plan until it’s 👌
+3. **Execute** - when your agent (not you!) knows how the task should be done, tell it to do it!
+4. **Agent review** - many harnesses have built-in auto-review features. Try using them in the background so the agent spends time finding all the stupid mistakes, not you (you should be doing more valuable work in the meantime).
+5. **Human review** - ultimately, you (a human) are responsible for the code. Invest some time in reviewing it so that (a) you know what’s happening and (b) you won’t waste reviewers’ time.
+6. **Agent self-improvement** - talk to your agent: How can you both improve your workflow? What lessons can you learn from recent work? Perhaps some AGENTS.md rule or a new skill needs to be created?
+   1. _If you use Claude Code, try the `/insights` command._
+   2. _Use your harness's memory feature (e.g., `/memory` in Claude Code, Memories in Cursor) to persist lessons learned across sessions._
+   3. _Try post-mortem diffs: ask the agent to compare its first attempt vs the final version and explain what it got wrong. Great for spotting recurring antipatterns._
+
+## Red/green TDD
+
+TL;DR: Write tests first, confirm they fail (red), then implement until they pass (green); a strong fit for coding agents because it reduces broken or unused code and builds a robust test suite.
+[https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/](https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/)
+
+## Multimodal input
+
+Screenshot a bug or broken UI in your app. Or record a short video of something changing over time. Drop it into the prompt and say “fix it”. You can even add arrows and annotations in your screenshot tool. GPT-5.3-Codex and Gemini 3.1 Pro handle multimodal input very well; Opus 4.6 is a bit weaker here.
+
+## Socratic prompting
+
+TL;DR: Instead of giving the answer, ask questions that lead the agent to reach it themselves. Example: Rather than “The bug is in the condition,” ask “What are the assumptions?”, “Is this condition always true?”, and “What happens for the edge case?” Goal: surface assumptions, check logic, and arrive at the conclusion through one’s own reasoning.
+[https://platform.claude.com/docs/en/resources/prompt-library/socratic-sage](https://platform.claude.com/docs/en/resources/prompt-library/socratic-sage)
+
+## Underprompting
+
+Intentionally omit some element of the prompt so that:
+
+1. The agent explores that area more thoroughly in its own way.
+2. You can see what’s missing in AGENTS.md / codebase / docs from what the agent tried to read.
+
+## Borrowing from other code
+
+If you know you’re working on a problem that has been solved somewhere else, tell your agent to find and borrow the solution.
+
+- If this is open-source code, you can tell it to clone it into `/tmp`.
+- There is also [https://mcp.grep.app](https://mcp.grep.app) if you’re just looking for code snippets.
+- Beware of legal (copyright) concerns!
+
+Depending on the codebase, a useful pattern is to have several _golden_ files that the agent can use as references.
+
+- For example, if you have a component library, tell the agent to follow the implementation of the `ui/Button.tsx` component.
+- If you're doing repetitive module refactoring, make the changes in one golden module, then ask the agent to reproduce them in other modules.
+
+## Walkthroughs
+
+TL;DR: You can tell your agent to explain to you in human language what happens in the code, or to help you review its work by letting the agent showcase it. Example prompt:
+
+```md
+Read the source and then plan a linear walkthrough of the code that explains how
+it all works in detail. Then create a walkthrough.md file in the repo and build
+the walkthrough in there, using Mermaid diagrams and commentary notes or whatever
+you need. Include snippets of code you are talking about.
+```
+
+- [https://simonwillison.net/guides/agentic-engineering-patterns/linear-walkthroughs/](https://simonwillison.net/guides/agentic-engineering-patterns/linear-walkthroughs/)
+- [https://ampcode.com/news/walkthrough](https://ampcode.com/news/walkthrough)
+
+## Put a human in the loop
+
+Ask the agent to prepare a step-by-step reproduction of a complex manual flow (what to click, in what order); you perform the steps (e.g., log in to the browser with your account), report back, and the agent continues or verifies. Like augmented manual QA: the agent scripts the scenario, and the human does the sensitive or interactive bits.
+
+## Models are good at Git
+
+You can tell your agent:
+
+1. To make a commit.
+2. To create a branch/worktree or check out some repo to `/tmp`.
+3. To submit a PR.
+4. To merge/rebase and fix conflicts (make sure to back up, or ask the agent to use `git reflog` in bad scenarios).
+5. To use the `gh` CLI to read issues/PR comments or GitHub Actions logs.
+
+## Reverse engineer
+
+Agents are surprisingly good at reverse engineering apps. Minified/compiled code is not such a big cognitive burden for them, and they have broad knowledge of useful tools in this space.
+
+Try pointing your agent at some website or Android APK where there’s something you want to mimic. Initially, you may need to interactively install some tools that the agent would like to use.
+
+## Issue pinpointer
+
+Got a huge log file, maybe a screenshot, and you need to identify the bug? Paste everything you have into your agent prompt and tell it to find the exact log lines itself.
