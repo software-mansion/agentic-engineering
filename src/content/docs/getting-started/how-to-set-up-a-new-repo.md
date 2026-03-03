@@ -29,7 +29,8 @@ over what input/output devices does user set. write me a complete poc
 5. If you have a lot of feedback, or the agent has consumed many tokens (context usage grew significantly, e.g., less than 40% is left), you’ll probably be better off switching to a new thread.
 6. The very first review message I am 101% certain you should send to your agent is this:
    ```md
-   are you sure you're running the latest versions of all packages? if not, update them
+   are you sure you're running the latest versions of all packages?
+   if not, update them
    ```
 7. Now it’s time to review changes. Open your editor of choice and read the generated code. You don’t have to address all review insights manually - you can tell your agent to fix many of them by itself.
 8. Finally, when you are happy with the results, it’s time for the initial commit. Let’s do something fun - tell your agent to make the commit itself! This works best if you switch to the initial thread where you crafted the plan and make the commit there - the agent will use all those insights and reasoning steps from thread history to produce a much better commit message.
