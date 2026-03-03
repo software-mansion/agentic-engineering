@@ -32,7 +32,6 @@ place to view all tasks relevant to one user. The feature was a home-screen widg
 from the self-DM report and rendering only when tasks exist. Here is a rough outline of what was done:
 
 1. Start in **ask** mode and map the current implementation:
-
    ```md
    Before proposing changes, map:
 
@@ -41,10 +40,8 @@ from the self-DM report and rendering only when tasks exist. Here is a rough out
    3. where home widgets are implemented.
       Show exact files and functions.
    ```
-
 2. Summarize the exploration output using `/summarize` to reclaim context window for planning the feature.
    Then ask for a plan with strict constraints.
-
    ```md
    I want to add a "Your tasks" widget to home screen.
    Requirements:
@@ -59,7 +56,6 @@ from the self-DM report and rendering only when tasks exist. Here is a rough out
    Use @TimeSensitiveSection as implementation reference.
    Keep diffs surgical and avoid unrelated refactors.
    ```
-
 3. Review the plan in a separate thread or window before implementation.
    - This often catches hidden coupling assumptions.
    - If needed, revise the plan before writing any feature code.
