@@ -11,16 +11,16 @@ Mature projects predate the agentic engineering era, so their codebases are usua
 agent-friendly. Here are the high-level factors you should address when applying agents in such repositories:
 
 1. There is usually a lot of institutional knowledge that is not written down.
-    - Often, the practice is to ask colleagues for help on Slack.
-    - Agents cannot do that (yet).
+   - Often, the practice is to ask colleagues for help on Slack.
+   - Agents cannot do that (yet).
 2. The codebase may have multiple architectural eras mixed together.
-    - Agents can get confused when they accidentally stomp on a rusty code.
+   - Agents can get confused when they accidentally stomp on a rusty code.
 3. The blast radius of a wrong change can be much larger.
-    - Humans don't like writing lots of tests. Projects may heavily depend on manual QA.
-    - The taste of an agent may not match the taste of a human. Models are trained globally once; humans always go
-      through the project fine-tuning.
+   - Humans don't like writing lots of tests. Projects may heavily depend on manual QA.
+   - The taste of an agent may not match the taste of a human. Models are trained globally once; humans always go
+     through the project fine-tuning.
 4. The feedback loop may not be fast and/or accessible enough.
-    - Many projects defer testing to sophisticated CI. Agents need to run checks locally just in time.
+   - Many projects defer testing to sophisticated CI. Agents need to run checks locally just in time.
 
 From a distance, these points are strongly correlated. You do not need to address each one separately.
 
@@ -61,23 +61,23 @@ from the self-DM report and rendering only when tasks exist. Here is a rough out
    ```
 
 3. Review the plan in a separate thread or window before implementation.
-    - This often catches hidden coupling assumptions.
-    - If needed, revise the plan before writing any feature code.
+   - This often catches hidden coupling assumptions.
+   - If needed, revise the plan before writing any feature code.
 4. Implement tests first.
-    - Add unit tests and acceptance-path coverage before production code.
-    - Fix ESLint/TypeScript issues immediately to keep feedback clean.
+   - Add unit tests and acceptance-path coverage before production code.
+   - Fix ESLint/TypeScript issues immediately to keep feedback clean.
 5. Execute implementation steps in parallel when independent.
-    - Keep changes small and traceable.
-    - If reused UI pieces are too tightly coupled to another screen, stop and keep boundaries clean.
+   - Keep changes small and traceable.
+   - If reused UI pieces are too tightly coupled to another screen, stop and keep boundaries clean.
 6. Run [Cursor Agent Review](https://cursor.com/docs/agent/review) and then verify manually.
-    - In this case, automated review found an important edge case: deletions are soft deletions, so deleted tasks must
-      be filtered.
+   - In this case, automated review found an important edge case: deletions are soft deletions, so deleted tasks must
+     be filtered.
 7. Use [Cursor Debug Mode](https://cursor.com/docs/agent/modes#debug) to address the issue.
-    - The agent can add `console.log` statements to help with debugging.
-    - The integrated browser with log access enables the agent to inspect changes on the fly in a closed loop.
+   - The agent can add `console.log` statements to help with debugging.
+   - The integrated browser with log access enables the agent to inspect changes on the fly in a closed loop.
 8. Ask the agent to fill the PR template based on actual changes.
-    - Because this prompt was run in the same agent thread, the agent had a lot of useful context from the previous
-      steps, which often produces a high-quality draft for further manual writing.
+   - Because this prompt was run in the same agent thread, the agent had a lot of useful context from the previous
+     steps, which often produces a high-quality draft for further manual writing.
    ```md
    Fill our PR template based only on this branch's changes.
    Include: scope, test evidence, risks, and follow-up tasks.
