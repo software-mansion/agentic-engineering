@@ -1,6 +1,9 @@
 ---
 title: Some words about models
+description: A concise comparison of popular coding models, including free-access options, strengths, weaknesses, and cost tradeoffs.
 ---
+
+Choose models by reliability, cost, and workflow fit, then benchmark them on your own real tasks.
 
 ## Where to access free models
 

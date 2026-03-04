@@ -1,5 +1,6 @@
 ---
 title: What can AI agents even do?
+description: A quick capability checklist of what modern coding agents can do across code navigation, debugging, planning, and automation.
 ---
 
 - Index, understand, and navigate your codebase by themselves.

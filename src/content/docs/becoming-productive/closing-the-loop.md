@@ -1,10 +1,11 @@
 ---
 title: Closing the loop
+description: How to make agents self-correct faster with autonomous feedback loops across tests, logs, CLIs, and manual QA automation.
 ---
 
-If you want to be efficient while working with agents, you need to _close the loop_. The agent must be able to **continuously** and **autonomously** gather feedback about its work without your intervention!
+Efficient agent workflows depend on a closed feedback loop. Agents should be able to gather signals from tests, logs, and runtime checks continuously, without waiting for manual input on every step.
 
-This section provides some tips on how to make your agent more _agentic_.
+The tips below focus on building that loop so agents can diagnose and fix issues more autonomously.
 
 ## Tests, tests, tests
 

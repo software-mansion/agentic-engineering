@@ -1,5 +1,6 @@
 ---
 title: A few words about MCP
+description: When to choose MCP, skills, or plain CLI integrations, with practical tradeoffs around auth, context load, and workflow fit.
 ---
 
 MCP is a tricky beast, and it was actually hard for us to find a good place for it in this guide.

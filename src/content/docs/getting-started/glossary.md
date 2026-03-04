@@ -1,5 +1,6 @@
 ---
 title: Glossary
+description: Definitions of core terms used throughout this guide.
 ---
 
 Before we start, let us introduce a few terms that we will use a lot:

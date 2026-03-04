@@ -1,5 +1,6 @@
 ---
 title: Going 10x
+description: Tactics for running multiple coding agents in parallel while managing conflicts, quality, and long-term maintainability.
 ---
 
 Agentic engineering is like multicore CPUs. Agents aren’t always faster than humans (sometimes they are, for sure). But a single human can control several agents in parallel, and that’s where the productivity speedup comes from. This page contains tips on how to deal with this effectively.

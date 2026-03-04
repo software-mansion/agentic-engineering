@@ -1,5 +1,6 @@
 ---
 title: What to read next
+description: Curated blogs and social feeds to follow for ongoing signal on agentic engineering, tooling, and model updates.
 ---
 
 If you want to stay sharp in agentic engineering, subscribe to these recommended feeds:

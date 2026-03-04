@@ -1,5 +1,6 @@
 ---
 title: Model pricing
+description: Compare API token economics with subscription plans, and learn practical levers for lowering model spend.
 ---
 
 There are two very different pricing worlds in AI tools: API pricing (pay per token) and app subscriptions (pay a flat monthly fee with usage limits).

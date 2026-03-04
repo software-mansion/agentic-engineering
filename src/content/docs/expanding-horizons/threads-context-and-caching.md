@@ -1,6 +1,9 @@
 ---
 title: Threads, context, and caching
+description: Understand how thread length, context windows, prompt caching, and compaction shape agent reliability, speed, and cost.
 ---
+
+This page explains how agent threads are transformed into model input and why that directly affects reliability, latency, and cost. It covers context windows, prompt caching, and compaction so you can understand what changes as conversations get longer.
 
 ## From thread to model input
 
