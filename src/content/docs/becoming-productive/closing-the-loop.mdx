@@ -3,6 +3,8 @@ title: Closing the loop
 description: How to make agents self-correct faster with autonomous feedback loops across tests, logs, CLIs, and manual QA automation.
 ---
 
+import ExternalLink from "../../../components/ExternalLink.astro";
+
 Efficient agent workflows depend on a closed feedback loop. Agents should be able to gather signals from tests, logs, and runtime checks continuously, without waiting for manual input on every step.
 
 The tips below focus on building that loop so agents can diagnose and fix issues more autonomously.
@@ -16,7 +18,7 @@ The tips below focus on building that loop so agents can diagnose and fix issues
 
 1. Make your app tee logs to a `*.log` file. This will allow agents to observe runtime behavior. Models are also good at adding their own temporary logs while debugging.
 2. Make it easy for an agent to connect to your database via `psql` or `sqlite3`. You can even use this interface in place of database GUIs.
-3. Take a look at [tidewave.ai](https://tidewave.ai/).
+3. <ExternalLink href="https://tidewave.ai/" />.
 
 ## Leverage CLIs
 
@@ -28,7 +30,9 @@ The tips below focus on building that loop so agents can diagnose and fix issues
 
 Also, take a look at these skills:
 
-- [https://skills.sh/mitsuhiko/agent-stuff/tmux](https://skills.sh/mitsuhiko/agent-stuff/tmux) - useful if you make/use interactive CLIs. Agents are pretty good at using GDB/LLDB via tmux.
+- <ExternalLink href="https://skills.sh/mitsuhiko/agent-stuff/tmux" /> - useful
+  if you make/use interactive CLIs. Agents are pretty good at using GDB/LLDB via
+  tmux.
 
 ## Automating web frontend QA
 
@@ -36,15 +40,15 @@ Current frontier models are surprisingly capable of browsing websites, clicking 
 
 Try using one of these tools:
 
-- [Cursor Browser](https://cursor.com/docs/agent/browser)
-- [Agent Browser](https://skills.sh/vercel-labs/agent-browser/agent-browser)
-- [Claude for Chrome](https://claude.com/chrome)
+- <ExternalLink href="https://cursor.com/docs/agent/browser" />
+- <ExternalLink href="https://skills.sh/vercel-labs/agent-browser/agent-browser" />
+- <ExternalLink href="https://claude.com/chrome" />
 
 Make it easy for agents to spawn a new instance of the app by themselves. Ideally on a separate port so that multiple agents can work in parallel.
 
 Also, take a look at these skills:
 
-- [https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices](https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices)
+- <ExternalLink href="https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices" />
 
 ## Automating mobile app QA
 
@@ -52,11 +56,11 @@ You can also tell the agent to play with a phone simulator.
 
 Take a look at:
 
-- [Radon AI](https://radon.swmansion.com/docs/features/radon-ai)
-- [XcodeBuildMCP](https://www.xcodebuildmcp.com/)
-- [Agent Device](https://github.com/callstackincubator/agent-device)
+- <ExternalLink href="https://radon.swmansion.com/docs/features/radon-ai" />
+- <ExternalLink href="https://www.xcodebuildmcp.com/" />
+- <ExternalLink href="https://github.com/callstackincubator/agent-device" />
 
 Also, have a look at these skills:
 
-- [https://skills.sh/expo/skills](https://skills.sh/expo/skills)
-- [https://skills.sh/callstackincubator/agent-skills/react-native-best-practices](https://skills.sh/callstackincubator/agent-skills/react-native-best-practices)
+- <ExternalLink href="https://skills.sh/expo/skills" />
+- <ExternalLink href="https://skills.sh/callstackincubator/agent-skills/react-native-best-practices" />

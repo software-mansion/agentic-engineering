@@ -3,6 +3,7 @@ title: Prompting Techniques
 description: Practical prompting patterns for coding agents, including thread structure, multimodal input, TDD loops, and guided review.
 ---
 
+import ExternalLink from "../../../components/ExternalLink.astro";
 import { Steps } from "@astrojs/starlight/components";
 
 Effective prompts rely on clear structure, explicit constraints, and fast feedback loops rather than sheer length.
@@ -32,7 +33,8 @@ This is not a strict scheme you must follow exactly. Phases can be optional or m
 ## Red/green TDD
 
 TL;DR: Write tests first, confirm they fail (red), then implement until they pass (green); a strong fit for coding agents because it reduces broken or unused code and builds a robust test suite.
-[https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/](https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/)
+
+- <ExternalLink href="https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/" />
 
 ## Multimodal input
 
@@ -41,7 +43,8 @@ Screenshot a bug or broken UI in your app. Or record a short video of something 
 ## Socratic prompting
 
 TL;DR: Instead of giving the answer, ask questions that lead the agent to reach it themselves. Example: Rather than “The bug is in the condition,” ask “What are the assumptions?”, “Is this condition always true?”, and “What happens for the edge case?” Goal: surface assumptions, check logic, and arrive at the conclusion through one’s own reasoning.
-[https://platform.claude.com/docs/en/resources/prompt-library/socratic-sage](https://platform.claude.com/docs/en/resources/prompt-library/socratic-sage)
+
+- <ExternalLink href="https://platform.claude.com/docs/en/resources/prompt-library/socratic-sage" />
 
 ## Underprompting
 
@@ -55,7 +58,7 @@ Intentionally omit some element of the prompt so that:
 If you know you’re working on a problem that has been solved somewhere else, tell your agent to find and borrow the solution.
 
 - If this is open-source code, you can tell it to clone it into `/tmp`.
-- There is also [https://mcp.grep.app](https://mcp.grep.app) if you’re just looking for code snippets.
+- There is also <ExternalLink href="https://mcp.grep.app">mcp.grep.app</ExternalLink> if you’re just looking for code snippets.
 - Beware of legal (copyright) concerns!
 
 Depending on the codebase, a useful pattern is to have several _golden_ files that the agent can use as references.
@@ -74,8 +77,8 @@ the walkthrough in there, using Mermaid diagrams and commentary notes or whateve
 you need. Include snippets of code you are talking about.
 ```
 
-- [https://simonwillison.net/guides/agentic-engineering-patterns/linear-walkthroughs/](https://simonwillison.net/guides/agentic-engineering-patterns/linear-walkthroughs/)
-- [https://ampcode.com/news/walkthrough](https://ampcode.com/news/walkthrough)
+- <ExternalLink href="https://simonwillison.net/guides/agentic-engineering-patterns/linear-walkthroughs/" />
+- <ExternalLink href="https://ampcode.com/news/walkthrough" />
 
 ## Put a human in the loop
 

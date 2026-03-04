@@ -3,6 +3,8 @@ title: Going 10x
 description: Tactics for running multiple coding agents in parallel while managing conflicts, quality, and long-term maintainability.
 ---
 
+import ExternalLink from "../../../components/ExternalLink.astro";
+
 Agentic engineering is like multicore CPUs. Agents aren’t always faster than humans (sometimes they are, for sure). But a single human can control several agents in parallel, and that’s where the productivity speedup comes from. This page contains tips on how to deal with this effectively.
 
 ## Conflict management
@@ -27,7 +29,11 @@ This is where vibe coding starts to diverge from agentic engineering. You, as a 
 
 Sounds familiar, doesn’t it? These are standard practices of large-scale engineering. Agentic engineering just amplifies problems. There is only one tip that applies to working with agents, which you’d be unlikely to adopt when working in 100% human teams:
 
-1. Embrace agents’ taste. Models have their own mindsets. If the codebase aligns with this, agents will be able to guess where something is, how to do something, and whether output fits correctly. Do not enforce your stylistic preferences. Check what libraries agents like to use and consider staying with that.
+:::tip
+Embrace agents’ taste. Models have their own mindsets. If the codebase aligns with this, agents will be able to guess where something is, how to do something, and whether output fits correctly. Do not enforce your stylistic preferences. Check what libraries agents like to use and consider staying with that.
+:::
 
-- [https://openai.com/index/harness-engineering/](https://openai.com/index/harness-engineering/)
-- [https://bits.logic.inc/p/ai-is-forcing-us-to-write-good-code](https://bits.logic.inc/p/ai-is-forcing-us-to-write-good-code)
+Read more:
+
+- <ExternalLink href="https://openai.com/index/harness-engineering/" />
+- <ExternalLink href="https://bits.logic.inc/p/ai-is-forcing-us-to-write-good-code" />

@@ -1,0 +1,79 @@
+---
+import { getEntry } from "astro:content";
+import { Icon } from "@astrojs/starlight/components";
+
+import { missingRequiredFields, normalizeUrl } from "../content/links";
+
+export interface Props {
+  href: string;
+}
+
+const { href } = Astro.props;
+const normalizedHref = normalizeUrl(href);
+const entry = await getEntry("links", normalizedHref);
+const record = entry?.data;
+const hasCustomLabel = Astro.slots.has("default");
+
+if (!record) {
+  throw new Error(
+    `ExternalLink: missing links.csv entry for ${normalizedHref}. Run: bun links`,
+  );
+}
+
+const missing = missingRequiredFields(record);
+if (missing.length > 0) {
+  throw new Error(
+    `ExternalLink: incomplete metadata for ${normalizedHref}. Missing: ${missing.join(", ")}. Run: bun links`,
+  );
+}
+
+let externalTitleParts: string[] = [];
+if (hasCustomLabel) {
+  if (record.author) {
+    externalTitleParts.push(record.author);
+  }
+  if (record.date) {
+    externalTitleParts.push(record.date);
+  }
+}
+if (record.urldate) {
+  externalTitleParts.push(`Retrieved ${record.urldate}`);
+}
+if (externalTitleParts) {
+  // To get the final dot.
+  externalTitleParts.push("");
+}
+const externalTitle = externalTitleParts.join(". ").trim();
+---
+
+<Fragment
+  ><a href={record.url} rel="noopener noreferrer" target="_blank"
+    ><slot>{record.title}</slot></a
+  >
+  {" "}
+  <span title={externalTitle}
+    ><Icon
+      name="external"
+      label="external link"
+      size=""
+      class="external-icon"
+    /></span
+  >{
+    !hasCustomLabel && (
+      <>
+        {record.author && <i>{` ${record.author}.`}</i>} {` ${record.date}`}
+      </>
+    )
+  }</Fragment
+>
+
+<style>
+  .external-icon {
+    /* We're setting size="" and using Starlight css vars to save lots of bytes
+       that Starlight would waste on inlines styles. */
+    --sl-icon-color: var(--sl-color-text-accent);
+    --sl-icon-size: 0.857em;
+    display: inline-block;
+    cursor: help;
+  }
+</style>

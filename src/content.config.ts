@@ -1,7 +1,10 @@
 import { defineCollection } from "astro:content";
-import { z } from "astro/zod";
 import { docsLoader } from "@astrojs/starlight/loaders";
 import { docsSchema } from "@astrojs/starlight/schema";
+import { file } from "astro/loaders";
+import { z } from "astro/zod";
+
+import { linkSchema, parseLinksCsv } from "./content/links";
 
 const jsonLdNodeSchema = z
   .object({
@@ -19,5 +22,14 @@ export const collections = {
         jsonLd: z.array(jsonLdNodeSchema).optional(),
       }),
     }),
+  }),
+  links: defineCollection({
+    loader: file("src/data/links.csv", {
+      parser: (fileContent) => {
+        const rows = parseLinksCsv(fileContent);
+        return Object.fromEntries(rows.map((row) => [row.url, row]));
+      },
+    }),
+    schema: linkSchema,
   }),
 };

@@ -3,6 +3,7 @@ title: First steps in mature projects
 description: A practical onboarding flow for using coding agents in mature codebases with predictable, low-risk, test-first delivery.
 ---
 
+import ExternalLink from "../../../components/ExternalLink.astro";
 import { Steps } from "@astrojs/starlight/components";
 
 Mature, long-lived repositories need a different onboarding flow than greenfield projects. The goal is predictable, low-risk delivery: map existing behavior, plan with explicit constraints, and ship surgical, verified diffs.
@@ -29,7 +30,7 @@ From a distance, these points are strongly correlated. You do not need to addres
 ## A first surgical feature delivery in 8 steps
 
 Let’s walk through a concrete case from a mature codebase using Cursor.
-In [Expensify](https://github.com/Expensify/App), tasks can be created inside reports (chats), but there was no single
+In <ExternalLink href="https://github.com/Expensify/App">Expensify</ExternalLink>, tasks can be created inside reports (chats), but there was no single
 place to view all tasks relevant to one user. The feature was a home-screen widget named `Your tasks`, sourcing tasks
 from the self-DM report and rendering only when tasks exist. Here is a rough outline of what was done:
 
@@ -80,12 +81,12 @@ from the self-DM report and rendering only when tasks exist. Here is a rough out
    Keep changes small and traceable.
    If reused UI pieces are too tightly coupled to another screen, stop and keep boundaries clean.
 
-6. Run [Cursor Agent Review](https://cursor.com/docs/agent/review) and then verify manually.
+6. Run <ExternalLink href="https://cursor.com/docs/agent/review">Cursor Agent Review</ExternalLink> and then verify manually.
 
    In this case, automated review found an important edge case: deletions are soft deletions, so deleted tasks must
    be filtered.
 
-7. Use [Cursor Debug Mode](https://cursor.com/docs/agent/modes#debug) to address the issue.
+7. Use <ExternalLink href="https://cursor.com/docs/agent/modes#debug">Cursor Debug Mode</ExternalLink> to address the issue.
 
    The agent can add `console.log` statements to help with debugging.
    The integrated browser with log access enables the agent to inspect changes on the fly in a closed loop.
@@ -108,10 +109,10 @@ cases before broadening scope.
 
 For more examples, look out on the internet for shared agent threads, some quality ones:
 
-- [Amp: Fix modal height with max-height constraint](https://ampcode.com/threads/T-019b0c24-7de0-7189-97e2-44121fbbbd9b)
-- [Amp: Implement file mentions in command palette](https://ampcode.com/threads/T-d0d0c3c4-4994-4574-9e56-e7f97e88bc33)
-- [Ghostty: Reproduce fuzz crash with test case](https://ampcode.com/threads/T-019cafee-1be2-72ab-bcec-28c6d41b753b)
-- [Tmux: Control mode protocol documentation](https://ampcode.com/threads/T-f02e59f8-e474-493d-9558-11fddf823672)
+- <ExternalLink href="https://ampcode.com/threads/T-019b0c24-7de0-7189-97e2-44121fbbbd9b" />
+- <ExternalLink href="https://ampcode.com/threads/T-d0d0c3c4-4994-4574-9e56-e7f97e88bc33" />
+- <ExternalLink href="https://ampcode.com/threads/T-019cafee-1be2-72ab-bcec-28c6d41b753b" />
+- <ExternalLink href="https://ampcode.com/threads/T-f02e59f8-e474-493d-9558-11fddf823672" />
 
 ## Rules of thumb
 
@@ -149,8 +150,7 @@ Sometimes mature repositories are missing small tools that make agent workflows 
 command away is easier to use correctly than a long prompt instruction. You can accumulate such helpers for your own
 use.
 
-Where to put these? Often in your own skills. They can also be a `Makefile`, a
-[`justfile`](https://just.systems/man/en/), or just a gitignored `local/` directory with a bunch of `*.sh` scripts.
+Where to put these? Often in your own skills. They can also be a `Makefile`, a <ExternalLink href="https://just.systems/man/en/">`justfile`</ExternalLink>, or just a gitignored `local/` directory with a bunch of `*.sh` scripts.
 
 What can these be?
 
