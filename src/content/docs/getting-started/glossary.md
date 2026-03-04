@@ -1,6 +1,15 @@
 ---
 title: Glossary
 description: Definitions of core terms used throughout this guide.
+jsonLd:
+  - "@type": "DefinedTermSet"
+    "@id": "$pageUrl#defined-term-set"
+    name: "$title"
+    description: "$description"
+    url: "$pageUrl"
+    inLanguage: "$lang"
+    isPartOf: { "@id": "$bookId" }
+    publisher: { "@id": "$organizationId" }
 ---
 
 Before we start, let us introduce a few terms that we will use a lot:

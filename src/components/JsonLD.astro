@@ -1,0 +1,112 @@
+---
+const {
+  lang,
+  siteTitle,
+  lastUpdated,
+  entry: { id: entryId, data },
+} = Astro.locals.starlightRoute;
+
+const isNotFoundPage = entryId === "404";
+
+const organizationId = "https://swmansion.com/#organization";
+const websiteId = new URL("#website", Astro.site);
+const bookId = new URL("#book", Astro.site);
+const defaultOgImage = new URL("og-default.png", Astro.site);
+
+const jsonLdPlaceholders = {
+  $site: `${Astro.site}`,
+  $pageUrl: `${Astro.url}`,
+  $bookId: `${bookId}`,
+  $organizationId: organizationId,
+  $lang: lang,
+  $title: data.title,
+  $description: data.description,
+};
+
+const replaceJsonLdPlaceholders = (value: string) =>
+  Object.entries(jsonLdPlaceholders).reduce(
+    (output, [placeholder, replacement]) =>
+      output.replaceAll(placeholder, replacement),
+    value,
+  );
+
+const applyJsonLdPlaceholders = (value: unknown): unknown =>
+  JSON.parse(
+    JSON.stringify(value, (_, nestedValue) =>
+      typeof nestedValue === "string"
+        ? replaceJsonLdPlaceholders(nestedValue)
+        : nestedValue,
+    ),
+  );
+
+const basePageNode = isNotFoundPage
+  ? null
+  : {
+      "@type": "TechArticle",
+      "@id": new URL("#tech-article", Astro.url),
+      name: data.title,
+      headline: data.title,
+      description: data.description,
+      url: Astro.url,
+      inLanguage: lang,
+      image: defaultOgImage,
+      mainEntityOfPage: Astro.url,
+      isPartOf: { "@id": bookId },
+      publisher: { "@id": organizationId },
+      ...(lastUpdated && { dateModified: lastUpdated.toISOString() }),
+    };
+
+const extraPageNodes = (data.jsonLd ?? []).map((node) =>
+  applyJsonLdPlaceholders(node),
+);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": organizationId,
+      name: "Software Mansion",
+      url: "https://swmansion.com/",
+      logo: {
+        "@type": "ImageObject",
+        url: new URL("swm-logo.png", Astro.site),
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      url: Astro.site,
+      name: siteTitle,
+      inLanguage: lang,
+      publisher: {
+        "@id": organizationId,
+      },
+    },
+    {
+      "@type": "Book",
+      "@id": bookId,
+      name: siteTitle,
+      description:
+        "Practical guidance for setting up and scaling agentic engineering workflows in real software projects.",
+      url: Astro.site,
+      inLanguage: lang,
+      image: defaultOgImage,
+      publisher: { "@id": organizationId },
+      author: [
+        { "@type": "Person", name: "Marek Kaput" },
+        { "@type": "Person", name: "Jakub Kosmydel" },
+        { "@type": "Person", name: "Adam Grzybowski" },
+      ],
+    },
+    ...(basePageNode ? [basePageNode] : []),
+    ...extraPageNodes,
+  ],
+};
+---
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(jsonLd)}
+/>
