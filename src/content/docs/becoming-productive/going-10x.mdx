@@ -37,3 +37,34 @@ Read more:
 
 - <ExternalLink href="https://openai.com/index/harness-engineering/" />
 - <ExternalLink href="https://bits.logic.inc/p/ai-is-forcing-us-to-write-good-code" />
+
+## Automated code reviews
+
+Automated review can run in parallel with implementation and catch obvious issues before a human reviewer spends time on them.
+
+At first, these tools may produce low-quality feedback. That is expected, just as newly hired engineers need ramp-up time before they can review effectively. High-quality review depends on context: familiarity with the codebase, its history, and the team’s rules.
+
+To make automated review agents useful, capture that context in artifacts they can read. There is no shared standard across tools yet, so you need to learn how your chosen review tool is configured and provide context in the format it expects.
+
+In-editor / local review workflows:
+
+- <ExternalLink href="https://code.claude.com/docs/en/sub-agents#code-reviewer">
+    {"Code reviewer subagent in Claude Code"}
+  </ExternalLink>
+- <ExternalLink href="https://cursor.com/for/code-review" />
+- <ExternalLink href="https://developers.openai.com/codex/cli/features#run-local-code-review" />
+- <ExternalLink href="https://warden.sentry.dev/" />
+
+PR review bots:
+
+- <ExternalLink href="https://cursor.com/bugbot" />
+- <ExternalLink href="https://developers.openai.com/codex/integrations/github/">
+    {"Codex code review for GitHub"}
+  </ExternalLink>
+- <ExternalLink href="https://coderabbit.ai/" />
+- <ExternalLink href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/request-a-code-review" />
+- <ExternalLink href="https://app.devin.ai/review" />
+
+Use these tools to reduce toil, not to skip ownership: don’t ask teammates to review code you haven’t reviewed yourself.
+
+- <ExternalLink href="https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/" />

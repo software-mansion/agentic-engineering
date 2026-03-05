@@ -8,19 +8,27 @@ https://ampcode.com/threads/T-019c999d-a6a6-73db-8970-4804d16814c4,Building Gran
 https://ampcode.com/threads/T-019cafee-1be2-72ab-bcec-28c6d41b753b,Reproduce fuzz crash with test case,Mitchell Hashimoto (via Amp),2026-03-02,2026-03-04
 https://ampcode.com/threads/T-d0d0c3c4-4994-4574-9e56-e7f97e88bc33,Implement file mentions in command palette,Nicolay Gerold (via Amp),2025-10-31,2026-03-04
 https://ampcode.com/threads/T-f02e59f8-e474-493d-9558-11fddf823672,Tmux control mode protocol documentation,Mitchell Hashimoto (via Amp),2025-12-01,2026-03-04
+https://app.devin.ai/review,Devin Review,,,2026-03-05
 https://bits.logic.inc/p/ai-is-forcing-us-to-write-good-code,AI Is Forcing Us To Write Good Code,Steve Krenzel,2025-12-29,2026-03-04
 https://claude.com/blog/category/claude-code,Claude Code Blog,,,2026-03-04
 https://claude.com/chrome,Claude in Chrome,,,2026-03-04
 https://claude.com/pricing,Claude Subscription,,,2026-03-04
 https://code.claude.com/docs/en/best-practices#write-an-effective-claude-md,Best Practices for Claude Code - Claude Code Docs,Anthropic,,2026-03-04
 https://code.claude.com/docs/en/hooks,Hooks reference - Claude Code Docs,Anthropic,,2026-03-04
+https://code.claude.com/docs/en/sub-agents#code-reviewer,Create custom subagents - Claude Code Docs,,,2026-03-05
+https://coderabbit.ai/,CodeRabbit,,,2026-03-05
 https://cursor.com/blog,Cursor Blog,,,2026-03-04
+https://cursor.com/bugbot,Cursor Bugbot,,,2026-03-05
 https://cursor.com/docs/agent/browser,Cursor Browser,,,2026-03-04
 https://cursor.com/docs/agent/modes#debug,Cursor Debug Mode,,,2026-03-04
 https://cursor.com/docs/agent/review,Cursor Review Agent,,,2026-03-04
 https://cursor.com/docs/context/rules,Cursor Rules,,,2026-03-04
+https://cursor.com/for/code-review,Reviewing Code with Cursor | Cursor Docs,,,2026-03-05
 https://cursor.com/pricing,Cursor Subscription,,,2026-03-04
 https://developers.openai.com/api/docs/guides/compaction,Compaction,OpenAI,,2026-03-04
+https://developers.openai.com/codex/cli/features#run-local-code-review,Codex CLI features (run local code review),,,2026-03-05
+https://developers.openai.com/codex/integrations/github/,Use Codex in GitHub,,,2026-03-05
+https://docs.github.com/en/copilot/how-tos/use-copilot-agents/request-a-code-review,GitHub Copilot code review,,,2026-03-05
 https://factory.ai/pricing,Factory Subscription,,,2026-03-04
 https://github.com/badlogic/pi-mono/blob/380236a003ec7f0e69f54463b0f00b3118d78f3c/packages/coding-agent/src/core/compaction/compaction.ts#L444-L475,Pi Compaction Prompt,Mario Zechner,,2026-03-04
 https://github.com/callstackincubator/agent-device,callstackincubator/agent-device: CLI to control iOS and Android devices for AI agents,Callstack,,2026-03-04
@@ -44,6 +52,7 @@ https://platform.openai.com/docs/guides/prompt-caching,Prompt caching,OpenAI,,20
 https://radon.swmansion.com/docs/features/radon-ai,Radon AI,,,2026-03-04
 https://registerspill.thorstenball.com/,Register Spill,Thorsten Ball,,2026-03-04
 https://simonwillison.net/,Weblog,Simon Willison,,2026-03-04
+https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/,Anti-patterns: things to avoid,Simon Willison,2026-03-04,2026-03-05
 https://simonwillison.net/guides/agentic-engineering-patterns/linear-walkthroughs/,Linear walkthroughs,Simon Willison,2026-02-25,2026-03-04
 https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/,Red/green TDD,Simon Willison,2026-02-23,2026-03-04
 https://skills.sh/,The Agent Skills Directory,Vercel,,2026-03-04
@@ -54,6 +63,7 @@ https://skills.sh/vercel-labs/agent-browser/agent-browser,agent-browser,Vercel,2
 https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices,vercel-react-best-practices skill,Vercel,2026-01-16,2026-03-04
 https://swmansion.com/,Software Mansion,,,2026-03-04
 https://tidewave.ai/,Tidewave,,,2026-03-04
+https://warden.sentry.dev/,Warden,,,2026-03-05
 https://www.figma.com/blog/introducing-claude-code-to-figma/,From Claude Code to Figma: Turning Production Code into Editable Figma Designs,Figma,2026-02-17,2026-03-04
 https://www.figma.com/pl-pl/make/,Figma Make,,,2026-03-04
 https://www.llm-prices.com/,LLM pricing calculator,llm-prices.com,,2026-03-04
