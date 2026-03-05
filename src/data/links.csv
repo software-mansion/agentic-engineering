@@ -1,14 +1,14 @@
 url,title,author,date,urldate
 https://agents.md/,AGENTS.md,,,2026-03-04
 https://ampcode.com/news,Chronicle,Amp,,2026-03-04
-https://ampcode.com/news/walkthrough,Shareable Walkthroughs,Amp,2026-03-04,2026-03-04
-https://ampcode.com/notes/200k-tokens-is-plenty,200k Tokens Is Plenty,Amp,2026-03-04,2026-03-04
+https://ampcode.com/news/walkthrough,Shareable Walkthroughs,Amp,2026-01-29,2026-03-04
+https://ampcode.com/notes/200k-tokens-is-plenty,200k Tokens Is Plenty,Amp,2025-12-09,2026-03-04
 https://ampcode.com/threads/T-019b0c24-7de0-7189-97e2-44121fbbbd9b,Fix modal height with max-height constraint,Thorsten Ball (via Amp),2025-12-11,2026-03-04
 https://ampcode.com/threads/T-019c999d-a6a6-73db-8970-4804d16814c4,Building Granola.ai clone macOS desktop app,Marek Kaput (via Amp),2026-02-26,2026-03-04
-https://ampcode.com/threads/T-019cafee-1be2-72ab-bcec-28c6d41b753b,Reproduce fuzz crash with test case,Mitchell Hashimoto (via Amp),,2026-03-04
-https://ampcode.com/threads/T-d0d0c3c4-4994-4574-9e56-e7f97e88bc33,Implement file mentions in command palette,Nicolay Gerold (via Amp),,2026-03-04
-https://ampcode.com/threads/T-f02e59f8-e474-493d-9558-11fddf823672,Tmux control mode protocol documentation,Mitchell Hashimoto (via Amp),,2026-03-04
-https://bits.logic.inc/p/ai-is-forcing-us-to-write-good-code,AI Is Forcing Us To Write Good Code,Steve Krenzel,,2026-03-04
+https://ampcode.com/threads/T-019cafee-1be2-72ab-bcec-28c6d41b753b,Reproduce fuzz crash with test case,Mitchell Hashimoto (via Amp),2026-03-02,2026-03-04
+https://ampcode.com/threads/T-d0d0c3c4-4994-4574-9e56-e7f97e88bc33,Implement file mentions in command palette,Nicolay Gerold (via Amp),2025-10-31,2026-03-04
+https://ampcode.com/threads/T-f02e59f8-e474-493d-9558-11fddf823672,Tmux control mode protocol documentation,Mitchell Hashimoto (via Amp),2025-12-01,2026-03-04
+https://bits.logic.inc/p/ai-is-forcing-us-to-write-good-code,AI Is Forcing Us To Write Good Code,Steve Krenzel,2025-12-29,2026-03-04
 https://claude.com/blog/category/claude-code,Claude Code Blog,,,2026-03-04
 https://claude.com/chrome,Claude in Chrome,,,2026-03-04
 https://claude.com/pricing,Claude Subscription,,,2026-03-04
@@ -27,16 +27,16 @@ https://github.com/callstackincubator/agent-device,callstackincubator/agent-devi
 https://github.com/Expensify/App,Expensify/App,GitHub,,2026-03-04
 https://github.com/mkaput,Marek Kaput,,,2026-03-04
 https://github.com/steipete/mcporter/,"steipete/mcporter: Call MCPs via TypeScript, masquerading as simple TypeScript API. Or package them as cli.",Peter Steinberger,,2026-03-04
-https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server,Guide to the Figma MCP server,,,2026-03-04
-https://help.figma.com/hc/en-us/articles/35281350665623-Figma-MCP-collection-How-to-set-up-the-Figma-remote-MCP-server,How to set up the Figma remote MCP server,,,2026-03-04
+https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server,Guide to the Figma MCP server,,2025-05-15,2026-03-04
+https://help.figma.com/hc/en-us/articles/35281350665623-Figma-MCP-collection-How-to-set-up-the-Figma-remote-MCP-server,How to set up the Figma remote MCP server,,2025-09-29,2026-03-04
 https://just.systems/man/en/,Just Manual,Casey Rodarmor,,2026-03-04
 https://lucumr.pocoo.org/,Thoughts and Writings,Armin Ronacher,,2026-03-04
 https://mcp.grep.app/,mcp.grep.app,Vercel,,2026-03-04
 https://mitchellh.com/,Blog,Mitchell Hashimoto,,2026-03-04
 https://models.dev/,Models.dev - An open-source database of AI models,Opencode,,2026-03-04
 https://openai.com/chatgpt/pricing/,ChatGPT Subscription,,,2026-03-04
-https://openai.com/index/harness-engineering/,Harness engineering: leveraging Codex in an agent-first world,OpenAI,2026-02-13,2026-03-04
-https://openai.com/news/engineering/,OpenAI Engineering News,,2026-03-04,2026-03-04
+https://openai.com/index/harness-engineering/,Harness engineering: leveraging Codex in an agent-first world,OpenAI,2026-02-11,2026-03-04
+https://openai.com/news/engineering/,OpenAI Engineering News,,,2026-03-04
 https://opencode.ai/docs/go/,Opencode Go,,,2026-03-04
 https://platform.claude.com/docs/en/build-with-claude/compaction,Compaction,Anthropic,,2026-03-04
 https://platform.claude.com/docs/en/resources/prompt-library/socratic-sage,Prompting best practices,Anthropic,,2026-03-04
@@ -44,14 +44,14 @@ https://platform.openai.com/docs/guides/prompt-caching,Prompt caching,OpenAI,,20
 https://radon.swmansion.com/docs/features/radon-ai,Radon AI,,,2026-03-04
 https://registerspill.thorstenball.com/,Register Spill,Thorsten Ball,,2026-03-04
 https://simonwillison.net/,Weblog,Simon Willison,,2026-03-04
-https://simonwillison.net/guides/agentic-engineering-patterns/linear-walkthroughs/,Linear walkthroughs,Simon Willison,,2026-03-04
-https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/,Red/green TDD,Simon Willison,,2026-03-04
+https://simonwillison.net/guides/agentic-engineering-patterns/linear-walkthroughs/,Linear walkthroughs,Simon Willison,2026-02-25,2026-03-04
+https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/,Red/green TDD,Simon Willison,2026-02-23,2026-03-04
 https://skills.sh/,The Agent Skills Directory,Vercel,,2026-03-04
 https://skills.sh/callstackincubator/agent-skills/react-native-best-practices,react-native-best-practices skill,Callstack,,2026-03-04
 https://skills.sh/expo/skills,expo/skills,Expo,,2026-03-04
-https://skills.sh/mitsuhiko/agent-stuff/tmux,tmux skill,Armin Ronacher,,2026-03-04
-https://skills.sh/vercel-labs/agent-browser/agent-browser,agent-browser,Vercel,,2026-03-04
-https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices,vercel-react-best-practices skill,Vercel,,2026-03-04
+https://skills.sh/mitsuhiko/agent-stuff/tmux,tmux skill,Armin Ronacher,2026-01-23,2026-03-04
+https://skills.sh/vercel-labs/agent-browser/agent-browser,agent-browser,Vercel,2026-01-16,2026-03-04
+https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices,vercel-react-best-practices skill,Vercel,2026-01-16,2026-03-04
 https://swmansion.com/,Software Mansion,,,2026-03-04
 https://tidewave.ai/,Tidewave,,,2026-03-04
 https://www.figma.com/blog/introducing-claude-code-to-figma/,From Claude Code to Figma: Turning Production Code into Editable Figma Designs,Figma,2026-02-17,2026-03-04
@@ -67,4 +67,4 @@ https://x.com/RLanceMartin,Lance Martin (@RLanceMartin) on X,,,2026-03-04
 https://x.com/thorstenball,Thorsten Ball (@thorstenball) on X,,,2026-03-04
 https://x.com/thsottiaux,Tibo (@thsottiaux) on X,,,2026-03-04
 https://x.com/trq212,Thariq Shihipar (@trq212) on X,,,2026-03-04
-https://x.com/trq212/status/2024574133011673516,Lessons from Building Claude Code: Prompt Caching Is Everything,Thariq Shihipar,2026-03-04,2026-03-04
+https://x.com/trq212/status/2024574133011673516,Lessons from Building Claude Code: Prompt Caching Is Everything,Thariq Shihipar,2026-02-19,2026-03-04
