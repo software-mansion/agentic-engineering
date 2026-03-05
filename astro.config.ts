@@ -55,7 +55,7 @@ export default defineConfig({
           items: [
             { slug: "expanding-horizons/threads-context-and-caching" },
             { slug: "expanding-horizons/some-words-about-models" },
-            { slug: "expanding-horizons/a-few-words-about-mcp" },
+            { slug: "expanding-horizons/mcp" },
             { slug: "expanding-horizons/what-to-read-next" },
           ],
         },
