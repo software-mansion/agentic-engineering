@@ -9,6 +9,7 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
 License.
 
 This applies to:
+
 - `src/content/**`
 - `src/assets/**`
 
