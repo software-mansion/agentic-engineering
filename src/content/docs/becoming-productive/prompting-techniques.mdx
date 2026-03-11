@@ -41,7 +41,7 @@ Example: Rather than “The bug is in the condition,” ask “What are the assu
 “Is this condition always true?”, and “What happens for the edge case?”
 The goal is to surface assumptions, check logic, and arrive at the conclusion through the agent's own reasoning.
 
-- <ExternalLink href="https://platform.claude.com/docs/en/resources/prompt-library/socratic-sage" />
+Source: <ExternalLink href="https://platform.claude.com/docs/en/resources/prompt-library/socratic-sage" />
 
 ### Underprompting
 
@@ -61,6 +61,7 @@ A small, focused document is usually better than one giant instruction file.
 The goal is not “more docs”.
 The goal is making the right knowledge discoverable, versioned, and loadable on demand.
 
+Sources:
 - <ExternalLink href="https://lexler.github.io/augmented-coding-patterns/patterns/knowledge-document/" />
 - <ExternalLink href="https://openai.com/index/harness-engineering/" />
 
@@ -88,7 +89,46 @@ Much of this can be automated too.
 TL;DR: Write tests first, confirm they fail (red), then implement until they pass (green).
 This is a strong fit for coding agents because it reduces broken or unused code and builds a robust test suite.
 
-- <ExternalLink href="https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/" />
+Source: <ExternalLink href="https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/" />
+
+### Knowledge checkpoint
+
+TL;DR: After planning but before implementation, checkpoint the plan in the repo and maybe commit it.
+That preserves the expensive part, your planning and explanations, while making failed implementation attempts cheap to retry.
+
+Ask the agent to extract the agreed plan into a short Markdown file, commit that file as a checkpoint, and only then start coding.
+If the implementation goes sideways, reset to the checkpoint and try again without redoing the planning work.
+This is especially useful when a model is overeager to jump straight into code before the plan is stable.
+
+For example:
+
+```md
+We have the plan. Before you implement, write the agreed approach to a
+short Markdown file in the repository. Keep it concise and action-oriented.
+Then make a git commit as a checkpoint. Only after that, start implementation.
+If the implementation attempt fails, reset to the checkpoint and try again from
+the saved plan.
+```
+
+Source: <ExternalLink href="https://lexler.github.io/augmented-coding-patterns/patterns/knowledge-checkpoint/" />
+
+### Parallel implementations
+
+TL;DR: When the task has multiple plausible solutions or a high chance of failure,
+branch from one checkpoint and let several implementations race in parallel.
+This works especially well when work involves some degree of creativity,
+like interface design.
+
+The pattern is:
+
+1. Create a checkpoint with the plan and a Git commit.
+2. Fork into parallel workspaces, for example with Git worktrees.
+   Alternatively, you can spawn multiple subagents and tell each one to write to a different file.
+3. Launch multiple implementations from the same starting point.
+4. Review the results side by side.
+5. Keep the best version or combine the strongest parts.
+
+Source: <ExternalLink href="https://lexler.github.io/augmented-coding-patterns/patterns/parallel-implementations/" />
 
 ## When text and code is not enough
 
@@ -134,6 +174,7 @@ the walkthrough in there, using Mermaid diagrams and commentary notes or whateve
 you need. Include snippets of code you are talking about.
 ```
 
+Sources:
 - <ExternalLink href="https://simonwillison.net/guides/agentic-engineering-patterns/linear-walkthroughs/" />
 - <ExternalLink href="https://ampcode.com/news/walkthrough" />
 
