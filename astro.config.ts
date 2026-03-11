@@ -14,6 +14,7 @@ export default defineConfig({
       title: "Software Mansion Agentic Engineering Guide",
       logo: {
         src: "./src/assets/logo.svg",
+        alt: "The Software Mansion Agentic Engineering Guide",
         replacesTitle: true,
       },
       description:
