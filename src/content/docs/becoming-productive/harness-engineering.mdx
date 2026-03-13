@@ -1,99 +1,30 @@
 ---
-title: AGENTS.md, Skills and MCP
+title: Harness engineering
 description: >-
-  Improve agent output over time by codifying project rules in
-  AGENTS.md, adopting reusable skills, and using MCP where it fits.
+  Improve agent output over time by shaping the environment around the model
+  with `AGENTS.md`, reusable skills, and MCP where it fits.
 ---
 
 import ExternalLink from "../../../components/ExternalLink.astro";
-import { Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
-An essential aspect of becoming productive while working with agents is to
-_blend them with code_.
-Your agents need to adapt to the codebase, and your codebase needs to adapt to
-the agents.
-For example, you might not necessarily like the commit message that the agent
-has just produced.
+Harness engineering is the practice of improving a coding agent's output
+quality and reliability by shaping its harness, not just the prompt you type
+into the chat.
+Instead of treating the agent as a black box, you shape the configuration
+around the model, including instructions, tools, context, and integrations, so
+that correct behavior becomes easier and more repeatable.
+
+In practice, that means shaping the scaffolding around the model so the right
+information, tools, and constraints show up at the right time.
+This page walks through several common ways to do that and the tradeoffs that
+come with them.
 
 ## AGENTS.md
 
-One way to steer agents toward doing the right things is to have an `AGENTS.md`
-file in the repository root.
-This file is read by the agent in each thread.
-
-This file is standardized and supported by most agent harnesses, except Claude Code.
-There are also harness-specific mechanisms, like `CLAUDE.md`
-or <ExternalLink href="https://cursor.com/docs/context/rules">Cursor Rules</ExternalLink>.
-
-### First steps towards self-improvement
-
-<Steps>
-
-1.  Write a minimal `AGENTS.md` file.
-    The goal is just to steer the agent to do the right thing every time.
-    Here are some good examples:
-
-    <Tabs>
-      <TabItem label="Example1">
-        ```md
-        # [Project name]
-
-        ## Rules
-
-        - you may be running in parallel with other agents; cooperate to avoid
-          conflicts, but avoid committing changes made by others
-        - add test coverage for new logic and regression fixes where practical
-        - run `npm lint` to format code and run linters; run `npm test` to run tests
-        - ignore any backward compatibility - break stuff everywhere if needed
-        ```
-
-        Source: <ExternalLink href="https://github.com/mkaput">Marek Kaput</ExternalLink>’s template.
-      </TabItem>
-      <TabItem label="Example 2">
-        ```md
-        # Sample AGENTS.md file
-
-        ## Dev environment tips
-
-        - Use `pnpm dlx turbo run where «project_name»` to jump to a package
-          instead of scanning with `ls`.
-        - Run `pnpm install --filter «project_name»` to add the package to your
-          workspace so Vite, ESLint, and TypeScript can see it.
-        - Use `pnpm create vite@latest «project_name» -- --template react-ts` to
-          spin up a new React + Vite package with TypeScript checks ready.
-        - Check the name field inside each package's package.json to confirm the
-          right name - skip the top-level one.
-
-        ## Testing instructions
-
-        - Find the CI plan in the .github/workflows folder.
-        - Run `pnpm turbo run test --filter «project_name»` to run every check
-          defined for that package.
-        - From the package root you can just call `pnpm test`. The commit should
-          pass all tests before you merge.
-        - To focus on one step, add the Vitest pattern:
-          `pnpm vitest run -t "«test name»"`.
-        - Fix any test or type errors until the whole suite is green.
-        - After moving files or changing imports, run
-          `pnpm lint --filter «project_name»` to be sure ESLint and TypeScript
-          rules still pass.
-        - Add or update tests for the code you change, even if nobody asked.
-
-        ## PR instructions
-
-        - Title format: [«project_name»] «Title»
-        - Always run `pnpm lint` and `pnpm test` before committing.
-        ```
-
-        Source: <ExternalLink href="https://agents.md">agents.md</ExternalLink> website.
-      </TabItem>
-    </Tabs>
-
-2.  Run `ln -s AGENTS.md CLAUDE.md` because Anthropic refuses to adopt someone else’s standards.
-
-3.  Commit both files to the repo (if you can).
-
-</Steps>
+`AGENTS.md` is the lightest-weight way to steer an agent inside a
+repository.
+It is not the only mechanism available, but it is usually the first place where
+project-specific guidance belongs.
 
 ### Good and bad practices
 
@@ -159,9 +90,9 @@ Very often, this produces something akin to what you have just read.
 ## Skills
 
 <ExternalLink href="https://agentskills.io/">Agent Skills</ExternalLink> is an
-open standard for extending AI agents with specialized capabilities. Skills
-package domain-specific knowledge and workflows that agents can use to perform
-specific tasks.
+open standard for extending AI agents with specialized capabilities.
+Skills package domain-specific knowledge and workflows that agents can use to
+perform specific tasks.
 
 A skill is just a well-named and well-described directory containing a `SKILL.md`
 file with arbitrary Markdown content.
@@ -293,11 +224,3 @@ You are unlikely to use many MCPs, and the ones most commonly used are access
 points to well-known services.
 So... in such cases just make sure your agents will not perform destructive
 actions on your behalf 🙂.
-
-[^1]:
-    In Claude Code and other harnesses with hook or extension features,
-    instead of telling the agent to run linters/typecheckers via `AGENTS.md` rules,
-    set them up as <ExternalLink href="https://code.claude.com/docs/en/hooks">hooks</ExternalLink>.
-    Hooks run automatically after each file edit, so the agent gets instant
-    feedback without burning context on lint/typecheck output from explicit tool
-    calls.

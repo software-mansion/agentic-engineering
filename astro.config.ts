@@ -39,7 +39,7 @@ export default defineConfig({
             { slug: "getting-started/glossary" },
             { slug: "getting-started/what-can-ai-agents-even-do" },
             { slug: "getting-started/how-to-set-up-a-new-repo" },
-            { slug: "getting-started/agents-md-skills-and-mcp" },
+            { slug: "getting-started/towards-self-improvement" },
             { slug: "getting-started/first-steps-in-mature-projects" },
           ],
         },
@@ -48,6 +48,7 @@ export default defineConfig({
           items: [
             { slug: "becoming-productive/the-workflow" },
             { slug: "becoming-productive/prompting-techniques" },
+            { slug: "becoming-productive/harness-engineering" },
             { slug: "becoming-productive/closing-the-loop" },
             { slug: "becoming-productive/going-10x" },
           ],
