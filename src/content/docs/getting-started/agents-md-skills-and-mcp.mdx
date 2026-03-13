@@ -232,13 +232,27 @@ upstream repository becomes compromised and the attacker inserts prompt injectio
 
 ## MCP
 
-MCP is a protocol through which AI applications can connect to data sources (local and remote), tools (applications and services), and workflows (specialized subagents).
+MCP is a protocol through which AI applications can connect to data sources
+(local and remote), tools (applications and services), and workflows
+(like domain specialized models).
+MCP servers plug new tools into your agent to extend its capabilities beyond
+filesystem, bash commands and web browsing.
 
-MCP is often mentioned along with skills - but they’re not the same. Truth is, 99% of problems can be solved equally well through MCPs, skills, or plain CLIs.
+MCP servers can run locally (like <ExternalLink href="https://github.com/microsoft/playwright-mcp">`npx @playwright/mcp`</ExternalLink>),
+allowing your agent to interact with your local environment;
+or be remote HTTP-based servers, like <ExternalLink href="https://linear.app/docs/mcp">Linear MCP</ExternalLink>,
+that connect your agent to remove services.
 
-One cool property of MCP is that it solves auth - you can easily authenticate to MCP services using API keys or OAuth with great UX provided by your harness. But MCP also has downsides, such as higher context pollution (try it yourself: load GitHub MCP and see how much context is already lost in a fresh thread). Claude Code is experimenting with countermeasures to this problem, but funnily enough, you can also wrap any MCP in a skill (through <ExternalLink href="https://github.com/steipete/mcporter/">mcporter</ExternalLink>).
+One cool property of MCP that is not solved by CLIs and skills is that MCP solves
+auth – you can easily authenticate to MCP services using API keys or OAuth with
+great UX provided by your harness.
 
-So to answer the question: when should you use MCP, a skill, or a CLI? If possible, try all three and do whatever works best for you and your agents.
+The downsides of MCP are that the specification requires harnesses to inject
+information about all MCP tools into the system prompt.
+This will sound less magic in future chapters, but in a nutshell, too many MCP
+servers will make your agent dumb, and the harness will take a long time to start.
+Claude Code is experimenting with lazy loading MCP tools, but this is still
+an unstable feature that is also not available elsewhere.
 
 [^1]:
     In Claude Code and other harnesses with hook or extension features,
