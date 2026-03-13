@@ -5,8 +5,6 @@ description: >-
   AGENTS.md, adopting reusable skills, and using MCP where it fits.
 ---
 
-
-
 import ExternalLink from "../../../components/ExternalLink.astro";
 import { Steps, TabItem, Tabs } from "@astrojs/starlight/components";
 
@@ -23,7 +21,7 @@ One way to steer agents toward doing the right things is to have an `AGENTS.md`
 file in the repository root.
 This file is read by the agent in each thread.
 
-This file is standardized and supported by most agent harnesses (except Claude Code).
+This file is standardized and supported by most agent harnesses, except Claude Code.
 There are also harness-specific mechanisms, like `CLAUDE.md`
 or <ExternalLink href="https://cursor.com/docs/context/rules">Cursor Rules</ExternalLink>.
 
@@ -33,7 +31,7 @@ or <ExternalLink href="https://cursor.com/docs/context/rules">Cursor Rules</Exte
 
 1.  Write a minimal `AGENTS.md` file.
     The goal is just to steer the agent to do the right thing every time.
-    Here are some nice examples:
+    Here are some good examples:
 
     <Tabs>
       <TabItem label="Example1">
@@ -112,7 +110,7 @@ They are pretty good:
 | Developer environment quirks (required env vars)     | File-by-file descriptions of the codebase          |
 | Common gotchas or non-obvious behaviors              | Self-evident practices like “write clean code”     |
 
-What we can add on top of that is the following:
+On top of that, we would add the following:
 
 | ✅ Include                               | ❌ Exclude                                   |
 | :--------------------------------------- | :------------------------------------------- |
@@ -165,22 +163,22 @@ open standard for extending AI agents with specialized capabilities. Skills
 package domain-specific knowledge and workflows that agents can use to perform
 specific tasks.
 
-A skill is just a well named and described directory containing a `SKILL.md`
-file with arbitraty Markdown content.
+A skill is just a well-named and well-described directory containing a `SKILL.md`
+file with arbitrary Markdown content.
 Agents initially only see all loadable skill names and descriptions,
 and they need to explicitly _load_ full skill definitions.
 You can mention a skill explicitly, or the model may decide to do it by itself.
-What's inside this skill is up to your imagination.
+What goes inside a skill is up to your imagination.
 
 ### Choosing the right skills
 
-Skills by their nature are domain-specific.
+Skills are domain-specific by nature.
 We can’t tell you upfront what skills you might need without knowing what
 you’re working on.
 What we can tell you is that unlike other harness-specific mechanisms, skills
 are largely portable and can be used in many creative ways.
 You may use them to save repetitive prompts, build more elaborate rules,
-provide hardly reachable up-to-date documentation about your toolchain or
+provide hard-to-reach up-to-date documentation about your toolchain or
 dependencies, or define agent personalities.
 
 ### Where to find skills
@@ -197,10 +195,10 @@ Copilot, and many more.
 
 #### Skill repositories
 
-There are many cool GitHub repositories that collect cool skills,
-kinda similar to the _Awesome X_ list repositories.
+There are many GitHub repositories that collect useful skills,
+similar to the _Awesome X_ list repositories.
 Many companies use these repositories as part of their marketing strategy,
-providing skills serving useful guidance to their products.
+providing skills that offer useful guidance for their products.
 
 For example:
 
@@ -216,7 +214,7 @@ machine, and taste.
 
 - Many harnesses have skills for creating new skills or updating/forking
   existing ones.
-- Don’t be afraid to fork an third-party skill.
+- Don’t be afraid to fork a third-party skill.
   If the “upstream” skill is updated, tell your agent to update your fork.
 
 ### Security considerations
@@ -234,25 +232,67 @@ upstream repository becomes compromised and the attacker inserts prompt injectio
 
 MCP is a protocol through which AI applications can connect to data sources
 (local and remote), tools (applications and services), and workflows
-(like domain specialized models).
+(like domain-specialized models).
 MCP servers plug new tools into your agent to extend its capabilities beyond
-filesystem, bash commands and web browsing.
+the filesystem, bash commands, and web browsing.
 
 MCP servers can run locally (like <ExternalLink href="https://github.com/microsoft/playwright-mcp">`npx @playwright/mcp`</ExternalLink>),
 allowing your agent to interact with your local environment;
 or be remote HTTP-based servers, like <ExternalLink href="https://linear.app/docs/mcp">Linear MCP</ExternalLink>,
-that connect your agent to remove services.
+that connect your agent to remote services.
 
-One cool property of MCP that is not solved by CLIs and skills is that MCP solves
-auth – you can easily authenticate to MCP services using API keys or OAuth with
-great UX provided by your harness.
+### Pros and cons
 
-The downsides of MCP are that the specification requires harnesses to inject
+One advantage of MCP that CLIs and skills do not solve is authentication:
+you can easily connect to MCP services using API keys or OAuth with
+the UX provided by your harness.
+
+The downside of MCP is that the specification requires harnesses to inject
 information about all MCP tools into the system prompt.
 This will sound less magic in future chapters, but in a nutshell, too many MCP
 servers will make your agent dumb, and the harness will take a long time to start.
 Claude Code is experimenting with lazy loading MCP tools, but this is still
 an unstable feature that is also not available elsewhere.
+
+Another problem is that MCP tools are not easily composable.
+Agents are trained a lot on Bash, and they are excellent on piping, awk, or jq.
+They can't use these tools on MCP outputs.
+
+:::tip
+You can wrap any MCP server in a CLI via <ExternalLink href="https://github.com/steipete/mcporter/">mcporter</ExternalLink>.
+For example, you can use this to wrap an MCP server into a Skill.
+:::
+
+### What MCPs might I use?
+
+The current consensus is to use MCPs mostly for connecting to external services,
+like Linear, Figma, Slack or Sentry.
+A good starting point for seeing which popular MCPs are available
+is <ExternalLink href="https://github.com/mcp" />.
+
+Some MCPs used to be popular, but now have more efficient alternatives in the
+form of CLIs or Skills.
+Examples include:
+- <ExternalLink href="https://github.com/github/github-mcp-server">GitHub MCP</ExternalLink> provides
+  far too many tools and overloads the agent's context.
+  Models have great knowledge of
+  the <ExternalLink href="https://cli.github.com/">`gh` CLI</ExternalLink>
+  and can do a lot by leveraging its JSON output and piping
+  through Bash commands.
+- <ExternalLink href="https://context7.com/">Context7</ExternalLink> can be
+  effectively replaced with domain-dedicated skills akin
+  to <ExternalLink href="https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices">vercel-react-best-practices</ExternalLink>,
+  or just more and more documentation websites support `Content: text/markdown`
+  responses.
+
+### Security considerations
+
+MCP servers have security considerations similar to those of Skills and any
+other CLI or remote service.
+You are unlikely to use many MCPs, and the ones most commonly used are access
+points to well-known services.
+So... in such cases just make sure your agents will not perform destructive
+actions on your behalf 🙂.
 
 [^1]:
     In Claude Code and other harnesses with hook or extension features,
