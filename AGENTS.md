@@ -3,7 +3,7 @@
 ## Rules
 
 - you may be running in parallel with other agents; cooperate to avoid conflicts, but avoid committing changes made by others
-- in markdown, try to put each sentence on a separate line. no need to wrap lines after commas etc.
+- in markdown, try to put each sentence on a separate line. do not wrap lines after commas.
 - `<ExternalLink>` component is whitespace sensitive; when reformatting make sure it stays within flowing text inline:
 
   ```md
