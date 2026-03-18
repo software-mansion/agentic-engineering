@@ -160,6 +160,16 @@ happening in the wild.
 Especially be cautious about updating third-party skills, you never know when an
 upstream repository becomes compromised and the attacker inserts prompt injections.
 
+These writeups show how this can go wrong in practice:
+
+- <ExternalLink href="https://www.catonetworks.com/blog/cato-ctrl-weaponizing-claude-skills-with-medusalocker/" />.
+  A seemingly harmless skill step in a GIF workflow was used to fetch and
+  execute MedusaLocker ransomware, showing how a reviewed skill can still hide
+  second-stage execution.
+- <ExternalLink href="https://embracethered.com/blog/posts/2026/scary-agent-skills/" />.
+  Hidden Unicode Tag characters were used to smuggle invisible instructions into
+  a skill, which means visual source review alone may miss malicious behavior.
+
 ## MCP
 
 MCP is a protocol through which AI applications can connect to data sources
