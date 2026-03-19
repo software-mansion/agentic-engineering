@@ -40,7 +40,6 @@ export default defineConfig({
             { slug: "getting-started/glossary" },
             { slug: "getting-started/what-can-ai-agents-even-do" },
             { slug: "getting-started/how-to-set-up-a-new-repo" },
-            { slug: "getting-started/towards-self-improvement" },
             { slug: "getting-started/first-steps-in-mature-projects" },
             { slug: "getting-started/towards-self-improvement" },
           ],
@@ -55,6 +54,7 @@ export default defineConfig({
             { slug: "becoming-productive/security" },
             { slug: "becoming-productive/legal-compliance" },
             { slug: "becoming-productive/going-10x" },
+            { slug: "becoming-productive/what-not-to-do" }, 
           ],
         },
         {
