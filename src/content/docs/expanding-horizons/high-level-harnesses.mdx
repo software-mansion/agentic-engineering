@@ -6,7 +6,7 @@ description: Beyond individual agent sessions — scheduled automations, paralle
 import ExternalLink from "../../../components/ExternalLink.astro";
 
 The [harness engineering](/becoming-productive/harness-engineering/) chapter covered shaping a single agent's actions through AGENTS.md, skills, hooks, and subagents.
-This section is one level of abstraction higher—it covers tools and patterns that treat agents as a managable workforce.
+This section is one level of abstraction higher—it covers tools and patterns that treat agents as a manageable workforce.
 
 :::caution
 Products and feature sets can change significantly between revisions of this guide.
@@ -16,7 +16,7 @@ Treat this page as an orientation, especially for building a solid intuition of 
 ## From conductor to orchestrator
 
 So far in this guide, you have been a **conductor**—you worked interactively with a single agent, steering it turn by turn in real time.
-Now, you will become an **orchestrator**, delegating work to a fleet of agents running in parallel. 
+Now, you will become an **orchestrator**, delegating work to a fleet of agents running in parallel.
 Instead of supervising each agent individually, you will manage the output queue—a review inbox, an issue tracker, a PR pipeline.
 
 :::note[Remember]
@@ -52,13 +52,14 @@ With automations, the process becomes closer to a CI pipeline than a chat window
 
 ## Issue-tracker-driven orchestration
 
-You may also set up the agent(s) to respond to issues as they appear.
+You may also set up agents to respond to issues as they appear.
 
 <ExternalLink href="https://github.com/openai/symphony">Symphony</ExternalLink> is an open-source orchestration service published by OpenAI.
 It monitors a Linear board, creates an isolated workspace per issue, and runs a Codex agent on each one.
 Engineers decide what issues belong in scope; Symphony handles assignment and execution.
 
-Agent behavior is defined in a `WORKFLOW.md` file in the repository alongside the code. The prompt and runtime settings for each agent run are versioned the same way you version a CI pipeline.
+Agent behavior is defined in a `WORKFLOW.md` file in the repository alongside the code.
+The prompt and runtime settings for each agent run are versioned the same way you version a CI pipeline.
 When an agent finishes, it gathers evidence: CI results, PR review feedback, complexity analysis.
 You can review the output instead of the agent's process.
 
