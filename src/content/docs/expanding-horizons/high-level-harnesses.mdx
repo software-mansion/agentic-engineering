@@ -6,18 +6,19 @@ description: Beyond individual agent sessions — scheduled automations, paralle
 import ExternalLink from "../../../components/ExternalLink.astro";
 
 The [harness engineering](/becoming-productive/harness-engineering/) chapter covered shaping a single agent's actions through AGENTS.md, skills, hooks, and subagents.
-This section is one level of abstraction higher—it covers tools and patterns that treat agents as a manageable workforce.
+This page is one level of abstraction up — it covers tools and patterns that treat agents as a manageable workforce.
 
 :::caution
 Products and feature sets can change significantly between revisions of this guide.
 Treat this page as an orientation, especially for building a solid intuition of the field, not a definitive reference.
 :::
 
-## From conductor to orchestrator
+## From engineering to managing
 
-So far in this guide, you have been a **conductor**—you worked interactively with a single agent, steering it turn by turn in real time.
-Now, you will become an **orchestrator**, delegating work to a fleet of agents running in parallel.
-Instead of supervising each agent individually, you will manage the output queue—a review inbox, an issue tracker, a PR pipeline.
+So far in this guide, you have been an **engineer** — you worked interactively with a single agent, steering it turn by turn in real time.
+Now, you will become a **manager**, delegating work to a fleet of agents running in parallel.
+Instead of supervising each agent individually, you will manage the output queue — a review inbox, an issue tracker, a PR pipeline.
+Your coding assistant no longer serves as a conductor, but as an orchestrator.
 
 :::note[Remember]
 The key shift is from "what should the agent do?" to "what work should be running right now, and how do I review what came back?"
@@ -36,7 +37,7 @@ That is qualitatively different from the sequential, one-task-at-a-time conducto
 
 ## Scheduled and recurring agents
 
-Agents do not always need to wait for you to trigger them—you can also set them up in advance.
+Agents do not always need to wait for you to trigger them — you can also set them up in advance.
 
 OpenAI's <ExternalLink href="https://developers.openai.com/codex/app">Codex App</ExternalLink> includes an <ExternalLink href="https://developers.openai.com/codex/app/automations">Automations</ExternalLink> feature:
 describe a recurring task, set a schedule, and have Codex run it in the background.
@@ -48,7 +49,7 @@ OpenAI uses automations internally for tasks like:
 - Generating release briefs
 - Checking for regressions between versions
 
-With automations, the process becomes closer to a CI pipeline than a chat window—an agent is no longer a tool you reach for and becomes a background process.
+With automations, the process becomes closer to a CI pipeline than a chat window — an agent is no longer a tool you reach for and becomes a background process.
 
 ## Issue-tracker-driven orchestration
 
@@ -94,8 +95,8 @@ Invest in solid tests, linters, and CI before automating the merge step.
 The Code Factory pattern is the technical foundation of a broader idea: that a single person with a well-configured agent fleet can operate at the scale that would previously have required a full engineering team.
 
 Projects like <ExternalLink href="https://myclaw.ai/">OpenClaw</ExternalLink> package infrastructure for connecting AI agents to communication platforms and scheduling systems, turning a single machine into an always-on agent runtime that responds to messages, executes tasks, and ships work continuously.
-
+x
 Steve Yegge, in a widely-read interview with The Pragmatic Engineer, argues that the engineering profession is reorganizing around exactly this spectrum.
-His framing: most engineers are at the low end of AI adoption today, and those who stay there risk being outcompeted by engineers who learn to orchestrate agent fleets—to act as owners of work queues rather than writers of individual functions.
+His framing: most engineers are at the low end of AI adoption today, and those who stay there risk being outcompeted by engineers who learn to orchestrate agent fleets — to act as owners of work queues rather than writers of individual functions.
 
 - <ExternalLink href="https://newsletter.pragmaticengineer.com/p/from-ides-to-ai-agents-with-steve" />
