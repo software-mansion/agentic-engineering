@@ -38,6 +38,27 @@ Subscriptions are different from API billing. You pay a monthly fee for usage in
 
 For most people, this is the cheapest way to get heavy day-to-day usage. The effective subscription-vs-API ratio can swing a lot as vendors change limits, model mixes, and pricing.
 
+## Language choice and token cost
+
+Token counts vary significantly by language.
+Polish, for example, requires roughly 40% more tokens than English for equivalent content — you can verify this yourself with <ExternalLink href="https://tiktokenizer.vercel.app/">Tiktokenizer</ExternalLink>.
+
+| Text | Tokens |
+|------|--------|
+| *"Jestem Adam i sprawdzam, ile tokenów potrzeba do zapisania tego tekstu. Czy język polski faktycznie wymaga ich więcej niż angielski?"* | 38 |
+| *"My name is Adam, and I'm checking how many tokens are needed to write this text. Does Polish actually require more tokens than English?"* | 27 |
+
+This is worth keeping in mind if you work in a non-English language — more tokens means higher cost and slower inference at scale.
+
+It's also a good occasion to debunk a myth that spread in Polish media in early 2025.
+Several articles claimed that Polish is the "best language for AI", citing a real paper: <ExternalLink href="https://arxiv.org/pdf/2503.01996">One ruler to measure them all: Benchmarking multilingual long-context language models</ExternalLink>.
+Marzena Karpińska from Microsoft, a co-author of the paper, addressed this directly:
+
+> No. We didn't study that at all.
+> We created a tool for diagnosing language models, checking how well they are able to extract information from very long texts.
+
+A neat example of a fake news cycle born from real research — likely fueled by misunderstood patriotism.
+
 Common subscription options:
 
 - <ExternalLink href="https://openai.com/chatgpt/pricing/" />
