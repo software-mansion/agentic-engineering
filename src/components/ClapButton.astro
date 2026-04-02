@@ -117,13 +117,7 @@ const { slug } = Astro.props;
         local.wasSent = true;
         window.removeEventListener("pagehide", sendClaps);
 
-        const body = new Blob([JSON.stringify({ claps: local.claps })], {
-          type: "text/plain; charset=utf-8",
-        });
-
-        // text/plain avoids CORS preflight (simple request), which can be cancelled
-        // during page unload before the actual POST is sent. request.json() on the
-        // server side parses the body regardless of content-type.
+        const body = JSON.stringify({ claps: local.claps });
         navigator.sendBeacon(clapsUrl, body);
       }
 
