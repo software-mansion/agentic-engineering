@@ -3,6 +3,8 @@ title: Model pricing
 description: "A concise guide to coding model pricing, including API costs, caching, and subscription tradeoffs."
 ---
 
+import ClapButton from "../../../components/ClapButton.astro";
+
 import ExternalLink from "../../../components/ExternalLink.astro";
 
 There are two very different pricing worlds in AI tools: API pricing (pay per token) and app subscriptions (pay a flat monthly fee with usage limits).
@@ -32,6 +34,8 @@ If you're integrating directly with an LLM API, lowering cost per request/sessio
 If you're using a coding agent, many of these optimizations are handled internally (prompt layout, caching, compaction).
 Your main cost levers are usually model choice and keeping tasks/threads scoped.
 
+<ClapButton slug="expanding-horizons/model-pricing/api-pricing" />
+
 ## Subscriptions
 
 Subscriptions are different from API billing. You pay a monthly fee for usage inside a product, usually with fair-use limits or soft/hard caps. These plans do not include raw API credits for your own apps.
@@ -45,3 +49,5 @@ Common subscription options:
 - <ExternalLink href="https://cursor.com/pricing" />
 - <ExternalLink href="https://factory.ai/pricing" />
 - <ExternalLink href="https://opencode.ai/docs/go/" />
+
+<ClapButton slug="expanding-horizons/model-pricing/subscriptions" />
