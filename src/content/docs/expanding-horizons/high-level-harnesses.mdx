@@ -76,6 +76,33 @@ monitoring a Linear board and running a Codex agent per issue in an isolated wor
 Issue-tracker-driven orchestration works best on codebases that have adopted [harness engineering](/becoming-productive/harness-engineering/).
 :::
 
+## Agent communication
+
+Running multiple agents in parallel may cause coordination problem — agents must exchange information without overloading any one context window.
+Two broad patterns have emerged.
+
+The simpler one is **hub-and-spoke orchestration**, where a lead agent spawns workers, collects their outputs, and consolidates.
+Workers never communicate directly.
+The benefit is simplicity, as the full picture is present in one place.
+The cost is that every intermediate result, log line, and failed attempt flows back through the orchestrator's context, degrading its reasoning quality over time.
+
+The more capable pattern is **collaborative teaming**, where agents share a task list, claim work independently, and can send messages directly to one another.
+A worker can flag a dependency, request a peer review, or broadcast a finding without routing it through the lead.
+The lead's context stays clean; coordination happens at the edges.
+
+In practice, most pipelines fall somewhere on a spectrum between these extremes, often organized into three levels:
+
+1. **Isolated workers** — each agent runs independently and returns its output to the caller.
+2. **Orchestrated workflows** — outputs become inputs for the next stage via shared files or aggregated results.
+3. **Collaborative teams** — agents share a task graph, can send direct or broadcast messages, and notify the lead when work completes.
+
+The right level depends on how tightly coupled the tasks are.
+Independent parallel tasks — security scan, test run, lint check — fit level 1 or 2 well.
+Tasks that need to challenge or build on each other's intermediate findings call for level 3.
+
+For reference, Claude Code Agent Teams implements level 3 with a shared task list, file-locked claiming, mailboxes for direct and broadcast messages, and idle notifications back to the lead.
+Codex 0.117 introduced path-based agent addressing and structured inter-agent messaging for its multi-agent workflows.
+
 ## The Code Factory pattern
 
 Beyond specific products, there is an emerging pattern popularized by Ryan Carson under the name **Code Factory**.
