@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://agentic-engineering.swmansion.com/sitemap-index.xml

@@ -1,0 +1,13 @@
+# Software Mansion Agentic Engineering Guide
+
+> Practical guidance for setting up and scaling agentic engineering workflows in real software projects.
+
+## Documentation Sets
+
+- [Abridged documentation](https://agentic-engineering.swmansion.com/pr-preview/pr-17/llms-small.txt): a compact version of the documentation for Software Mansion Agentic Engineering Guide, with non-essential content removed
+- [Complete documentation](https://agentic-engineering.swmansion.com/pr-preview/pr-17/llms-full.txt): the full documentation for Software Mansion Agentic Engineering Guide
+
+## Notes
+
+- The complete documentation includes all content from the official documentation
+- The content is automatically generated from the same source as the official documentation
