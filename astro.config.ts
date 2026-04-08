@@ -3,12 +3,14 @@ import starlight from "@astrojs/starlight";
 import starlightLlmsTxt from "starlight-llms-txt";
 
 const site = "https://agentic-engineering.swmansion.com/";
+const base = process.env.BASE_PATH || "/";
 const repo = `https://github.com/software-mansion/agentic-engineering/`;
 const defaultOgImage = `${site}og-default.png`;
 
 // https://astro.build/config
 export default defineConfig({
   site,
+  base,
   integrations: [
     starlight({
       title: "Software Mansion Agentic Engineering Guide",
