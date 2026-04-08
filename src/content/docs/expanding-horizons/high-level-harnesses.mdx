@@ -78,10 +78,10 @@ Issue-tracker-driven orchestration works best on codebases that have adopted [ha
 
 ## Agent communication
 
-Running multiple agents in parallel may cause coordination problem — agents must exchange information without overloading any one context window.
+Running multiple agents in parallel may create coordination problems — agents must exchange information without overloading any one context window.
 Two broad patterns have emerged.
 
-The simpler one is **hub-and-spoke orchestration**, where a lead agent spawns workers, collects their outputs, and consolidates.
+The simpler one is **hub-and-spoke orchestration**, where a lead agent spawns workers, collects their outputs, and consolidates them.
 Workers never communicate directly.
 The benefit is simplicity, as the full picture is present in one place.
 The cost is that every intermediate result, log line, and failed attempt flows back through the orchestrator's context, degrading its reasoning quality over time.
@@ -97,7 +97,7 @@ In practice, most pipelines fall somewhere on a spectrum between these extremes,
 3. **Collaborative teams** — agents share a task graph, can send direct or broadcast messages, and notify the lead when work completes.
 
 The right level depends on how tightly coupled the tasks are.
-Independent parallel tasks — security scan, test run, lint check — fit level 1 or 2 well.
+Independent parallel tasks — security scans, test runs, lint checks — fit level 1 or 2 well.
 Tasks that need to challenge or build on each other's intermediate findings call for level 3.
 
 For reference, Claude Code Agent Teams implements level 3 with a shared task list, file-locked claiming, mailboxes for direct and broadcast messages, and idle notifications back to the lead.
