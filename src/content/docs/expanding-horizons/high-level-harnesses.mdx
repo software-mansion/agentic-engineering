@@ -37,7 +37,7 @@ You do not need to wait for any single agent — you come back later and review 
 In practice, each agent needs its own isolated workspace — typically a separate Git worktree — so their changes do not interfere.
 A dashboard or queue then surfaces results as agents finish, letting you review and merge at your own pace.
 
-For example, <ExternalLink href="https://conductor.build/">Conductor</ExternalLink> is a tool built around this model,
+For example, <ExternalLink href="https://conductor.build/"/> is a tool built around this model,
 running multiple AI coding agents (Claude Code and Codex) in parallel worktrees with a shared review dashboard.
 
 ## Scheduled and recurring agents
@@ -54,7 +54,10 @@ This is well-suited for tasks like:
 
 With scheduled agents, the process becomes closer to a CI pipeline than a chat window — an agent is no longer a tool you reach for, but a background process.
 
-As an example, OpenAI's <ExternalLink href="https://developers.openai.com/codex/app">Codex App</ExternalLink> includes an <ExternalLink href="https://developers.openai.com/codex/app/automations">Automations</ExternalLink> feature built around exactly this model.
+Example application features built around this pattern:
+- <ExternalLink href="https://developers.openai.com/codex/app/automations"/>
+- <ExternalLink href="https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-cowork"/>
+- <ExternalLink href="https://cursor.com/docs/cloud-agent/automations"/>
 
 ## Issue-tracker-driven orchestration
 
@@ -65,7 +68,7 @@ Engineers decide what issues belong in scope; the orchestrator handles assignmen
 Agent behavior can be defined in a workflow file versioned alongside the code — the same way you version a CI pipeline.
 When an agent finishes, it gathers evidence (CI results, PR review feedback, complexity analysis) for human review.
 
-For example, <ExternalLink href="https://github.com/openai/symphony">Symphony</ExternalLink> is an open-source orchestration service published by OpenAI that implements this pattern,
+For example, <ExternalLink href="https://github.com/openai/symphony"/> is an open-source orchestration service that implements this pattern,
 monitoring a Linear board and running a Codex agent per issue in an isolated workspace.
 
 :::tip
@@ -96,10 +99,9 @@ The right level depends on how tightly coupled the tasks are.
 Independent parallel tasks — security scans, test runs, lint checks — fit level 1 or 2 well.
 Tasks that need to challenge or build on each other's intermediate findings call for level 3.
 
-For reference, Claude Code Agent Teams implements level 3 with a shared task list, file-locked claiming, mailboxes for direct and broadcast messages, and idle notifications back to the lead.
-Codex 0.117 introduced path-based agent addressing and structured inter-agent messaging for its multi-agent workflows.
+For reference, <ExternalLink href="https://code.claude.com/docs/en/agent-teams"/> implements level 3 with a shared task list, file-locked claiming, mailboxes for direct and broadcast messages, and idle notifications back to the lead.
 
-## The Code Factory pattern
+## Code factories
 
 Beyond specific products, there is an emerging pattern popularized by Ryan Carson under the name **Code Factory**.
 The idea is a repository setup where agents autonomously write code, open pull requests, and a separate review agent validates those PRs with machine-verifiable evidence.
@@ -121,14 +123,12 @@ Invest in solid tests, linters, and CI before automating the merge step.
 
 - <ExternalLink href="https://x.com/ryancarson" />
 
-## The one-human company
+## One-human companies
 
-The Code Factory pattern is the technical foundation of a broader idea: that a single person with a well-configured agent fleet can operate at the scale that would previously have required a full engineering team.
+The code factory pattern is the technical foundation of a broader idea: that a single person with a well-configured agent fleet can operate at the scale that would previously have required a full engineering team.
 
 This requires connecting agents to communication platforms, scheduling systems, and external services — turning a single machine into an always-on runtime that responds to messages, executes tasks, and ships work continuously.
-As an example of tooling in this space, see <ExternalLink href="https://openclaw.ai/">OpenClaw</ExternalLink>, which packages infrastructure for exactly this kind of setup.
+As an example of tooling in this space, <ExternalLink href="https://openclaw.ai/"/> packages infrastructure for exactly this kind of setup.
 
-Steve Yegge, in a widely read interview with The Pragmatic Engineer, argues that the engineering profession is reorganizing around exactly this spectrum.
+In <ExternalLink href="https://newsletter.pragmaticengineer.com/p/from-ides-to-ai-agents-with-steve" />, Yegge argues that the engineering profession is reorganizing around exactly this spectrum.
 His framing: most engineers are at the low end of AI adoption today, and those who stay there risk being outcompeted by engineers who learn to orchestrate agent fleets — to act as owners of work queues rather than writers of individual functions.
-
-- <ExternalLink href="https://newsletter.pragmaticengineer.com/p/from-ides-to-ai-agents-with-steve" />
