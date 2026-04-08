@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLlmsTxt from "starlight-llms-txt";
+import { remarkClapButtons } from "./src/plugins/remark-clap-buttons";
 
 const site = "https://agentic-engineering.swmansion.com/";
 const repo = `https://github.com/software-mansion/agentic-engineering/`;
@@ -103,4 +104,7 @@ export default defineConfig({
       plugins: [starlightLlmsTxt()],
     }),
   ],
+  markdown: {
+    remarkPlugins: [remarkClapButtons],
+  },
 });
