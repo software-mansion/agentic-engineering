@@ -67,6 +67,7 @@ const { slug } = Astro.props;
           }
 
           remote = parsing.data;
+          remote.count += local.claps;
 
           render();
         })
