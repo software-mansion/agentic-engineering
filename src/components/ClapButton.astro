@@ -42,7 +42,7 @@ const { slug } = Astro.props;
       const countElement =
         wrapperElement.querySelector<HTMLElement>(".clap-count")!;
 
-      const local = { claps: 0, wasSent: false };
+      const local = { claps: 0, sentClaps: 0 };
       let remote: z.infer<typeof ClapsResponse> = {
         count: 0,
         max_claps: MAX_CLAPS,
@@ -110,21 +110,24 @@ const { slug } = Astro.props;
       });
 
       function sendClaps() {
-        const hasClapsToSend = local.claps > 0;
-        const canSend = hasClapsToSend && !local.wasSent;
+        const toSend = local.claps - local.sentClaps;
 
-        if (!canSend) {
+        if (toSend <= 0) {
           return;
         }
 
-        local.wasSent = true;
-        window.removeEventListener("pagehide", sendClaps);
-
-        const body = JSON.stringify({ claps: local.claps });
-        navigator.sendBeacon(clapsUrl, body);
+        local.sentClaps = local.claps;
+        navigator.sendBeacon(clapsUrl, JSON.stringify({ claps: toSend }));
       }
 
       window.addEventListener("pagehide", sendClaps);
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState !== "hidden") {
+          return;
+        }
+
+        sendClaps();
+      });
     });
 </script>
 
