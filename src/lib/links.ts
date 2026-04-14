@@ -11,11 +11,11 @@ export const LINKS_HEADER = [
 export const REQUIRED_LINK_FIELDS = ["title", "urldate"] as const;
 
 export const linkSchema = z.object({
-  url: z.string().url(),
+  url: z.url(),
   title: z.string().min(1),
   author: z.string(),
-  date: z.string().date().or(z.literal("")),
-  urldate: z.string().date(),
+  date: z.iso.date().or(z.literal("")),
+  urldate: z.iso.date(),
 });
 
 const UTM_PARAM_RE = /^utm_/i;

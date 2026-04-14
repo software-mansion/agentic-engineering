@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLlmsTxt from "starlight-llms-txt";
+import { remarkClapButtons } from "./src/plugins/remark-clap-buttons";
 
 const site = "https://agentic-engineering.swmansion.com/";
 const repo = `https://github.com/software-mansion/agentic-engineering/`;
@@ -64,6 +65,7 @@ export default defineConfig({
             { slug: "expanding-horizons/threads-context-and-caching" },
             { slug: "expanding-horizons/model-pricing" },
             { slug: "expanding-horizons/high-level-harnesses" },
+            { slug: "expanding-horizons/autoresearch" },
             { slug: "expanding-horizons/what-to-read-next" },
           ],
         },
@@ -72,6 +74,8 @@ export default defineConfig({
         Head: "./src/components/Head.astro",
         Footer: "./src/components/Footer.astro",
         SkipLink: "./src/components/SkipLink.astro",
+        TableOfContents: "./src/components/TableOfContents.astro",
+        Pagination: "./src/components/Pagination.astro",
       },
       editLink: {
         baseUrl: `${repo}edit/main/`,
@@ -102,4 +106,7 @@ export default defineConfig({
       plugins: [starlightLlmsTxt()],
     }),
   ],
+  markdown: {
+    remarkPlugins: [remarkClapButtons],
+  },
 });

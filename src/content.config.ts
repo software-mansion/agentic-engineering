@@ -6,11 +6,9 @@ import { z } from "astro/zod";
 
 import { linkSchema, parseLinksCsv } from "./lib/links";
 
-const jsonLdNodeSchema = z
-  .object({
-    "@type": z.string().min(1),
-  })
-  .passthrough();
+const jsonLdNodeSchema = z.looseObject({
+  "@type": z.string().min(1),
+});
 
 export const collections = {
   docs: defineCollection({
