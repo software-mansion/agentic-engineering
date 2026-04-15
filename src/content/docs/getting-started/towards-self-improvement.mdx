@@ -4,7 +4,7 @@ description: Start adapting your repository to coding agents with a minimal `AGE
 ---
 
 import ExternalLink from "../../../components/ExternalLink.astro";
-import { Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+import { TabItem, Tabs } from "@astrojs/starlight/components";
 
 An essential aspect of becoming productive while working with agents is to
 _blend them with code_.
@@ -19,7 +19,7 @@ One way to steer agents toward doing the right things is to have an `AGENTS.md`
 file in the repository root.
 This file is read by the agent in each thread and defines basic guidance for how it should operate.
 
-You might see different variants of this file across tools — `GEMINI.md`, `COPILOT.md`, `AGENT.md`, `CLAUDE.md`, and others. 
+You might see different variants of this file across tools — `GEMINI.md`, `COPILOT.md`, `AGENT.md`, `CLAUDE.md`, and others.
 **In practice, one file is enough: `AGENTS.md`.**
 It’s supported by nearly all coding agents except Claude Code, which still expects a separate `CLAUDE.md`.
 
@@ -84,7 +84,8 @@ Keep this file minimal. Its role is to make sure the agent “does the right thi
   </TabItem>
 </Tabs>
 
-### Claude integration 
+### Claude integration
+
 Create a symbolic link for Claude:
 ```
 ln -s AGENTS.md CLAUDE.md
@@ -103,7 +104,7 @@ leverage without adding much complexity.
 As you get comfortable with that baseline, you can introduce more advanced
 utilities around the agent:
 skills for reusable workflows,
-more structured guidance such as <ExternalLink href="https://cursor.com/docs/context/rules">Cursor Rules</ExternalLink> for larger codebases,
+more structured guidance such as <ExternalLink href="https://cursor.com/docs/context/rules"/> for larger codebases,
 and MCP integrations for connecting the model to external tools and services.
 
 You do not need all of that on day one.
