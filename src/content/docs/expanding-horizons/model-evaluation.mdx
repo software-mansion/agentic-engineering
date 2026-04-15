@@ -1,0 +1,15 @@
+---
+title: Model Evaluation
+description: Learn how to evaluate LLM performance for agentic workflows using benchmarks, custom evals, and real-world testing.
+---
+
+import ExternalLink from "../../../components/ExternalLink.astro";
+
+Traditional software testing relies on deterministic outputs where `assert response == "expected"` works every time.
+In the world of LLMs, this approach fails because the same prompt can yield slightly different (yet equally valid) results.
+
+The most common trap in agentic development is the "vibe check" dilemma.
+This happens when developers manually test a few prompts, see a good result, and assume the system is production-ready.
+However, small changes to a prompt or a model update can introduce regressions that appear intermittently and are hard to reproduce.
+Establishing a local evaluation pipeline is the bridge between "playing with AI" and "engineering AI systems."
+
