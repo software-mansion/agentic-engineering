@@ -43,9 +43,15 @@ const { slug } = Astro.props;
 
   if (API && wrappers.length > 0) {
     const batchUrl = new URL("/claps/batch", API);
+    const updates = new Map<
+      string,
+      (maxClaps: number, remote: { count: number; user_claps: number }) => void
+    >();
 
-    for (const element of wrappers) {
-      batchUrl.searchParams.append("slugs", element.dataset.slug!);
+    for (const wrapper of wrappers) {
+      const slug = wrapper.dataset.slug!;
+      batchUrl.searchParams.append("slugs", slug);
+      updates.set(slug, initButton(API, wrapper, slug));
     }
 
     void fetch(batchUrl)
@@ -65,7 +71,7 @@ const { slug } = Astro.props;
           const slug = wrapper.dataset.slug!;
           const item = bySlug.get(slug);
 
-          initButton(API, wrapper, slug, max_claps, {
+          updates.get(slug)!(max_claps, {
             count: item?.count ?? 0,
             user_claps: item?.user_claps ?? 0,
           });
@@ -80,8 +86,6 @@ const { slug } = Astro.props;
     api: string,
     wrapperElement: HTMLDivElement,
     slug: string,
-    maxClaps: number,
-    initialRemote: { count: number; user_claps: number },
   ) {
     const buttonElement =
       wrapperElement.querySelector<HTMLButtonElement>(".clap-button")!;
@@ -89,21 +93,23 @@ const { slug } = Astro.props;
       wrapperElement.querySelector<HTMLElement>(".clap-count")!;
 
     const local = { claps: 0, sentClaps: 0 };
-    const remote = { ...initialRemote };
-
-    render();
+    const remote = { count: 0, user_claps: 0 };
+    let maxClaps = Number.MAX_SAFE_INTEGER;
+    let loaded = false;
 
     function render() {
       const localClaps = local.claps + remote.user_claps;
 
-      const total = String(remote.count);
-      const progress = String(localClaps / maxClaps);
-
       const wasPressed = localClaps > 0;
-      const isDisabled = localClaps >= maxClaps;
+      const isDisabled = loaded && localClaps >= maxClaps;
 
-      countElement.textContent = total;
-      wrapperElement.style.setProperty("--clap-progress", progress);
+      if (loaded) {
+        countElement.textContent = String(remote.count);
+        wrapperElement.style.setProperty(
+          "--clap-progress",
+          String(localClaps / maxClaps),
+        );
+      }
       buttonElement.setAttribute("aria-pressed", String(wasPressed));
       buttonElement.toggleAttribute("disabled", isDisabled);
     }
@@ -116,7 +122,7 @@ const { slug } = Astro.props;
     }
 
     buttonElement.addEventListener("click", () => {
-      if (remote.user_claps + local.claps >= maxClaps) {
+      if (loaded && remote.user_claps + local.claps >= maxClaps) {
         return;
       }
 
@@ -150,6 +156,18 @@ const { slug } = Astro.props;
 
       sendClaps();
     });
+
+    return function update(
+      newMaxClaps: number,
+      newRemote: { count: number; user_claps: number },
+    ) {
+      loaded = true;
+      maxClaps = newMaxClaps;
+      // Merge real server count with optimistic local claps accumulated before batch returned.
+      remote.count = newRemote.count + local.claps;
+      remote.user_claps = newRemote.user_claps;
+      render();
+    };
   }
 </script>
 
