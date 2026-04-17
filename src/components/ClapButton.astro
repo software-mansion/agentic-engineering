@@ -47,11 +47,22 @@ const { slug } = Astro.props;
       string,
       (maxClaps: number, remote: { count: number; user_claps: number }) => void
     >();
+    const senders: (() => void)[] = [];
+
+    window.addEventListener("pagehide", () => {
+      for (const send of senders) send();
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState !== "hidden") return;
+      for (const send of senders) send();
+    });
 
     for (const wrapper of wrappers) {
       const slug = wrapper.dataset.slug!;
       batchUrl.searchParams.append("slugs", slug);
-      updates.set(slug, initButton(API, wrapper, slug));
+      const { update, sendClaps } = initButton(API, wrapper, slug);
+      updates.set(slug, update);
+      senders.push(sendClaps);
     }
 
     void fetch(batchUrl)
@@ -148,16 +159,7 @@ const { slug } = Astro.props;
       navigator.sendBeacon(clapsUrl, JSON.stringify({ claps: toSend }));
     }
 
-    window.addEventListener("pagehide", sendClaps);
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState !== "hidden") {
-        return;
-      }
-
-      sendClaps();
-    });
-
-    return function update(
+    function update(
       newMaxClaps: number,
       newRemote: { count: number; user_claps: number },
     ) {
@@ -167,7 +169,9 @@ const { slug } = Astro.props;
       remote.count = newRemote.count + local.claps;
       remote.user_claps = newRemote.user_claps;
       render();
-    };
+    }
+
+    return { update, sendClaps };
   }
 </script>
 
