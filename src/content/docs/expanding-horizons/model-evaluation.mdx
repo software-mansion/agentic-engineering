@@ -65,3 +65,27 @@ Despite the rise of automated "judges," human review remains the ultimate benchm
 * **The "Ground Truth" Creator:** Humans are typically responsible for creating the initial high-quality datasets that automated systems use for comparison (Golden Dataset). 
 * **Feedback:** Real users or domain experts rank model responses (e.g., "Which of these two emails sounds more professional?"). 
 
+## LLM evals as unit tests
+
+To maintain long-term reliability, evaluation must be moved out of local notebooks and into your continuous integration pipeline.
+Treating evals as unit tests ensures that every change to your prompts or model selection is validated before it hits production.
+
+### Automating the pipeline
+
+You should integrate your evaluation scripts into GitHub Actions, GitLab CI, or any other automation tool you use.
+Every time a pull request is opened, the CI environment should run your **Golden Dataset** against the new version of your system.
+This automation removes the human bottleneck and prevents "vibe-based" deployments.
+
+### Setting performance thresholds
+
+A "passing" build in agentic engineering is defined by meeting a specific quality threshold.
+For example, you might define a failing build as one where the average "LLM-as-a-Judge" score drops by more than 5% compared to the main branch.
+By setting these guardrails, you ensure that performance never silently degrades over time.
+
+### Regression testing
+
+The most difficult bugs to catch are those where fixing an issue for one user breaks the experience for another.
+Comprehensive evaluation allows you to run regression tests across your entire dataset.
+If a prompt change fixes a tool-calling error in one scenario but causes a hallucination in three others, your evaluation pipeline will catch it immediately.
+This systematic approach is the only way to build agentic systems that scale without collapsing under their own complexity.
+
