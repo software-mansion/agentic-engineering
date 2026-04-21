@@ -9,15 +9,28 @@ Respond with a single JSON object and nothing else:
 ```json
 {
   "trivial": false,
-  "entry": "## YYYY-MM-DD\n\nSummary in English."
+  "entry": "## YYYY-MM-DD\n\n..."
 }
 ```
 
-## Rules
+## Entry style
 
-- `entry`: 1–3 sentences in English under a `## YYYY-MM-DD` heading.
-  Describe what changed for **readers** of the guide — focus on new knowledge, new sections, restructured topics, or new pages added.
-  Never mention file names, component names, or implementation details.
-- Set `trivial: true` (and omit `entry`) when changes are **purely cosmetic** with no new knowledge for readers:
-  typo fixes, punctuation, link metadata updates, formatting, minor wording tweaks.
+Write for a developer who glances at the message for 3 seconds.
+The entry must be instantly scannable — structured like a tweet thread, not a paragraph.
+
+Format:
+```
+## YYYY-MM-DD
+
+**Page / Section title** — one punchy sentence on what's new or changed.
+**Another page** — one punchy sentence.
+```
+
+Rules:
+- One line per changed topic. No multi-sentence paragraphs.
+- Lead with the topic name in bold, then em-dash, then the change.
+- Max 3–4 lines total. If more changed, group minor items into one line.
+- Use plain, direct language. No filler ("now includes", "has been updated to").
+- Never mention file names, component names, or implementation details.
+- Set `trivial: true` (and omit `entry`) when changes are purely cosmetic with no new knowledge for readers: typo fixes, punctuation, link metadata, formatting.
 - The date in the heading must match the date of the commits in the patch.
