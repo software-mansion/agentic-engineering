@@ -65,7 +65,7 @@ Despite the rise of automated "judges," human review remains the ultimate benchm
 * **The "Ground Truth" Creator:** Humans are typically responsible for creating the initial high-quality datasets that automated systems use for comparison (Golden Dataset). 
 * **Feedback:** Real users or domain experts rank model responses (e.g., "Which of these two emails sounds more professional?"). 
 
-## LLM evals as unit tests
+## Evaluation as quality gate
 
 To maintain long-term reliability, evaluation must be moved out of local notebooks and into your continuous integration pipeline.
 Treating evals as unit tests ensures that every change to your prompts or model selection is validated before it hits production.
