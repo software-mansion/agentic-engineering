@@ -20,7 +20,7 @@ An effective selection process uses your evaluation pipeline to find the most ef
 
 ### Defining task-specific benchmarks
 
-General leaderboards like LMSYS are useful for broad comparisons, but they rarely reflect the specific domain of your application.
+General benchmarks are useful for broad comparisons, but they rarely reflect the specific domain of your application.
 You should create a test suite that directly mirrors your production tasks, such as "triage of customer messages" or "extraction of data from legacy PDF documents."
 A model that ranks first on coding benchmarks might perform poorly on nuanced sentiment analysis or specialized legal reasoning.
 
@@ -41,4 +41,27 @@ For example, a customer-facing chatbot might prioritize low latency and cost, wh
 Evaluation scores provide the evidence needed to move from premium models to cheaper, faster alternatives.
 You can use your benchmarks to prove whether a lightweight model can match 95% or more of a premium model's performance for your specific use case.
 This "data-driven downsizing" is often the most significant optimization you can make to your system's operational cost.
+
+## Metrics: How to Measure "Good"
+
+Because LLM outputs are non-deterministic, you cannot rely on a single boolean check. Instead, you should build a tiered evaluation system that uses different types of metrics to measure success, moving from automated checks to the human "Gold Standard."
+
+### Deterministic Metrics
+
+These are the fastest, cheapest, and most objective checks. They work best for technical constraints and structured outputs where the rules are black and white.
+* **Regex and Keyword Checks:** Ensuring specific mandatory terms are present or that forbidden "hallucinated" terms are absent.
+* **Format Validation:** Using tools to verify that the model produced a valid, parsable JSON object or Markdown structure that matches your expected schema.
+
+### LLM-as-a-Judge
+
+When your output is natural language, it’s hard to write a script to check for "helpfulness." This is where you use a superior "frontier" model (e.g., GPT-4o or Claude 3.5 Sonnet) to grade a smaller, faster model.
+* **Rubric-Based Scoring:** You provide the "Judge" with a specific set of criteria (e.g., "Score this summary from 1-5 based on factual density") and the model's output.
+* **Scalability:** This allows you to evaluate thousands of responses in minutes. While it adds token costs, it captures nuances like tone, sentiment, and reasoning that simple scripts miss.
+* **Reference Comparison:** The judge can compare the model's output against a "Ground Truth" answer to see if the core meaning remains intact despite different wording.
+
+### Human Evaluation
+
+Despite the rise of automated "judges," human review remains the ultimate benchmark for quality, especially in high-stakes domains like legal, medical, or complex technical tasks.
+* **The "Ground Truth" Creator:** Humans are typically responsible for creating the initial high-quality datasets that automated systems use for comparison (Golden Dataset). 
+* **Feedback:** Real users or domain experts rank model responses (e.g., "Which of these two emails sounds more professional?"). 
 
