@@ -3,8 +3,6 @@ title: Model Evaluation
 description: Learn how to evaluate LLM performance for agentic workflows using benchmarks, custom evals, and real-world testing.
 ---
 
-import ExternalLink from "../../../components/ExternalLink.astro";
-
 Traditional software testing relies on deterministic outputs where `assert response == "expected"` works every time.
 In the world of LLMs, this approach fails because the same prompt can yield slightly different (yet equally valid) results.
 
@@ -28,7 +26,7 @@ A model that ranks first on coding benchmarks might perform poorly on nuanced se
 
 The most reliable way to compare models is by running them against a **Golden Dataset**.
 A Golden Dataset is a curated collection of 20–50 high-quality input/output pairs that represent the core edge cases and requirements of your application.
-By running the same dataset across multiple candidates—such as frontier models (GPT-4o, Claude 3.5 Sonnet) and lightweight alternatives (Llama 3, Gemini 1.5 Flash) you can see exactly where each model succeeds or fails.
+By running the same dataset across multiple candidates—such as frontier models (GPT-5.4, Claude Opus 4.6) and lightweight alternatives (Llama 3, Gemini 1.5 Flash) you can see exactly where each model succeeds or fails.
 
 ### The efficiency frontier
 
@@ -52,9 +50,17 @@ These are the fastest, cheapest, and most objective checks. They work best for t
 * **Regex and Keyword Checks:** Ensuring specific mandatory terms are present or that forbidden "hallucinated" terms are absent.
 * **Format Validation:** Using tools to verify that the model produced a valid, parsable JSON object or Markdown structure that matches your expected schema.
 
+### Semantic Similarity
+
+When the "ground truth" is natural language, exact matching is too restrictive.
+This approach compares the meaning of the model's output against a reference answer rather than just looking at the literal characters.
+* **Meaning-based Matching:** It identifies if the model's response is "close enough" in intent, even if it uses different wording or sentence structure.
+* **Continuous Scoring:** Instead of a binary pass/fail, you get a similarity score that allows for granular analysis of performance trends over time.
+* **Efficiency:** It provides a middle ground that is faster and cheaper than using an LLM-as-a-judge while being more flexible than deterministic checks.
+
 ### LLM-as-a-Judge
 
-When your output is natural language, it’s hard to write a script to check for "helpfulness." This is where you use a superior "frontier" model (e.g., GPT-4o or Claude 3.5 Sonnet) to grade a smaller, faster model.
+When your output is natural language, it’s hard to write a script to check for "helpfulness." This is where you use a superior "frontier" model (e.g., GPT-5.4 or Claude Opus 4.6) to grade a smaller, faster model.
 * **Rubric-Based Scoring:** You provide the "Judge" with a specific set of criteria (e.g., "Score this summary from 1-5 based on factual density") and the model's output.
 * **Scalability:** This allows you to evaluate thousands of responses in minutes. While it adds token costs, it captures nuances like tone, sentiment, and reasoning that simple scripts miss.
 * **Reference Comparison:** The judge can compare the model's output against a "Ground Truth" answer to see if the core meaning remains intact despite different wording.
