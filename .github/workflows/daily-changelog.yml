@@ -1,0 +1,95 @@
+name: Daily Changelog
+
+# Runs every night at 3 AM UTC.
+# Checks for content changes in src/content/docs/ from the previous day.
+# If changes exist, generates a scannable changelog entry via Claude (Anthropic),
+# prepends it to changelog.mdx, commits, and posts to Slack #aiaiai.
+# No-ops if patch is empty or AI deems changes trivial.
+#
+# Required GitHub secrets:
+#   ANTHROPIC_API_KEY          — Anthropic API key
+#   SLACK_WORKFLOW_WEBHOOK_URL — Webhook URL from Slack Workflow Builder
+#
+# Slack Workflow Builder setup (one-time, done in Slack UI):
+#   Workflow name: "Agentic Engineering Guide — Changelog"
+#   1. New Workflow → trigger: Webhook
+#   2. Add two variables: "date" (text), "message" (text)
+#   3. Step: Send a message to #aiaiai
+#      - Bot name: Agentic Engineering Guide - Changelog
+#      - Message: `{{message}}`
+#   4. Publish → copy webhook URL → save as SLACK_WORKFLOW_WEBHOOK_URL secret
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v6.3.0
+        with:
+          node-version-file: .nvmrc
+      - uses: oven-sh/setup-bun@v2.2.0
+
+      - name: Get yesterday's content patch
+        id: patch
+        run: |
+          YESTERDAY=$(date -d "yesterday" +%Y-%m-%d)
+          echo "date=${YESTERDAY}" >> "$GITHUB_OUTPUT"
+
+          git log \
+            --since="${YESTERDAY} 00:00:00" \
+            --until="${YESTERDAY} 23:59:59" \
+            -p \
+            -- "src/content/docs/" \
+            ":(exclude)src/content/docs/changelog.mdx" \
+            > /tmp/yesterday.patch 2>/dev/null || true
+
+          if [ ! -s /tmp/yesterday.patch ]; then
+            echo "empty=true" >> "$GITHUB_OUTPUT"
+            echo "No content changes on ${YESTERDAY}, skipping."
+          else
+            echo "empty=false" >> "$GITHUB_OUTPUT"
+            echo "Found content changes on ${YESTERDAY}."
+          fi
+
+      - name: Generate changelog entry via AI
+        if: steps.patch.outputs.empty == 'false'
+        id: ai
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CHANGELOG_DATE: ${{ steps.patch.outputs.date }}
+        run: |
+          bun run scripts/changelog/generate-entry.mts /tmp/yesterday.patch > /tmp/ai-result.json
+          bun run scripts/changelog/set-outputs.mts
+
+      - name: Update changelog.mdx
+        if: steps.patch.outputs.empty == 'false' && steps.ai.outputs.trivial == 'false'
+        run: bun run scripts/changelog/prepend-entry.mts
+
+      - name: Commit and push
+        if: steps.patch.outputs.empty == 'false' && steps.ai.outputs.trivial == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/content/docs/changelog.mdx
+          git commit -m "changelog: ${{ steps.patch.outputs.date }}"
+          git push
+
+      - name: Post to Slack
+        if: steps.patch.outputs.empty == 'false' && steps.ai.outputs.trivial == 'false'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WORKFLOW_WEBHOOK_URL }}
+          CHANGELOG_DATE: ${{ steps.patch.outputs.date }}
+        run: bun run scripts/changelog/post-slack.mts
