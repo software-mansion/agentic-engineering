@@ -1,5 +1,5 @@
 ---
-title: Model Evaluation
+title: Evaluation
 description: Learn how to evaluate LLM performance for agentic workflows using benchmarks, custom evals, and real-world testing.
 ---
 import ExternalLink from "../../../components/ExternalLink.astro";
@@ -9,8 +9,8 @@ In the world of LLMs, this approach fails because the same prompt can yield slig
 
 The most common trap in agentic development is the "vibe check" dilemma.
 This happens when developers manually test a few prompts, see a good result, and assume the system is production-ready.
-However, small changes to a prompt or a model update can introduce regressions that appear intermittently and are hard to reproduce.
-Establishing a local evaluation pipeline is the bridge between "playing with AI" and "engineering AI systems."
+However, small changes to a prompt or a model update can introduce regressions to your system.
+Establishing a evaluation pipeline is the bridge between "playing with AI" and "engineering AI systems."
 
 ## Model selection through evaluation
 
@@ -27,7 +27,7 @@ A model that ranks first on coding benchmarks might perform poorly on nuanced se
 
 The most reliable way to compare models is by running them against a **Golden Dataset**.
 A Golden Dataset is a curated collection of 20–50 high-quality input/output pairs that represent the core edge cases and requirements of your application.
-By running the same dataset across multiple candidates—such as frontier models (GPT-5.4, Claude Opus 4.6) and lightweight alternatives (Llama 3, Gemini 1.5 Flash) you can see exactly where each model succeeds or fails.
+By running the same dataset across multiple candidates—such as frontier models (GPT-5.4, Claude Opus 4.6) and lightweight alternatives (Gemini 3.1 Flash-Lite) you can see exactly where each model succeeds or fails.
 
 ### The efficiency frontier
 
@@ -53,7 +53,7 @@ These are the fastest, cheapest, and most objective checks. They work best for t
 
 ### Semantic Similarity
 
-When the "ground truth" is natural language, exact matching is too restrictive.
+When your output is natural language, exact matching is too restrictive.
 This approach compares the meaning of the model's output against a reference answer rather than just looking at the literal characters.
 * **Meaning-based Matching:** It identifies if the model's response is "close enough" in intent, even if it uses different wording or sentence structure.
 * **Continuous Scoring:** Instead of a binary pass/fail, you get a similarity score that allows for granular analysis of performance trends over time.
@@ -61,16 +61,16 @@ This approach compares the meaning of the model's output against a reference ans
 
 ### LLM-as-a-Judge
 
-When your output is natural language, it’s hard to write a script to check for "helpfulness." This is where you use a superior "frontier" model (e.g., GPT-5.4 or Claude Opus 4.6) to grade a smaller, faster model.
+In this case you can use a superior "frontier" model (e.g., GPT-5.4 or Claude Opus 4.6) to grade a smaller, faster model.
 * **Rubric-Based Scoring:** You provide the "Judge" with a specific set of criteria (e.g., "Score this summary from 1-5 based on factual density") and the model's output.
 * **Scalability:** This allows you to evaluate thousands of responses in minutes. While it adds token costs, it captures nuances like tone, sentiment, and reasoning that simple scripts miss.
-* **Reference Comparison:** The judge can compare the model's output against a "Ground Truth" answer to see if the core meaning remains intact despite different wording.
+* **Reference Comparison:** The judge can compare the model's output against a golden dataset to see if the core meaning remains intact despite different wording.
 
 ### Human Evaluation
 
 Despite the rise of automated "judges," human review remains the ultimate benchmark for quality, especially in high-stakes domains like legal, medical, or complex technical tasks.
-* **The "Ground Truth" Creator:** Humans are typically responsible for creating the initial high-quality datasets that automated systems use for comparison (Golden Dataset). 
-* **Feedback:** Real users can rank model responses too. 
+* **The "Ground Truth" Creator:** Humans are typically responsible for creating the initial high-quality datasets that automated systems use for comparison (golden dataset). 
+* **Feedback:** Real users can rank your's model responses too. 
 
 ## Evaluation as quality gate
 
