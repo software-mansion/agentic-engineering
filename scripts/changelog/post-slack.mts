@@ -1,12 +1,18 @@
-const raw = JSON.parse(await Bun.file("/tmp/ai-result.json").text());
+const aiResultPath = process.argv[2];
+if (!aiResultPath) {
+  console.error("Usage: post-slack.mts <ai_result_json>");
+  process.exit(1);
+}
+
+const raw = JSON.parse(await Bun.file(aiResultPath).text());
 
 if (typeof raw !== "object" || raw === null) {
-  console.error("[ai-result.json] Expected object, got", typeof raw);
+  console.error("[changelog entry] Expected object, got", typeof raw);
   process.exit(1);
 }
 if (typeof raw.entry !== "string" || raw.entry.trim() === "") {
   console.error(
-    "[ai-result.json] Missing or empty 'entry' field. Full result:",
+    "[changelog entry] Missing or empty 'entry' field. Full result:",
     JSON.stringify(raw),
   );
   process.exit(1);
