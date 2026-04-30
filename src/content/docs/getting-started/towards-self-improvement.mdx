@@ -6,26 +6,23 @@ description: Start adapting your repository to coding agents with a minimal `AGE
 import ExternalLink from "../../../components/ExternalLink.astro";
 import { TabItem, Tabs } from "@astrojs/starlight/components";
 
-An essential aspect of becoming productive while working with agents is to
-_blend them with code_.
-Your agents need to adapt to the codebase, and your codebase needs to adapt to
-the agents.
-For example, you might not necessarily like the commit message that the agent
-has just produced.
+A large part of becoming productive with agents is learning how to _blend them with code_.
+Your agents need to adapt to the codebase, and your codebase needs to adapt to the agents.
+For example, you might not like the commit message an agent has just produced.
 
 ## AGENTS.md
 
-One way to steer agents toward doing the right things is to have an `AGENTS.md`
-file in the repository root.
+One way to steer agents toward the right behavior is to keep an `AGENTS.md` file in the repository root.
 This file is read by the agent in each thread and defines basic guidance for how it should operate.
 
 You might see different variants of this file across tools — `GEMINI.md`, `COPILOT.md`, `AGENT.md`, `CLAUDE.md`, and others.
 **In practice, one file is enough: `AGENTS.md`.**
 It’s supported by nearly all coding agents except Claude Code, which still expects a separate `CLAUDE.md`.
 
-The simplest solution to keep both files in sync is to create a symlink (symbolic link) from `AGENTS.md` to `CLAUDE.md` — see the command below.
+The simplest way to keep both files in sync is to create a symlink (symbolic link) from `AGENTS.md` to `CLAUDE.md` using the command below.
 
-Keep this file minimal. Its role is to make sure the agent “does the right thing” every time — not to over‑specify every step.
+Keep this file minimal.
+Its role is to make sure the agent "does the right thing" every time, not to over-specify every step.
 
 
 <Tabs>
@@ -99,19 +96,15 @@ If possible, commit both files to your repository.
 
 ## More utilities await
 
-`AGENTS.md` is the simplest place to start, because it gives you immediate
-leverage without adding much complexity.
+`AGENTS.md` is the simplest place to start because it gives you immediate leverage without adding much complexity.
 
-As you get comfortable with that baseline, you can introduce more advanced
-utilities around the agent:
+As you get comfortable with that baseline, you can introduce more advanced utilities around the agent:
 skills for reusable workflows,
 more structured guidance such as <ExternalLink href="https://cursor.com/docs/context/rules"/> for larger codebases,
 and MCP integrations for connecting the model to external tools and services.
 
 You do not need all of that on day one.
-For now, it is enough to understand that these mechanisms exist and become more
-useful once you already have a stable basic workflow.
+For now, it is enough to know these mechanisms exist and become more useful once you already have a stable basic workflow.
 
-When you are ready, continue with
-[Harness engineering](/becoming-productive/harness-engineering/),
+When you are ready, continue with [Harness engineering](/becoming-productive/harness-engineering/),
 which covers these more advanced building blocks in detail.

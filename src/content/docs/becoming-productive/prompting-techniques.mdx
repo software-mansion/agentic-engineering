@@ -9,22 +9,22 @@ Once you have a sensible workflow, the next question is how to interact with the
 Good prompting is less about writing massive instructions and more about giving the right kind of guidance at the right time.
 With a good prompt, the agent can often find the right answers on its own.
 
-This page collects tactics that help at different moments of engineering.
+This page collects tactics for different moments in engineering work.
 
 ## Clarify the task first
 
-Many prompting failures begin before the agent writes a single line of code. If the task is underspecified, framed too narrowly, or missing the right reference points, the agent will confidently optimize for the wrong thing. These techniques help you align on intent before execution begins.
+Many prompting failures begin before the agent writes a single line of code.
+If the task is underspecified, framed too narrowly, or missing the right reference points, the agent may confidently optimize for the wrong thing.
+These techniques help you align on intent before execution begins.
 
 ### Frame first, then implement
 
 If the task is vague, do not jump straight to architecture.
-First, ask the agent for a short framing brief covering the problem, desired
-outcome, non-goals, options, and open questions with owners.
+First, ask the agent for a short framing brief covering the problem, desired outcome, non-goals, options, and open questions with owners.
 
 A false certainty that the agent knows your intent is a common failure mode.
-Ask the agent to separate facts, assumptions, and preferences, then review
-whether its understanding is correct. You can include the following
-snippet in your prompt:
+Ask the agent to separate facts, assumptions, and preferences, then review whether its understanding is correct.
+You can include this snippet in your prompt:
 
 ```md
 Interview me relentlessly about every aspect of this plan until we reach a
@@ -36,9 +36,8 @@ Source: <ExternalLink href="https://github.com/mattpocock/skills/blob/main/grill
 
 ### Socratic prompting
 
-TL;DR: Instead of giving the answer, ask questions that lead the agent to reach it on their own.
-Example: Rather than “The bug is in the condition,” ask “What are the assumptions?”,
-“Is this condition always true?”, and “What happens for the edge case?”
+TL;DR: Instead of giving the answer, ask questions that lead the agent to reach it on its own.
+Example: Rather than “The bug is in the condition,” ask “What are the assumptions?”, “Is this condition always true?”, and “What happens for the edge case?”
 The goal is to surface assumptions, check logic, and arrive at the conclusion through the agent's own reasoning.
 
 Source: <ExternalLink href="https://platform.claude.com/docs/en/resources/prompt-library/socratic-sage" />
@@ -48,13 +47,13 @@ Source: <ExternalLink href="https://platform.claude.com/docs/en/resources/prompt
 Intentionally omit some element of the prompt so that:
 
 1. The agent explores that area more thoroughly in its own way.
-2. You can see what’s missing in AGENTS.md / codebase / docs from what the agent tried to read.
+2. You can see what is missing in AGENTS.md, the codebase, or the docs based on what the agent tried to read.
 
 ### Document knowledge
 
 TL;DR: If a fact should survive a reset, handoff, or future task, ask the agent to write it into the repository instead of leaving it in chat.
 Treat `AGENTS.md` as a short map.
-Treat repo-local Markdown as the system of record.
+Treat repository-local Markdown as the system of record.
 
 This works well for architecture notes, domain terminology, debugging discoveries, migration constraints, and execution plans.
 A small, focused document is usually better than one giant instruction file.
@@ -68,16 +67,16 @@ Sources:
 
 ### Borrowing from other code
 
-If you know you’re working on a problem that has been solved somewhere else, tell your agent to find and borrow the solution.
+If you know you are working on a problem that has been solved somewhere else, tell your agent to find and borrow the solution.
 
 - If this is open-source code, you can tell it to clone it into `/tmp`.
-- There is also <ExternalLink href="https://mcp.grep.app">mcp.grep.app</ExternalLink> if you’re just looking for code snippets.
+- There is also <ExternalLink href="https://mcp.grep.app">mcp.grep.app</ExternalLink> if you are just looking for code snippets.
 - Beware of legal (copyright) concerns!
 
 Depending on the codebase, a useful pattern is to have several _golden_ files that the agent can use as references.
 
 - For example, if you have a component library, tell the agent to follow the implementation of the `ui/Button.tsx` component.
-- If you're doing repetitive module refactoring, make the changes in one golden module, then ask the agent to reproduce them in other modules.
+- If you are doing repetitive module refactoring, make the changes in one golden module, then ask the agent to reproduce them in other modules.
 
 ## Steer the execution
 
@@ -94,8 +93,8 @@ Source: <ExternalLink href="https://simonwillison.net/guides/agentic-engineering
 
 ### Knowledge checkpoint
 
-TL;DR: After planning but before implementation, checkpoint the plan in the repo and maybe commit it.
-That preserves the expensive part, your planning and explanations, while making failed implementation attempts cheap to retry.
+TL;DR: After planning but before implementation, checkpoint the plan in the repo and consider committing it.
+That preserves the expensive part, the planning and explanation, while making failed implementation attempts cheap to retry.
 
 Ask the agent to extract the agreed plan into a short Markdown file, commit that file as a checkpoint, and only then start coding.
 If the implementation goes sideways, reset to the checkpoint and try again without redoing the planning work.
@@ -117,8 +116,7 @@ Source: <ExternalLink href="https://lexler.github.io/augmented-coding-patterns/p
 
 TL;DR: When the task has multiple plausible solutions or a high chance of failure,
 branch from one checkpoint and let several implementations race in parallel.
-This works especially well when work involves some degree of creativity,
-like interface design.
+This works especially well when the work involves some degree of creativity, such as interface design.
 
 The pattern is:
 
@@ -131,7 +129,7 @@ The pattern is:
 
 Source: <ExternalLink href="https://lexler.github.io/augmented-coding-patterns/patterns/parallel-implementations/" />
 
-## When text and code is not enough
+## When text and code are not enough
 
 Sometimes the fastest way to explain a problem is not another painfully typed paragraph.
 Other forms of communication can be valuable too.
@@ -146,25 +144,23 @@ Frontier models handle multimodal input very well.
 
 ### Put a human in the loop
 
-Ask the agent to prepare a step-by-step reproduction of a complex manual flow (what to click, in what order);
-you perform the steps (e.g., log in to the browser with your account), report back, and the agent continues or verifies.
-Like augmented manual QA: the agent scripts the scenario, and the human does the sensitive or interactive bits.
+Ask the agent to prepare a step-by-step reproduction of a complex manual flow: what to click, and in what order.
+You perform the steps, such as logging in to the browser with your account, report back, and the agent continues or verifies.
+Think of it as augmented manual QA: the agent scripts the scenario, and the human does the sensitive or interactive parts.
 
 ### Just talk to it
 
 If typing is tiring, you can use your voice instead.
 Some coding agents have built-in voice dictation features.
-Similar things are also provided by accessibility features of operating systems,
-like <ExternalLink href="https://support.apple.com/guide/mac-help/mh40584/mac">Dictation</ExternalLink> on macOS,
-or <ExternalLink href="https://support.microsoft.com/en-us/windows/use-voice-typing-to-talk-instead-of-type-on-your-pc-fec94565-c4bd-329d-e59a-af033fa5689f">Voice Typing</ExternalLink> on Windows,
-and many third-party apps for all platforms.
+Similar options are also built into operating systems, like <ExternalLink href="https://support.apple.com/guide/mac-help/mh40584/mac">Dictation</ExternalLink> on macOS, <ExternalLink href="https://support.microsoft.com/en-us/windows/use-voice-typing-to-talk-instead-of-type-on-your-pc-fec94565-c4bd-329d-e59a-af033fa5689f">Voice Typing</ExternalLink> on Windows, and many third-party apps for all platforms.
 
 ### Interactive playgrounds
 
-When exploring a new topic or prototyping an algorithm or some component, you tell the agent to build interactive
-playgrounds to explain the concept visually and to expose quick controls for fine-tuning the parameters.
+When exploring a new topic, prototyping an algorithm, or sketching a component, tell the agent to build an interactive playground.
+It can explain the concept visually and expose quick controls for fine-tuning parameters.
 
 Take a look at these utilities:
+
 - <ExternalLink href="https://claude.com/plugins/playground" />
 - <ExternalLink href="https://simonwillison.net/2026/Feb/10/showboat-and-rodney/" />
 - <ExternalLink href="https://ampcode.com/notes/feedback-loopable" />
@@ -176,7 +172,8 @@ They turn the agent into an exoskeleton around your normal workflow: surfacing u
 
 ### Walkthroughs
 
-TL;DR: You can tell your agent to explain to you in human language what happens in the code, or to help you review its work by letting the agent showcase it. Example prompt:
+TL;DR: You can tell your agent to explain to you in human language what happens in the code, or you can ask it to help you review its work by showcasing it.
+Example prompt:
 
 ```md
 Read the source and then plan a linear walkthrough of the code that explains how
@@ -202,10 +199,13 @@ You can tell your agent:
 
 ### Reverse engineer
 
-Agents are surprisingly good at reverse engineering apps. Minified/compiled code is not such a big cognitive burden for them, and they have broad knowledge of useful tools in this space.
+Agents are surprisingly good at reverse engineering apps.
+Minified or compiled code is not a major cognitive burden for them, and they know many useful tools in this area.
 
-Try pointing your agent at some website or Android APK where there’s something you want to mimic. Initially, you may need to interactively install some tools that the agent would like to use.
+Try pointing your agent at a website or Android APK that contains something you want to mimic.
+At first, you may need to interactively install tools that the agent wants to use.
 
 ### Issue pinpointer
 
-Got a huge log file, maybe a screenshot, and you need to identify the bug? Paste everything you have into your agent prompt and tell it to find the exact log lines itself.
+Got a huge log file, maybe a screenshot, and need to identify the bug?
+Paste everything you have into your agent prompt and tell it to find the exact log lines itself.

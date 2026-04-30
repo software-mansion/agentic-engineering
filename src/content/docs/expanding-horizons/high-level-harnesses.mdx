@@ -6,7 +6,7 @@ description: Beyond individual agent sessions — scheduled automations, paralle
 import ExternalLink from "../../../components/ExternalLink.astro";
 
 The [harness engineering](/becoming-productive/harness-engineering/) chapter covered shaping a single agent's actions through AGENTS.md, skills, hooks, and subagents.
-This page is one level of abstraction up — it covers tools and patterns that treat agents as a manageable workforce.
+This page moves one level up: tools and patterns that treat agents as a manageable workforce.
 
 
 ## From engineering to managing
@@ -14,23 +14,23 @@ This page is one level of abstraction up — it covers tools and patterns that t
 So far in this guide, you have been an **engineer** — you have worked interactively with a single agent, steering it turn by turn in real time.
 Now, you will become a **manager**, delegating work to a fleet of agents running in parallel.
 Instead of supervising each agent individually, you will manage the output queue — a review inbox, an issue tracker, a PR pipeline.
-Your coding assistant no longer serves as a conductor, but as an orchestrator.
+Your coding assistant is no longer a conductor, but an orchestrator.
 
 :::note[Remember]
-The key shift is from "what should the agent do?" to "what work should be running right now, and how do I review what came back?"
+The shift is from "what should the agent do?" to "what work should be running right now, and how do I review what came back?"
 :::
 
 ## Running agents in parallel
 
-The key difference is running several agents simultaneously, each on an isolated task.
-You hand different issues to separate agents at once, come back and review, and merge the ones you like.
+The difference is that several agents run at the same time, each on an isolated task.
+You hand different issues to separate agents, come back to review their work, and merge the results you like.
 That is qualitatively different from the sequential, one-task-at-a-time conductor workflow from the previous chapters.
 
-[Subagents](/becoming-productive/harness-engineering/#subagents) are also parallel, but they are different: a subagent is spawned **by the agent** to partition a single task's context.
+[Subagents](/becoming-productive/harness-engineering/#subagents) are also parallel, but they work differently: a subagent is spawned **by the agent** to partition a single task's context.
 The agent decides when to spawn one, waits for the result, and folds it back into its own session.
 You as the human still trigger one top-level session and review one result.
 
-What is described here is different: **you** spawn multiple fully independent agent sessions, each assigned to a separate task.
+The model here is different: **you** spawn multiple fully independent agent sessions, each assigned to a separate task.
 No session knows about the others.
 You do not need to wait for any single agent — you come back later and review the queue of results in bulk.
 
@@ -42,7 +42,8 @@ running multiple AI coding agents (Claude Code and Codex) in parallel worktrees 
 
 ## Scheduled and recurring agents
 
-Agents do not always need to wait for you to trigger them — you can set them up in advance to run on a schedule.
+Agents do not always need to wait for you to trigger them.
+You can set them up in advance to run on a schedule.
 The pattern is similar to a cron job or a CI pipeline: describe a recurring task, define when it should run, and have an agent execute it in the background.
 Results land in a review inbox or are auto-archived if nothing needs attention.
 
@@ -52,7 +53,8 @@ This is well-suited for tasks like:
 - Generating release briefs
 - Checking for regressions between versions
 
-With scheduled agents, the process becomes closer to a CI pipeline than a chat window — an agent is no longer a tool you reach for, but a background process.
+With scheduled agents, the process becomes closer to a CI pipeline than a chat window.
+An agent is no longer just a tool you reach for, but a background process.
 
 Example application features built around this pattern:
 - <ExternalLink href="https://developers.openai.com/codex/app/automations"/>
@@ -61,14 +63,14 @@ Example application features built around this pattern:
 
 ## Issue-tracker-driven orchestration
 
-A natural extension of scheduled agents is wiring them directly to your issue tracker.
+Scheduled agents can also be wired directly to your issue tracker.
 Instead of manually assigning tasks to agents, the system monitors a board and automatically spawns an agent for each new issue in scope.
 Engineers decide what issues belong in scope; the orchestrator handles assignment and execution.
 
 Agent behavior can be defined in a workflow file versioned alongside the code — the same way you version a CI pipeline.
 When an agent finishes, it gathers evidence (CI results, PR review feedback, complexity analysis) for human review.
 
-For example, <ExternalLink href="https://github.com/openai/symphony"/> is an open-source orchestration service that implements this pattern,
+For example, <ExternalLink href="https://github.com/openai/symphony"/> is an open-source orchestration service built around this pattern,
 monitoring a Linear board and running a Codex agent per issue in an isolated workspace.
 
 :::tip
@@ -77,17 +79,18 @@ Issue-tracker-driven orchestration works best on codebases that have adopted [ha
 
 ## Agent communication
 
-Running multiple agents in parallel may create coordination problems — agents must exchange information without overloading any one context window.
+Running multiple agents in parallel can create coordination problems.
+Agents need to exchange information without overloading any one context window.
 Two broad patterns have emerged.
 
 The simpler one is **hub-and-spoke orchestration**, where a lead agent spawns workers, collects their outputs, and consolidates them.
 Workers never communicate directly.
-The benefit is simplicity, as the full picture is present in one place.
+The benefit is simplicity: the full picture is in one place.
 The cost is that every intermediate result, log line, and failed attempt flows back through the orchestrator's context, degrading its reasoning quality over time.
 
 The more capable pattern is **collaborative teaming**, where agents share a task list, claim work independently, and can send messages directly to one another.
 A worker can flag a dependency, request a peer review, or broadcast a finding without routing it through the lead.
-The lead's context stays clean; coordination happens at the edges.
+The lead's context stays cleaner because coordination happens at the edges.
 
 In practice, most pipelines fall somewhere on a spectrum between these extremes, often organized into three levels:
 
@@ -103,8 +106,8 @@ For reference, <ExternalLink href="https://code.claude.com/docs/en/agent-teams"/
 
 ## Code factories
 
-Beyond specific products, there is an emerging pattern known as the **Code Factory**.
-The idea is a repository setup where agents autonomously write code, open pull requests, and a separate review agent validates those PRs with machine-verifiable evidence.
+Beyond specific products, one pattern is known as the **Code Factory**.
+In this setup, agents autonomously write code and open pull requests, while a separate review agent validates those PRs with machine-verifiable evidence.
 If validation passes, the PR merges without human intervention.
 
 The continuous loop looks like this:
@@ -125,10 +128,11 @@ Invest in solid tests, linters, and CI before automating the merge step.
 
 ## One-human companies
 
-The code factory pattern is the technical foundation of a broader idea: that a single person with a well-configured agent fleet can operate at the scale that would previously have required a full engineering team.
+The code factory pattern is the technical foundation of a broader idea: a single person with a well-configured agent fleet can operate at a scale that previously required a full engineering team.
 
-This requires connecting agents to communication platforms, scheduling systems, and external services — turning a single machine into an always-on runtime that responds to messages, executes tasks, and ships work continuously.
+This requires connecting agents to communication platforms, scheduling systems, and external services.
+A single machine becomes an always-on runtime that responds to messages, executes tasks, and ships work continuously.
 As an example of tooling in this space, <ExternalLink href="https://openclaw.ai/"/> packages infrastructure for exactly this kind of setup.
 
 In <ExternalLink href="https://newsletter.pragmaticengineer.com/p/from-ides-to-ai-agents-with-steve" />, Yegge argues that the engineering profession is reorganizing around exactly this spectrum.
-His framing: most engineers are at the low end of AI adoption today, and those who stay there risk being outcompeted by engineers who learn to orchestrate agent fleets — to act as owners of work queues rather than writers of individual functions.
+His framing is that most engineers are at the low end of AI adoption today, and those who stay there risk being outcompeted by engineers who learn to orchestrate agent fleets — acting as owners of work queues rather than writers of individual functions.

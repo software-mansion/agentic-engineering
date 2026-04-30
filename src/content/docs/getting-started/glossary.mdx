@@ -12,11 +12,11 @@ jsonLd:
     publisher: { "@id": "$organizationId" }
 ---
 
-Before we start, let us introduce a few terms that we will use a lot:
+Before we start, let's define a few terms we'll use often:
 
-- **Model**: A particular LLM, like Claude-4.6-Opus, GPT-5.3-Codex, Gemini-3.1-Pro.
+- **Model**: A specific LLM, like Claude Opus 4.7, GPT 5.5, or Gemini 3.1 Pro.
 
-- **Agent**: Software that calls an LLM, gives it tools, and runs those tools in a loop to achieve a goal.
+- **Agent**: Software that uses an LLM, gives it tools, and runs those tools in a loop to achieve a goal.
 
 - **Coding agent**: An agent specialized for software work, like Claude Code or Cursor Agent.
   In practice, coding agents can inspect repositories, use developer tools, propose changes, and often write and run code as part of a task loop.
@@ -26,11 +26,11 @@ Before we start, let us introduce a few terms that we will use a lot:
 
 - **Vibe coding**: When agents write code and you're in the flow, building PoCs and MVPs, or just having fun.
 
-- **Agentic engineering**: When you use agents to develop codebases professionally, and you are responsible for the output.
+- **Agentic engineering**: When you use agents to develop codebases professionally and remain responsible for the output.
 
 - **Slop**: Content that takes more effort to consume than it took to produce.
   In practice, slop usually appears as plausible-looking text or code that creates review and correction work for other people.
 
 - **Gate**: A check that work must pass before it can move forward.
-  The term predates AI agents, but agentic workflows made it much more common because they require explicit checkpoints for reviewing and verifying autonomous work.
+  The term predates AI agents, but agentic workflows made it more common because they need explicit checkpoints for reviewing and verifying autonomous work.
   In practice, a gate can be a lint run, typecheck, test suite, code review, preview deployment, or any other requirement that blocks changes until they meet your quality bar.

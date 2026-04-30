@@ -6,12 +6,13 @@ description: A practical onboarding flow for using coding agents in mature codeb
 import ExternalLink from "../../../components/ExternalLink.astro";
 import { Steps } from "@astrojs/starlight/components";
 
-Mature, long-lived repositories need a different onboarding flow than greenfield projects. The goal is predictable, low-risk delivery: map existing behavior, plan with explicit constraints, and ship surgical, verified diffs.
+Mature, long-lived repositories need a different onboarding flow than greenfield projects.
+The goal is predictable, low-risk delivery: map existing behavior, plan with explicit constraints, and ship surgical, verified diffs.
 
 ## Why mature repos are different
 
-Mature projects predate the agentic engineering era, so their codebases are usually human-centric and not always
-agent-friendly. Here are the high-level factors you should address when applying agents in such repositories:
+Mature projects predate the agentic engineering era, so their codebases are usually built for humans and not always agent-friendly.
+Start by looking for these common issues:
 
 1. There is usually a lot of institutional knowledge that is not written down.
    - Often, the practice is to ask colleagues for help on Slack.
@@ -19,23 +20,25 @@ agent-friendly. Here are the high-level factors you should address when applying
 2. The codebase may have multiple architectural eras mixed together.
    - Agents can get confused when they accidentally stomp on a rusty code.
 3. The blast radius of a wrong change can be much larger.
-   - Humans don't like writing lots of tests. Projects may heavily depend on manual QA.
-   - The taste of an agent may not match the taste of a human. Models are trained globally once; humans always go
-     through the project fine-tuning.
+   - Humans don't like writing lots of tests.
+     Projects may heavily depend on manual QA.
+   - The taste of an agent may not match the taste of a human.
+     Models are trained globally once; humans always go through the project fine-tuning.
 4. The feedback loop may not be fast and/or accessible enough.
-   - Many projects defer testing to sophisticated CI. Agents need to run checks locally just in time.
+   - Many projects defer testing to sophisticated CI.
+     Agents need to run checks locally just in time.
 
-From a distance, these points are strongly correlated. You do not need to address each one separately.
+From a distance, these points are strongly correlated.
+You do not need to address each one separately.
 
 ## A first surgical feature delivery in 8 steps
 
 Let’s walk through a concrete case from a mature codebase using Cursor.
-Let's take as an example an open-source React Native application called <ExternalLink href="https://github.com/Expensify/App">Expensify</ExternalLink>.
+The example is <ExternalLink href="https://github.com/Expensify/App">Expensify</ExternalLink>, an open-source React Native application.
 In Expensify, <ExternalLink href="https://help.expensify.com/articles/new-expensify/chat/Assign-Tasks">tasks</ExternalLink>
-can be created inside reports (chats), but there was no single place to view all
-tasks relevant to one user.
-The feature was a home-screen widget named `Your tasks`, sourcing tasks from the
-self-DM report and rendering only when tasks exist.
+can be created inside reports (chats), but there was no single place to view all tasks relevant to one user.
+The feature was a home-screen widget named `Your tasks`.
+It sourced tasks from the self-DM report and rendered only when tasks existed.
 Here is a rough outline of what was done:
 
 <Steps>
@@ -51,7 +54,7 @@ Here is a rough outline of what was done:
       Show exact files and functions.
    ```
 
-2. Summarize the exploration output using `/summarize` to reclaim context window for planning the feature.
+2. Summarize the exploration output using `/summarize` to reclaim context window space for planning the feature.
    Then ask for a plan with strict constraints.
 
    ```md
@@ -87,8 +90,7 @@ Here is a rough outline of what was done:
 
 6. Run <ExternalLink href="https://cursor.com/docs/agent/review">Cursor Agent Review</ExternalLink> and then verify manually.
 
-   In this case, automated review found an important edge case: deletions are soft deletions, so deleted tasks must
-   be filtered.
+   In this case, automated review found an important edge case: deletions are soft deletions, so deleted tasks must be filtered.
 
 7. Use <ExternalLink href="https://cursor.com/docs/agent/modes#debug">Cursor Debug Mode</ExternalLink> to address the issue.
 
@@ -97,8 +99,7 @@ Here is a rough outline of what was done:
 
 8. Ask the agent to fill the PR template based on actual changes.
 
-   Because this prompt was run in the same agent thread, the agent had a lot of useful context from the previous
-   steps, which often produces a high-quality draft for further manual writing.
+   Because this prompt was run in the same agent thread, the agent had a lot of useful context from the previous steps, which often produces a high-quality draft for further manual writing.
 
    ```md
    Fill our PR template based only on this branch's changes.
@@ -108,10 +109,10 @@ Here is a rough outline of what was done:
 
 </Steps>
 
-This flow is intentionally conservative: ask first, plan explicitly, test first, implement surgically, and verify edge
-cases before broadening scope.
+This flow is intentionally conservative: ask first, plan explicitly, test first, implement surgically, and verify edge cases before broadening scope.
 
-For more examples, look out on the internet for shared agent threads, some quality ones:
+For more examples, look online for shared agent threads.
+These are good starting points:
 
 - <ExternalLink href="https://ampcode.com/threads/T-019b0c24-7de0-7189-97e2-44121fbbbd9b" />
 - <ExternalLink href="https://ampcode.com/threads/T-d0d0c3c4-4994-4574-9e56-e7f97e88bc33" />
@@ -120,57 +121,59 @@ For more examples, look out on the internet for shared agent threads, some quali
 
 ## Rules of thumb
 
-There are a few high-level rules you can follow when you jump into a new largeish project.
+There are a few rules you can follow when you jump into a new largeish project.
 
 ### Anchor new code to good existing code
 
-When asking the agent to implement something new, point it to one or two existing components that are already considered
-high quality.
+When asking the agent to implement something new, point it to one or two existing components that are already considered high quality.
 
 - Ask it to mirror structure, naming, error handling, and test style from those files.
 - Ask it to explain any intentional deviation.
 - Prefer references from the same package/domain to reduce style drift.
-- Optimize changesets: tell the agent to aim for clear, surgical diffs. Avoid large-scale refactoring.
+- Optimize changesets: tell the agent to aim for clear, surgical diffs.
+  Avoid large-scale refactoring.
 - Prefer conventional names over clever or ambiguous ones.
 
 This is one of the fastest ways to keep outputs aligned with repository standards.
 
 ### Externalize knowledge
 
-When you join an existing codebase, you learn a lot of details up front. The same applies to agents; the difference is
-that you write these details down instead of only remembering them.
+When you join an existing codebase, you learn a lot of details up front.
+The same applies to agents; the difference is that you write these details down instead of only remembering them.
 
 - As you repeat the same explanation in reviews or prompts, start accumulating this knowledge privately.
   Capture hidden constraints, conventions, ownership boundaries, and known pitfalls.
 - The utilities described in [Towards self-improvement](/getting-started/towards-self-improvement/)
-  and [Harness engineering](/becoming-productive/harness-engineering/) don’t have to be immediately
-  shared with the team. You can add `AGENTS.md` and `.agents/skills` to `.gitignore`.
+  and [Harness engineering](/becoming-productive/harness-engineering/) don’t have to be immediately shared with the team.
+  You can add `AGENTS.md` and `.agents/skills` to `.gitignore`.
 - If this grows too large, move detailed guidance to separate `*.md` files and keep `AGENTS.md` as an index.
 
 Knowledge in-repo is easier for both agents and humans to reuse.
 
 ### Add missing capabilities
 
-Sometimes mature repositories are missing small tools that make agent workflows reliable. A capability that is one
-command away is easier to use correctly than a long prompt instruction. You can accumulate such helpers for your own
-use.
+Sometimes mature repositories are missing small tools that make agent workflows reliable.
+A capability that is one command away is easier to use correctly than a long prompt instruction.
+You can accumulate such helpers for your own use.
 
-Where to put these? Often in your own skills. They can also be a `Makefile`,
+Where should these go?
+Often in your own skills.
+They can also be a `Makefile`,
 a <ExternalLink href="https://just.systems/man/en/">`justfile`</ExternalLink>,
 or just a gitignored `local/` directory with a bunch of Bash scripts.
 
 What can these be?
 
-- Scenarios/scripts for repetitive validation flows. You could write a skill that instructs the agent how to perform
-  manual QA of a particular feature.
+- Scenarios/scripts for repetitive validation flows.
+  You could write a skill that instructs the agent how to perform manual QA of a particular feature.
 - CLI wrappers for internal APIs that allow agents to interactively debug stuff.
 - Focused commands that run builds/tests for a narrow scope or specific configuration.
-- Utilities for doing point-in-time backup and recovery of development databases. This proves to be useful when agents
-  break the database state while debugging.
+- Utilities for point-in-time backup and recovery of development databases.
+  This proves to be useful when agents break database state while debugging.
 
 :::tip
-Agents also like running `ls` in directories and calling `--help`; you can use this to keep supplementary instructions
-close to the code. A skill may just tell the agent about a utility and ask it to call for help.
+Agents also like running `ls` in directories and calling `--help`; you can use this to keep supplementary instructions close to the code.
+A skill may just tell the agent about a utility and ask it to call for help.
 :::
 
 ## Agent use must be negotiated
@@ -180,14 +183,15 @@ In mature teams, maintainers may not accept higher agent autonomy, and that’s 
 First and foremost, always check whether legal or ethical constraints prevent agent use in a particular project:
 
 - The project may have regulatory constraints that forbid uploading the codebase to inference providers.
-- It can also be the other way around: legal teams may forbid incorporating LLM-generated code (which may reproduce
-  open-source code from GitHub) into a proprietary product.
+- It can also be the other way around: legal teams may forbid incorporating LLM-generated code, which may reproduce open-source code from GitHub, into a proprietary product.
 - There may be a corporate policy mandating the use of a specific coding agent.
 - Maintainers may simply not be comfortable with agent usage.
 
-If that is clear, you can use agents to support your work. In external collaboration, though, behave as a human owner.
-Do not spam reviewers with slop. Consider writing PR descriptions yourself. This also helps ensure you understand the
-code you are about to ship.[^1]
+If that is clear, you can use agents to support your work.
+In external collaboration, though, behave as a human owner.
+Do not spam reviewers with slop.
+Consider writing PR descriptions yourself.
+This also helps ensure you understand the code you are about to ship.[^1]
 
 :::note[Remember]
 In the end, you are the one who takes ownership of shipped code.

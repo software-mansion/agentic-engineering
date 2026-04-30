@@ -5,24 +5,31 @@ description: How to make agents self-correct faster with autonomous feedback loo
 
 import ExternalLink from "../../../components/ExternalLink.astro";
 
-Efficient agent workflows depend on a closed feedback loop. Agents should be able to gather signals from tests, logs, and runtime checks continuously, without waiting for manual input on every step.
+Efficient agent workflows depend on a closed feedback loop.
+Agents should be able to gather signals from tests, logs, and runtime checks continuously, without waiting for manual input at every step.
 
 The tips below focus on building that loop so agents can diagnose and fix issues more autonomously.
 
 ## Tests, tests, tests
 
-1. Make sure your agent writes tests for any regression it finds before attempting to fix actual code. If it doesn’t do this by itself, consider telling it so in your AGENTS.md.
-2. Pay attention to how models assert the expected state. Many models tend to write leaky assertions, which only catch the exact issue they just reasoned about.
+1. Make sure your agent writes tests for any regression it finds before attempting to fix actual code.
+   If it doesn’t do this by itself, consider telling it so in your AGENTS.md.
+2. Pay attention to how models assert the expected state.
+   Many models tend to write leaky assertions, which only catch the exact issue they just reasoned about.
 
 ## Backend logs and database access
 
-1. Make your app tee logs to a `*.log` file. This will allow agents to observe runtime behavior. Models are also good at adding their own temporary logs while debugging.
-2. Make it easy for an agent to connect to your database via `psql` or `sqlite3`. You can even use this interface in place of database GUIs.
+1. Make your app tee logs to a `*.log` file.
+   This lets agents observe runtime behavior.
+   Models are also good at adding their own temporary logs while debugging.
+2. Make it easy for an agent to connect to your database with `psql` or `sqlite3`.
+   You can even use this interface instead of a database GUI.
 3. <ExternalLink href="https://tidewave.ai/" />.
 
 ## Leverage CLIs
 
-1. Models are trained _a lot_ on Bash. They breathe it and are very productive when they can process data through shell one-liners or quick Python scripts.
+1. Models are trained _a lot_ on Bash.
+   They breathe it and can be very productive when they process data through shell one-liners or quick Python scripts.
 2. If you build a quick library for some remote API:
    1. Try to make it easy for agents to play with this API.
    2. In a non-interactive language (Go, Rust, Swift, etc.), consider asking your agent to whip up a quick CLI on top of your code.
@@ -32,7 +39,7 @@ If you're building a CLI that agents will use, design it for non-interactive use
 
 - **Make it non-interactive.** Every input needs a flag equivalent.
   Don't drop into interactive prompts mid-execution — agents can't press arrow keys.
-- **Make `--help` useful.** Include examples in every subcommand's help output.
+- **Make `--help` useful.** Include examples in each subcommand's help output.
   Agents pattern-match off examples faster than they read descriptions.
 - **Accept stdin.** Agents think in pipelines and want to chain commands.
   Don't require positional args in unusual orders.
@@ -42,7 +49,7 @@ If you're building a CLI that agents will use, design it for non-interactive use
   Running the same command twice should be a no-op, not a duplicate action.
 - **Add `--dry-run` for destructive actions.** Let agents validate a plan before committing to it.
 - **Add `--yes` to skip confirmations.** Make the safe path the default, but allow bypassing it.
-- **Use a predictable command structure.** Pick a pattern (e.g. resource + verb) and use it everywhere.
+- **Use a predictable command structure.** Pick a pattern, such as resource + verb, and use it everywhere.
   If an agent learns `mycli service list`, it should be able to guess `mycli deploy list`.
 - **Return data on success.** Output IDs and URLs, not just a success message.
 
@@ -52,9 +59,8 @@ Read more:
 
 Also, take a look at these skills:
 
-- <ExternalLink href="https://skills.sh/mitsuhiko/agent-stuff/tmux" /> - useful
-  if you make/use interactive CLIs. Agents are pretty good at using GDB/LLDB via
-  tmux.
+- <ExternalLink href="https://skills.sh/mitsuhiko/agent-stuff/tmux" /> - useful if you make or use interactive CLIs.
+  Agents are pretty good at using GDB/LLDB via tmux.
 
 ## Automating web frontend QA
 
@@ -66,7 +72,8 @@ Try using one of these tools:
 - <ExternalLink href="https://skills.sh/vercel-labs/agent-browser/agent-browser" />
 - <ExternalLink href="https://claude.com/chrome" />
 
-Make it easy for agents to spawn a new instance of the app by themselves. Ideally on a separate port so that multiple agents can work in parallel.
+Make it easy for agents to spawn a new instance of the app by themselves.
+Ideally, each instance should run on a separate port so multiple agents can work in parallel.
 
 Also, take a look at these skills:
 
