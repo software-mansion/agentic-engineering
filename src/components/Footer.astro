@@ -1,8 +1,10 @@
 ---
 import Default from "@astrojs/starlight/components/Footer.astro";
+import Attribution from "./Attribution.astro";
 import { swmUrl, feedbackUrl } from "../lib/siteLinks";
 ---
 
+<Attribution />
 <Default><slot /></Default>
 
 <footer class="swm-footer" aria-label="Software Mansion legal notice">

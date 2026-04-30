@@ -1,0 +1,143 @@
+---
+import { getAuthors, getContributors } from "../lib/githubAttribution";
+
+const authors = await getAuthors(Astro);
+const contributors = await getContributors(Astro);
+---
+
+{
+  Astro.locals.starlightRoute.entry.data.showAttribution && (
+    <section class="attribution" aria-labelledby="page-attribution-title">
+      <h2 id="page-attribution-title">Attribution</h2>
+      <div class="attribution-groups">
+        <section class="attribution-group" aria-labelledby="page-authors-title">
+          <h3 id="page-authors-title">Authors</h3>
+          <ul class="people-list">
+            {authors.map((person) => (
+              <li>
+                <a
+                  href={person.url}
+                  title={person.name}
+                  aria-label={person.name}
+                >
+                  <img
+                    src={person.avatarUrl}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    width="96"
+                    height="96"
+                    class="avatar"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+        {contributors.length > 0 && (
+          <section
+            class="attribution-group"
+            aria-labelledby="page-contributors-title"
+          >
+            <h3 id="page-contributors-title">Contributors</h3>
+            <ul class="people-list">
+              {contributors.map((person) => (
+                <li>
+                  <a
+                    href={person.url}
+                    title={person.name}
+                    aria-label={person.name}
+                  >
+                    <img
+                      src={person.avatarUrl}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      width="96"
+                      height="96"
+                      class="avatar"
+                    />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  @layer starlight.core {
+    .attribution {
+      margin-top: 3rem;
+      padding-block-start: 1.5rem;
+      border-top: 1px solid var(--sl-color-hairline);
+    }
+
+    .attribution h2 {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .attribution-groups {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 40rem) {
+      .attribution-groups {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+      }
+    }
+
+    .attribution-group h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0 0 0.75rem;
+      color: var(--sl-color-white);
+      font-size: var(--sl-text-lg);
+      line-height: var(--sl-line-height-headings);
+    }
+
+    .people-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .people-list a {
+      display: block;
+      border-radius: 99rem;
+      color: inherit;
+    }
+
+    .people-list a:focus-visible {
+      outline: 2px solid var(--sl-color-accent-high);
+      outline-offset: 3px;
+    }
+
+    .avatar {
+      display: block;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 99rem;
+      outline: 1px solid rgba(255, 255, 255, 0.33);
+      outline-offset: -1px;
+      background: var(--sl-color-gray-6);
+    }
+  }
+</style>
