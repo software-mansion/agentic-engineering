@@ -1,4 +1,4 @@
-import { execa } from "execa";
+import { $ } from "bun";
 import type { AstroGlobal } from "astro";
 import { Mailmap } from "./mailmap";
 
@@ -44,13 +44,7 @@ export const getContributors = async (astro: AttributionAstro) => {
   );
   const contributorCounts = new Map<string, number>();
 
-  const { stdout: gitLog } = await execa("git", [
-    "log",
-    "--follow",
-    "--format=%ae",
-    "--",
-    filePath,
-  ]);
+  const gitLog = await $`git log --follow --format=%ae -- ${filePath}`.text();
 
   for (const email of gitLog.split("\n")) {
     const trimmedEmail = email.trim();
