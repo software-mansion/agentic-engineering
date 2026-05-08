@@ -1,4 +1,6 @@
 ---
+import { getAuthors } from "../lib/githubAttribution";
+
 const {
   lang,
   siteTitle,
@@ -12,6 +14,7 @@ const organizationId = "https://swmansion.com/#organization";
 const websiteId = new URL("#website", Astro.site);
 const bookId = new URL("#book", Astro.site);
 const defaultOgImage = new URL("og-default.png?v0", Astro.site);
+const authors = await getAuthors(Astro);
 
 const jsonLdPlaceholders = {
   $site: `${Astro.site}`,
@@ -53,6 +56,12 @@ const basePageNode = isNotFoundPage
       mainEntityOfPage: Astro.url,
       isPartOf: { "@id": bookId },
       publisher: { "@id": organizationId },
+      author: authors.map((author) => ({
+        "@type": "Person",
+        name: author.name,
+        url: author.url,
+        image: author.avatarUrl,
+      })),
       ...(lastUpdated && { dateModified: lastUpdated.toISOString() }),
     };
 

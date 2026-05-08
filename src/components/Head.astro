@@ -1,9 +1,19 @@
 ---
 import Default from "@astrojs/starlight/components/Head.astro";
 import JsonLD from "./JsonLD.astro";
+import { getAuthors } from "../lib/githubAttribution";
+
+const authors = await getAuthors(Astro);
 ---
 
 <Default />
+
+{authors.map((author) => <meta name="author" content={author.name} />)}
+{
+  authors.map((author) => (
+    <meta property="article:author" content={author.url} />
+  ))
+}
 
 <!-- Google Tag Manager -->
 <script is:inline>
