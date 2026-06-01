@@ -43,7 +43,7 @@ https://cursor.com/docs/hooks,Hooks Docs,Cursor,,2026-03-13
 https://cursor.com/docs/subagents,Cursor Subagents,Cursor,,2026-03-13
 https://cursor.com/for/code-review,Reviewing Code with Cursor | Cursor Docs,,,2026-03-05
 https://cursor.com/pricing,Cursor Subscription,,,2026-03-04
-https://dev.to/trknhr/lessons-from-the-spring-2026-oss-incidents-hardening-npm-pnpm-and-github-actions-against-1jnp,"Lessons from the Spring 2026 OSS Incidents: Hardening npm, pnpm, and GitHub Actions Against Supply-Chain Attacks - DEV Community",,,2026-05-18
+https://dev.to/trknhr/lessons-from-the-spring-2026-oss-incidents-hardening-npm-pnpm-and-github-actions-against-1jnp,"Lessons from the Spring 2026 OSS Incidents: Hardening npm, pnpm, and GitHub Actions Against Supply-Chain Attacks - DEV Community",Teruo Kunihiro,2026-04-02,2026-05-18
 https://developers.openai.com/api/docs/guides/compaction,Compaction,OpenAI,,2026-03-04
 https://developers.openai.com/codex/agent-approvals-security,Codex: Agent approvals & security,OpenAI,,2026-03-16
 https://developers.openai.com/codex/app/automations,Automations in Codex app,OpenAI,,2026-03-25
@@ -53,14 +53,15 @@ https://developers.openai.com/codex/integrations/github/,Use Codex in GitHub,,,2
 https://developers.openai.com/codex/multi-agent/,Codex Multi-agents,OpenAI,,2026-03-13
 https://developers.openai.com/codex/security,Codex Security,OpenAI,,2026-04-17
 https://docs.conductor.build/guides/spotlight-testing,Using spotlight testing - Conductor,,,2026-03-10
+https://docs.github.com/en/code-security/concepts/supply-chain-security/about-dependabot-security-updates,Dependabot Security Updates,GitHub,,2026-06-01
 https://docs.github.com/en/code-security/dependabot,Securing your supply chain,GitHub,,2026-04-15
 https://docs.github.com/en/copilot/how-tos/use-copilot-agents/request-a-code-review,GitHub Copilot code review,,,2026-03-05
 https://docs.renovatebot.com/,Renovate,Mend.io,,2026-04-15
 https://docs.sentry.io/product/ai-in-sentry/seer/autofix/,Autofix,Sentry,,2026-04-29
 https://embracethered.com/blog/posts/2026/scary-agent-skills/,Hidden Unicode Instructions in Skills,Johann Rehberger,2026-02-11,2026-03-18
 https://factory.ai/pricing,Factory Subscription,,,2026-03-04
-https://github.com/anchore/grype,anchore/grype,Anchore,2026-04-16,2026-04-17
-https://github.com/anchore/syft,anchore/syft,Anchore,2026-04-16,2026-04-17
+https://github.com/anchore/grype,Grype,Anchore,,2026-04-17
+https://github.com/anchore/syft,Syft,Anchore,,2026-04-17
 https://github.com/anthropics/skills,anthropics/skills,Anthropic,,2026-03-12
 https://github.com/badlogic/pi-mono/blob/380236a003ec7f0e69f54463b0f00b3118d78f3c/packages/coding-agent/src/core/compaction/compaction.ts#L444-L475,Pi Compaction Prompt,Mario Zechner,,2026-03-04
 https://github.com/callstackincubator/agent-device,callstackincubator/agent-device: CLI to control iOS and Android devices for AI agents,Callstack,,2026-03-04
@@ -112,7 +113,7 @@ https://simonwillison.net/2026/Mar/13/liquid/,"Shopify/liquid: Performance: 53% 
 https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/,Anti-patterns: things to avoid,Simon Willison,2026-03-04,2026-03-05
 https://simonwillison.net/guides/agentic-engineering-patterns/linear-walkthroughs/,Linear walkthroughs,Simon Willison,2026-02-25,2026-03-04
 https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/,Red/green TDD,Simon Willison,2026-02-23,2026-03-04
-https://simonwillison.net/tags/ai-security-research/,Simon Willison's AI security research,Simon Willison,2026-04-14,2026-04-17
+https://simonwillison.net/tags/ai-security-research/,AI security research tag - Simon Willison's Weblog,Simon Willison,,2026-04-17
 https://skills.sh/,The Agent Skills Directory,Vercel,,2026-03-04
 https://skills.sh/callstackincubator/agent-skills/react-native-best-practices,react-native-best-practices skill,Callstack,,2026-03-04
 https://skills.sh/expo/skills,expo/skills,Expo,,2026-03-04
@@ -129,7 +130,7 @@ https://tidewave.ai/,Tidewave,,,2026-03-04
 https://tiktokenizer.vercel.app/,Tiktokenizer,,,2026-03-31
 https://warden.sentry.dev/,Warden,,,2026-03-05
 https://www.anthropic.com/glasswing,Project Glasswing,Anthropic,2026-04-14,2026-04-17
-https://www.armorcode.com/blog/defending-against-npm-supply-chain-attacks-a-practical-guide,Defending Against NPM Supply Chain Attacks: A Practical Guide,,,2026-05-18
+https://www.armorcode.com/blog/defending-against-npm-supply-chain-attacks-a-practical-guide,Defending Against NPM Supply Chain Attacks: A Practical Guide,Karan Bansal,2026-03-31,2026-05-18
 https://www.catonetworks.com/blog/cato-ctrl-weaponizing-claude-skills-with-medusalocker/,Weaponizing Claude Skills with MedusaLocker,Inga Cherny,2025-12-02,2026-03-18
 https://www.figma.com/blog/introducing-claude-code-to-figma/,From Claude Code to Figma: Turning Production Code into Editable Figma Designs,Figma,2026-02-17,2026-03-04
 https://www.figma.com/pl-pl/make/,Figma Make,,,2026-03-04
