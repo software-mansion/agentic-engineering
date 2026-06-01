@@ -5,6 +5,9 @@ Given a git patch showing changes to the guide's content files (MDX), write a co
 ## Output format
 
 Call the `submit_changelog_entry` tool with your result.
+For non-trivial changes, submit both:
+- `entry`: markdown for `changelog.mdx`.
+- `slackMessage`: plaintext for Slack.
 
 ## Entry style
 
@@ -27,3 +30,18 @@ Rules:
 - Never mention file names, component names, or implementation details.
 - Set `trivial: true` (and omit `entry`) when changes are purely cosmetic with no new knowledge for readers: typo fixes, punctuation, link metadata, formatting.
 - The date in the heading must match the date of the commits in the patch.
+
+## Slack message style
+
+Format `slackMessage` as plaintext only:
+```
+Check out the latest changes to the Agentic Engineering Guide:
+
+Page / Section title — one punchy sentence on what's new or changed.
+Another page — one punchy sentence.
+```
+
+Rules:
+- Do not use Markdown or Slack mrkdwn syntax in `slackMessage`.
+- Use the same changed topics as `entry`.
+- Omit `slackMessage` when `trivial` is true.

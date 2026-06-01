@@ -47,6 +47,11 @@ const response = await fetch("https://api.anthropic.com/v1/messages", {
               description:
                 "Changelog entry in markdown, starting with ## YYYY-MM-DD heading. Required when trivial is false.",
             },
+            slackMessage: {
+              type: "string",
+              description:
+                "Plaintext Slack message with no Markdown or Slack mrkdwn syntax. Required when trivial is false.",
+            },
           },
           required: ["trivial"],
         },
