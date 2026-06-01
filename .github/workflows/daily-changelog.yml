@@ -94,8 +94,8 @@ jobs:
             exit 0
           fi
 
-          if ! jq -e 'type == "object" and .trivial == false and (.entry | type == "string" and test("\\S"))' /tmp/ai-result.json >/dev/null; then
-            echo "Expected a non-trivial changelog entry in /tmp/ai-result.json" >&2
+          if ! jq -e 'type == "object" and .trivial == false and (.entry | type == "string" and test("\\S")) and (.slackMessage | type == "string" and test("\\S"))' /tmp/ai-result.json >/dev/null; then
+            echo "Expected a non-trivial changelog entry and Slack message in /tmp/ai-result.json" >&2
             exit 1
           fi
 

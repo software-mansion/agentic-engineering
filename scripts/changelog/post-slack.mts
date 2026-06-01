@@ -10,9 +10,9 @@ if (typeof raw !== "object" || raw === null) {
   console.error("[changelog entry] Expected object, got", typeof raw);
   process.exit(1);
 }
-if (typeof raw.entry !== "string" || raw.entry.trim() === "") {
+if (typeof raw.slackMessage !== "string" || raw.slackMessage.trim() === "") {
   console.error(
-    "[changelog entry] Missing or empty 'entry' field. Full result:",
+    "[changelog entry] Missing or empty 'slackMessage' field. Full result:",
     JSON.stringify(raw),
   );
   process.exit(1);
@@ -24,19 +24,12 @@ if (!webhookUrl) {
   process.exit(1);
 }
 
-const toMrkdwn = (md: string) =>
-  md
-    .replace(/^#{1,6}\s+(.+)$/gm, "*$1*")
-    .replace(/\*\*(.+?)\*\*/g, "*$1*")
-    .replace(/`{3}[\w]*\n?([\s\S]*?)`{3}/g, "```$1```")
-    .replace(/`([^`]+)`/g, "`$1`");
-
 const response = await fetch(webhookUrl, {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     date: process.env.CHANGELOG_DATE ?? "",
-    message: toMrkdwn(raw.entry),
+    message: raw.slackMessage.trim(),
   }),
 });
 
