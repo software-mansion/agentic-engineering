@@ -27,22 +27,65 @@ project-specific guidance belongs.
 Let's start by citing rules from <ExternalLink href="https://code.claude.com/docs/en/best-practices#write-an-effective-claude-md">Claude docs</ExternalLink>.
 They are pretty good:
 
-| ✅ Include                                            | ❌ Exclude                                          |
-|:-----------------------------------------------------|:---------------------------------------------------|
-| Bash commands Claude can't guess                     | Anything Claude can figure out by reading code     |
-| Code style rules that differ from defaults           | Standard language conventions Claude already knows |
-| Testing instructions and preferred test runners      | Detailed API documentation (link to docs instead)  |
-| Repository etiquette (branch naming, PR conventions) | Information that changes frequently                |
-| Architectural decisions specific to your project     | Long explanations or tutorials                     |
-| Developer environment quirks (required env vars)     | File-by-file descriptions of the codebase          |
-| Common gotchas or non-obvious behaviors              | Self-evident practices like “write clean code”     |
+<table>
+  <thead>
+    <tr>
+      <th>✅ Include</th>
+      <th>❌ Exclude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bash commands Claude can't guess</td>
+      <td>Anything Claude can figure out by reading code</td>
+    </tr>
+    <tr>
+      <td>Code style rules that differ from defaults</td>
+      <td>Standard language conventions Claude already knows</td>
+    </tr>
+    <tr>
+      <td>Testing instructions and preferred test runners</td>
+      <td>Detailed API documentation (link to docs instead)</td>
+    </tr>
+    <tr>
+      <td>Repository etiquette (branch naming, PR conventions)</td>
+      <td>Information that changes frequently</td>
+    </tr>
+    <tr>
+      <td>Architectural decisions specific to your project</td>
+      <td>Long explanations or tutorials</td>
+    </tr>
+    <tr>
+      <td>Developer environment quirks (required env vars)</td>
+      <td>File-by-file descriptions of the codebase</td>
+    </tr>
+    <tr>
+      <td>Common gotchas or non-obvious behaviors</td>
+      <td>Self-evident practices like "write clean code"</td>
+    </tr>
+  </tbody>
+</table>
 
 On top of that, we would add the following:
 
-| ✅ Include                                | ❌ Exclude                                    |
-|:-----------------------------------------|:---------------------------------------------|
-| Only crucial and frequently needed hints | Anything that is one `ls` or `cat` call away |
-| Terser language throughout the file      | Rules better handled by hooks or extensions  |
+<table>
+  <thead>
+    <tr>
+      <th>✅ Include</th>
+      <th>❌ Exclude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Only crucial and frequently needed hints</td>
+      <td>Anything that is one <code>ls</code> or <code>cat</code> call away</td>
+    </tr>
+    <tr>
+      <td>Terser language throughout the file</td>
+      <td>Rules better handled by hooks or extensions</td>
+    </tr>
+  </tbody>
+</table>
 
 As your codebase and AGENTS.md grow, it will make sense to move chunks of that file into either skills or separate files in the `docs/` directory, while AGENTS.md becomes mostly a table of contents.
 

@@ -56,10 +56,24 @@ Common subscription options:
 Token counts vary significantly by language.
 Polish, for example, requires roughly 40% more tokens than English for equivalent content — you can verify this yourself with <ExternalLink href="https://tiktokenizer.vercel.app/"/>.
 
-| Text | Tokens |
-|------|--------|
-| *"Jestem Adam i sprawdzam, ile tokenów potrzeba do zapisania tego tekstu. Czy język polski faktycznie wymaga ich więcej niż angielski?"* | 38 |
-| *"My name is Adam, and I'm checking how many tokens are needed to write this text. Does Polish actually require more tokens than English?"* | 27 |
+<table>
+  <thead>
+    <tr>
+      <th>Text</th>
+      <th>Tokens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><em>"Jestem Adam i sprawdzam, ile tokenów potrzeba do zapisania tego tekstu. Czy język polski faktycznie wymaga ich więcej niż angielski?"</em></td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <td><em>"My name is Adam, and I'm checking how many tokens are needed to write this text. Does Polish actually require more tokens than English?"</em></td>
+      <td>27</td>
+    </tr>
+  </tbody>
+</table>
 
 This is worth keeping in mind if you work in a non-English language.
 More tokens means higher cost and slower inference at scale.
