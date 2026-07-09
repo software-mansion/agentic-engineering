@@ -57,6 +57,7 @@ export default defineConfig({
             { slug: "becoming-productive/security" },
             { slug: "becoming-productive/legal-compliance" },
             { slug: "becoming-productive/going-10x" },
+            { slug: "becoming-productive/designing-loops" },
             { slug: "becoming-productive/what-not-to-do" },
           ],
         },

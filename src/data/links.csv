@@ -1,5 +1,6 @@
 url,title,author,date,urldate
 https://addyosmani.com/blog/factory-model/,AddyOsmani.com - The Factory Model: How Coding Agents Changed Software Engineering,,,2026-04-14
+https://addyosmani.com/blog/loop-engineering/,Loop Engineering,Addy Osmani,2026-06-08,2026-07-09
 https://agents.md/,AGENTS.md,,,2026-03-04
 https://agentskills.io/,Agent Skills,Anthropic,,2026-03-12
 https://alexeyondata.substack.com/p/how-i-dropped-our-production-database,How I Dropped Our Production Database and Now Pay 10% More for AWS,Alexey Grigorev,2026-03-06,2026-03-16
@@ -16,6 +17,7 @@ https://app.devin.ai/review,Devin Review,,,2026-03-05
 https://argent.swmansion.com/,Argent,Software Mansion,,2026-04-21
 https://arxiv.org/pdf/2503.01996,One ruler to measure them all: Benchmarking multilingual long-context language models,Alveera Ahsan et al.,2025-03-03,2026-03-31
 https://bits.logic.inc/p/ai-is-forcing-us-to-write-good-code,AI Is Forcing Us To Write Good Code,Steve Krenzel,2025-12-29,2026-03-04
+https://blakecrosley.com/blog/loops-win-where-verification-is-cheap,Loops Win Where Verification Is Cheap,Blake Crosley,2026-06-09,2026-07-09
 https://bun.com/blog/bun-in-rust,Rewriting Bun in Rust,Jarred Sumner,2026-07-08,2026-07-09
 https://claude.com/blog/category/claude-code,Claude Code Blog,,,2026-03-04
 https://claude.com/chrome,Claude in Chrome,,,2026-03-04
@@ -137,13 +139,18 @@ https://www.figma.com/blog/introducing-claude-code-to-figma/,From Claude Code to
 https://www.figma.com/pl-pl/make/,Figma Make,,,2026-03-04
 https://www.llm-prices.com/,LLM pricing calculator,llm-prices.com,,2026-03-04
 https://www.xcodebuildmcp.com/,XcodeBuildMCP,Sentry,,2026-03-04
+https://www.youtube.com/watch?v=RkQQ7WEor7w,Boris Cherny: Claude Code & the Future of Engineering,Acquired,2026-06-02,2026-07-09
 https://x.com/bcherny,Boris Cherny (@bcherny) on X,,,2026-03-04
+https://x.com/ClaudeDevs/article/2074208949205881033,Getting started with loops,Claude Developers,,2026-07-09
 https://x.com/embirico,Alexander Embiricos (@embirico) on X,,,2026-03-04
 https://x.com/ericzakariasson/status/2036762680401223946,Building CLIs for agents,Eric Zakariasson,2026-03-25,2026-04-07
 https://x.com/GeminiApp,Google Gemini (@GeminiApp) on X,,,2026-03-04
 https://x.com/karpathy,Andrej Karpathy (@karpathy) on X,,,2026-03-04
+https://x.com/mvanhorn/article/2063865685558903149,WTF Is a Loop?,Matt Van Horn,2026-06-07,2026-07-09
 https://x.com/opencode,OpenCode (@opencode) on X,,,2026-03-04
+https://x.com/PaulSolt/status/2073470146115490230,Codex Chief of Staff pattern,Paul Solt,2026-07-04,2026-07-09
 https://x.com/RLanceMartin,Lance Martin (@RLanceMartin) on X,,,2026-03-04
+https://x.com/steipete/status/2063697162748260627,X,Peter Steinberger,2026-06-07,2026-07-09
 https://x.com/thorstenball,Thorsten Ball (@thorstenball) on X,,,2026-03-04
 https://x.com/thsottiaux,Tibo (@thsottiaux) on X,,,2026-03-04
 https://x.com/trq212,Thariq Shihipar (@trq212) on X,,,2026-03-04

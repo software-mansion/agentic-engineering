@@ -1,0 +1,222 @@
+---
+title: Designing Loops
+description: How to move from prompting agents by hand to designing bounded loops that trigger work, verify results, and stop safely.
+authors: [mkaput]
+---
+
+import ExternalLink from "../../../components/ExternalLink.astro";
+
+Parallel agents still leave you doing a lot of manual coordination.
+When the same handoff keeps coming back, such as checking CI, rebasing a branch, or collecting feedback, you can move that handoff into a loop.
+
+Boris Cherny describes loop-writing as what comes after both direct coding and manually steering several agent sessions (<ExternalLink href="https://www.youtube.com/watch?v=RkQQ7WEor7w" />).
+Peter Steinberger's viral post turned the same move into a sharper rule of thumb:
+
+> Here's your monthly reminder that you shouldn't be prompting coding agents anymore.
+>
+> You should be designing loops that prompt your agents.
+
+<ExternalLink href="https://x.com/steipete/status/2063697162748260627" />
+
+Prompts remain part of the workflow, but they are no longer always sent directly by a human.
+The loop controls timing, context, and verification for each turn.
+
+## What is a loop?
+
+A loop is a repeated agent workflow with a trigger, context, work step, verification step, and stop condition.
+
+In pseudocode, it looks like this:
+
+```python
+while not stop_condition():
+    context = gather_context()
+    result = run_agent(context)
+    evidence = verify(result)
+    record_state(result, evidence)
+```
+
+A timer alone does not make something a loop.
+The useful shift is that each turn inspects fresh evidence before choosing another move (<ExternalLink href="https://x.com/mvanhorn/article/2063865685558903149" />).
+
+One practical way to design loops is to classify them by what starts the next turn and what stops it (<ExternalLink href="https://x.com/ClaudeDevs/article/2074208949205881033" />):
+
+| Loop type | Trigger | Stop condition | Best fit |
+| --- | --- | --- | --- |
+| Turn-based | Human prompt | Agent believes the task is done, or asks for input | Exploration and one-off work |
+| Goal-based | Human prompt | A verifier says the goal is met, or the turn cap is reached | Tasks with explicit success criteria |
+| Time-based | Interval or schedule | You cancel it, or the watched work is done | Work that changes outside the agent |
+| Proactive | Event or schedule | Each run exits when its local goal is met | Recurring streams of well-defined work |
+
+The useful move is to make the next turn conditional.
+A CI loop should wake up because a check failed and stop because the check passed, not because the agent kept talking.
+A feedback loop should wake up on a schedule or event and stop after it writes the agreed report.
+
+## Design the loop before you run it
+
+A useful loop is more than a repeated prompt.
+You do not need to spell out every part every time, especially for a short supervised loop where the context is already shared.
+These are the parts worth considering and clarifying when they are fuzzy:
+
+- **Trigger.** What starts the loop?
+  A human command, a timer, a CI failure, a new issue, or a changed file?
+- **Scope.** What is the loop allowed to inspect and change?
+  Read-only loops are easier to trust than write-capable loops.
+- **State.** Where does progress live between runs?
+  Use Git, Markdown, an issue tracker, or another durable store.
+- **Worker.** Which agent or skill does the actual work?
+  Keep its job narrow.
+- **Verifier.** What checks the result?
+  Tests, CI, benchmarks, browser checks, static analysis, a reviewer agent, or a human?
+- **Stop condition.** What exact evidence means the loop should stop?
+  Avoid "until it looks good".
+- **Budget.** How many turns, minutes, tokens, or dollars may it spend?
+  Every unattended loop needs a hard cap.
+- **Escalation.** What does the loop do when it gets stuck?
+  It should leave a useful report instead of continuing forever.
+
+If the verifier and stop condition are still vague, do not build an unattended write loop.
+Keep the loop read-only or make it queue work for human review.
+
+## Verification decides what belongs in a loop
+
+The hard part of loop design is choosing work where correctness can be checked cheaply.
+
+This rule of thumb is more useful than asking whether a task is "easy" or "hard":
+
+| Work | Verifier | Unattended? |
+| --- | --- | --- |
+| Summarize new issues, logs, or feedback | Human reads a report | Yes, if read-only |
+| Keep a pull request rebased | Git and CI | Usually yes |
+| Reorder a PR stack or split a PR into a stack | Same final diff, CI on each PR, and human review | Sometimes |
+| Fix a CI failure | Test suite | Yes, with a clean diff and cap |
+| Try optimization experiments | Benchmark plus tests | Yes, if experiments are isolated |
+| Bump dependencies | CI plus changelog review | Usually, with review before merge |
+| Implement a new design | Screenshot comparison against the design using a visual model | Sometimes |
+| Fix a bug with a reproduction | Regression test | Sometimes |
+| Build an open-ended feature | Human judgment | No, queue a draft |
+| Change architecture | Humans over time | No |
+
+Loops tend to show up first around maintenance work.
+CI failures, rebases, flaky tests, benchmark experiments, and report generation already have cheap feedback signals.
+The loop can run because the environment can tell it when it is wrong.
+
+Feature work is different.
+The fact that an agent can keep coding does not mean it can decide the feature is good.
+For feature work, the loop should prepare a branch, evidence, and notes for review.
+It should not silently merge.
+
+## Skills make loops reusable
+
+A loop that repeats a large prompt is fragile.
+It re-explains the same procedure every time and invites drift.
+
+A loop that calls a small set of named skills is easier to maintain.
+The loop decides when to run.
+The skill defines how to do the work.
+
+For example:
+
+- A PR babysitter loop can call a `fix-ci` skill, a `respond-to-review` skill, and a `prepare-pr-summary` skill.
+- A nightly frontend check can call a browser verification skill and append results to a report.
+- An [autoresearch](/expanding-horizons/autoresearch/) loop can call a benchmark skill after each experiment and keep only changes that improve the number.
+- A feedback triage loop can call a clustering skill and write grouped findings into Linear or Markdown.
+
+That is the practical version of designing loops.
+You turn repeated judgment and repeated mechanics into named, reusable parts.
+
+## Start with read-only loops
+
+The safest first loops observe and report.
+They do not edit code, update tickets, delete files, or merge branches.
+
+Good starter loops:
+
+- Summarize recent CI failures and flaky tests, then suggest the most likely fixes.
+- Triage new issues and suggest owner, priority, and labels.
+- Summarize yesterday's Git activity for standup.
+- Detect dependency and SDK drift, then propose a minimal alignment plan.
+- Compare recent changes with benchmarks or traces and flag likely regressions.
+
+After a read-only loop has produced useful reports for a while, promote it one step at a time.
+Let it open draft branches before it opens pull requests.
+Let it fix failing tests before it fixes open-ended product behavior.
+Let it comment with suggestions before it changes shared state.
+
+A tiny supervised loop worth trying is `/goal`.
+Give one worker a bounded task, run `/goal`, and watch whether it keeps pushing toward the stated finish line instead of stopping at the first plausible checkpoint.
+Treat it as practice for writing better stop conditions, not as permission to leave the worker unattended.
+
+## Beware endlessly spinning loops
+
+Budget and scope keep the blast radius small.
+The next problem is noticing when the loop is no longer making progress.
+
+Agents can look busy while repeating the same failed repair.
+If the same check fails twice for the same reason, the loop should usually stop and explain what it tried.
+
+Also separate routine failure from surprising failure.
+Routine failure is "CI is still red because one test assertion is wrong".
+The loop can continue if it has budget.
+Surprising failure is "the loop wants to reset the branch", "the diff touches unrelated files", or "the verifier cannot run".
+That should escalate to a human.
+
+## Chief of Staff
+
+Once you have multiple worker loops, coordination itself becomes a job.
+A useful pattern is to keep one manager thread that does not implement features.
+Its job is to watch the queue, check PRs, read review feedback, inspect CI, and decide which worker should get the next instruction.
+
+Treat this as a Chief of Staff loop:
+one manager thread runs a heartbeat over the state of the work, then routes the next instruction to the right worker (<ExternalLink href="https://x.com/PaulSolt/status/2073470146115490230" />).
+The important part is the separation of responsibilities.
+Workers write code.
+The manager watches whether the work is actually moving toward merge-ready.
+
+This pattern is useful when you have several small tasks in flight at once:
+
+- create task branches or worktrees,
+- assign each task to a worker,
+- check PR status, CI, and review comments on a cadence,
+- route feedback back to the right worker,
+- keep a short status report for the human.
+
+It also lets you sequence dependent work.
+For example, the manager can wait until one worker opens a clean PR, then start the next worker on top of that branch.
+That is useful when you want to build a stack of PRs without manually watching for each handoff.
+
+The manager should not become a hidden merge button.
+For code changes, it still needs gates: passing checks, clean diffs, and human review for anything product-facing or ambiguous.
+The payoff is that you stop being the message bus between workers, reviewers, and CI.
+
+## It is fine not to loop
+
+Loops that stay inside one task are usually easy to try.
+Loops that reach beyond one task are different.
+They may cross meetings, approvals, release trains, ownership rules, compliance checks, or review habits that were not designed around AI agents.
+
+In that environment, a broader loop may be impractical to introduce, and that is fine.
+Use a one-shot agent task, a draft PR, or a read-only report that waits for the existing process.
+The goal is not to make every workflow autonomous.
+The goal is to remove coordination where the scope is clear and the result can be checked.
+
+## What the human still owns
+
+Loops move you out of the inner prompting cycle.
+They do not remove engineering responsibility.
+
+You still own:
+
+- choosing which work is safe to automate,
+- defining the verifier,
+- reviewing write-capable loop output,
+- keeping budget and blast radius bounded,
+- improving the loop when it fails.
+
+When a loop produces a bad result, do not only fix that result.
+Ask what missing check, missing state, missing skill, or missing stop condition allowed it.
+The real payoff comes when the next run cannot fail the same way.
+
+Read more:
+
+- <ExternalLink href="https://addyosmani.com/blog/loop-engineering/" />
+- <ExternalLink href="https://blakecrosley.com/blog/loops-win-where-verification-is-cheap" />
