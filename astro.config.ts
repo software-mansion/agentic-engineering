@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import { unified } from "@astrojs/markdown-remark";
 import starlightLlmsTxt from "starlight-llms-txt";
 import { remarkClapButtons } from "./src/plugins/remark-clap-buttons";
 
@@ -110,6 +111,8 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    remarkPlugins: [remarkClapButtons],
+    processor: unified({
+      remarkPlugins: [remarkClapButtons],
+    }),
   },
 });
