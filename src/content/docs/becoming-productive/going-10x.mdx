@@ -63,6 +63,11 @@ Read more:
 
 ## Automated code reviews
 
+Once several agents are producing diffs in parallel, review becomes the bottleneck.
+Automated reviewers help by filtering obvious bugs, missing context, and risky assumptions before the work reaches a human.
+
+### Context quality
+
 Automated review can run in parallel with implementation and catch obvious issues before a human reviewer spends time on them.
 
 At first, these tools may produce low-quality feedback.
@@ -71,6 +76,17 @@ High-quality review depends on context: familiarity with the codebase, its histo
 
 To make automated review agents useful, capture that context in artifacts they can read.
 There is no shared standard across tools yet, so you need to learn how your chosen review tool is configured and provide context in the format it expects.
+
+### Adversarial review
+
+A stronger version is adversarial review.
+Run the reviewer in a separate context and tell it to assume the change is wrong.
+The point is to find concrete failure modes, not to summarize the implementation.
+
+Bun used this pattern during its Rust rewrite at a much larger scale:
+one implementer, multiple adversarial reviewers, and a fixer pass before changes were accepted (<ExternalLink href="https://bun.com/blog/bun-in-rust" />).
+
+### Tools
 
 In-editor / local review workflows:
 
@@ -90,6 +106,8 @@ PR review bots:
 - <ExternalLink href="https://coderabbit.ai/" />
 - <ExternalLink href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/request-a-code-review" />
 - <ExternalLink href="https://app.devin.ai/review" />
+
+### Ownership
 
 Use these tools to reduce toil, not to skip ownership.
 Don’t ask teammates to review code you haven’t reviewed yourself.
