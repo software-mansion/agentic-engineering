@@ -49,19 +49,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy
     steps:
-      - name: Wait for public deployment
-        run: |
-          for attempt in {1..30}; do
-            if curl --fail --silent --show-error --location \
-              https://agentic-engineering.swmansion.com/robots.txt | \
-              grep --fixed-strings --quiet "Algolia-Crawler-Verif: FFA43F5A970188E4"; then
-              exit 0
-            fi
-            sleep 10
-          done
-
-          echo "The new deployment was not visible after five minutes."
-          exit 1
       - name: Start Algolia crawl
         env:
           ALGOLIA_CRAWLER_API_KEY: ${{ secrets.ALGOLIA_CRAWLER_API_KEY }}
