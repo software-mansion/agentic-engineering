@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@astrojs/starlight": "0.41.3",
+    "@astrojs/starlight-docsearch": "^0.7.0",
     "@std/csv": "npm:@jsr/std__csv@1.0.6",
     "astro": "7.0.7",
     "execa": "9.6.1",

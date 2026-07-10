@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://agentic-engineering.swmansion.com/sitemap-index.xml
+
+# Algolia-Crawler-Verif: FFA43F5A970188E4

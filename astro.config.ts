@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import starlightDocSearch from "@astrojs/starlight-docsearch";
 import { unified } from "@astrojs/markdown-remark";
 import starlightLlmsTxt from "starlight-llms-txt";
 import { remarkClapButtons } from "./src/plugins/remark-clap-buttons";
@@ -108,7 +109,14 @@ export default defineConfig({
           attrs: { name: "twitter:creator", content: "@swmansion" },
         },
       ],
-      plugins: [starlightLlmsTxt()],
+      plugins: [
+        starlightLlmsTxt(),
+        starlightDocSearch({
+          appId: "VOEP7VN50F",
+          apiKey: "726f8032f89600a1f9dd3e34de6bb860",
+          indexName: "Software Mansion Agentic Engineering Guide",
+        }),
+      ],
     }),
   ],
   markdown: {
