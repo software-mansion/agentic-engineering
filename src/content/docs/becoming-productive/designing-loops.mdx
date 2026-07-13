@@ -144,6 +144,13 @@ Let it comment with suggestions before it changes shared state.
 
 A tiny supervised loop worth trying is `/goal`.
 Give one worker a bounded task, run `/goal`, and watch whether it keeps pushing toward the stated finish line instead of stopping at the first plausible checkpoint.
+
+For example:
+
+```text
+/goal submit PR for a branch, then watch ci/cd for any issues and address them, making sure the PR is green
+```
+
 Treat it as practice for writing better stop conditions, not as permission to leave the worker unattended.
 
 ## Beware endlessly spinning loops
