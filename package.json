@@ -6,9 +6,10 @@
   "scripts": {
     "astro": "astro",
     "build": "astro build",
-    "check": "prettier --check . && astro check && bun links --check && bun mailmap --check",
+    "check": "prettier --check . && astro check && bun links --check && bun mailmap --check && bun last-revised --check",
     "dev": "astro dev",
-    "lint": "prettier --write . && astro check && bun links && bun mailmap",
+    "lint": "prettier --write . && astro check && bun links && bun mailmap && bun last-revised",
+    "last-revised": "bun run scripts/last-revised.ts",
     "links": "bun run scripts/links.ts",
     "mailmap": "bun run scripts/mailmap.ts",
     "preview": "astro preview",
