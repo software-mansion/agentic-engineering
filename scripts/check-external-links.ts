@@ -9,7 +9,7 @@ const CONCURRENCY = 10;
 const REQUEST_TIMEOUT_MS = 30_000;
 const MAX_ATTEMPTS = 3;
 const DEAD_STATUSES = new Set([404, 410]);
-const ACTIVE_STATUSES = new Set([401, 403, 429]);
+const ACTIVE_STATUSES = new Set([401, 403, 405, 429]);
 
 type LinkResult =
   | { url: string; kind: "active"; status: number }
@@ -94,6 +94,7 @@ async function checkLinkOnce(url: string): Promise<LinkResult> {
       headers: {
         accept:
           "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8",
+        "accept-language": "en-US,en;q=0.9",
         "user-agent":
           "software-mansion-link-checker/1.0 (+https://swmansion.com)",
       },
