@@ -6,6 +6,7 @@
   "scripts": {
     "astro": "astro",
     "build": "astro build",
+    "check-external-links": "bun run scripts/check-external-links.ts",
     "check": "prettier --check . && astro check && bun links --check && bun mailmap --check && bun last-revised --check",
     "dev": "astro dev",
     "lint": "prettier --write . && astro check && bun links && bun mailmap && bun last-revised",

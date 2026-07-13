@@ -1,0 +1,71 @@
+name: Monthly Link Check
+
+on:
+  schedule:
+    - cron: "0 8 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: monthly-link-check
+  cancel-in-progress: false
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - uses: actions/setup-node@v6.3.0
+        with:
+          node-version-file: .nvmrc
+      - uses: oven-sh/setup-bun@v2.2.0
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Check external links
+        run: bun run scripts/check-external-links.ts /tmp/link-report.json
+
+      - name: Add results to job summary
+        env:
+          REPORT_PATH: /tmp/link-report.json
+        run: |
+          {
+            echo "## Monthly link check"
+            echo
+            echo "Checked $(jq -r '.checked' "$REPORT_PATH") links."
+            echo
+
+            if [ "$(jq -r '.dead | length' "$REPORT_PATH")" -gt 0 ]; then
+              echo "### Dead links"
+              echo
+              jq -r '.dead[] | "- HTTP \(.status): <\(.url)>"' "$REPORT_PATH"
+              echo
+            fi
+
+            if [ "$(jq -r '.inconclusive | length' "$REPORT_PATH")" -gt 0 ]; then
+              echo "### Inconclusive checks"
+              echo
+              echo "These links will be retried next month."
+              echo
+              jq -r '.inconclusive[] | "- <\(.url)>: \(.reason)"' "$REPORT_PATH"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Notify about dead links
+        env:
+          REPORT_PATH: /tmp/link-report.json
+        run: |
+          DEAD_COUNT=$(jq -r '.dead | length' "$REPORT_PATH")
+
+          if [ "$DEAD_COUNT" -gt 0 ]; then
+            jq -r '.dead[] | "Dead link (HTTP \(.status)): \(.url)"' "$REPORT_PATH" >&2
+            exit 1
+          fi
