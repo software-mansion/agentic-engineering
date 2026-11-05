@@ -229,7 +229,7 @@ After the handoff succeeds, archive this thread.
 
 You can tell a thread to wait for another thread to finish, then continue with dependent work.
 Give it an observable completion condition and the next action.
-For longer chains, use a [Chief of Staff loop](./designing-loops/#chief-of-staff), where one manager thread watches workers and starts dependent work when it is ready.
+For longer chains, use a [Chief of Staff loop](../designing-loops/#chief-of-staff), where one manager thread watches workers and starts dependent work when it is ready.
 
 ```md
 Wait until <thread link> has shipped its pull request and archived itself.
