@@ -1,0 +1,20 @@
+---
+import { getEntry } from "astro:content";
+
+// The Daily Changelog workflow skips trivial content changes,
+// so the newest changelog entry marks the last real revision of the book.
+const changelog = await getEntry("docs", "changelog");
+const latestEntry = changelog?.body?.match(/^## (\d{4}-\d{2}-\d{2})$/m);
+
+if (!latestEntry) {
+  throw new Error("LastRevised: no dated entry found in changelog.mdx.");
+}
+
+const lastRevised = new Intl.DateTimeFormat("en", {
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+}).format(new Date(latestEntry[1]));
+---
+
+{lastRevised}
