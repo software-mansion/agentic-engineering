@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+step() {
+  printf '\n==> %s\n' "$*"
+}
+
+# Install the Node.js release that .nvmrc pins (CI uses the same file).
+# Orb login shells put ~/.local/bin ahead of the base image's /usr/local/bin.
+step "Node.js $(<.nvmrc)"
+lts_codename="$(sed -n 's|^lts/||p' .nvmrc)"
+node_version="$(curl -fsSL https://nodejs.org/dist/index.json |
+  jq -r --arg lts "$lts_codename" 'map(select((.lts | strings | ascii_downcase) == $lts))[0].version')"
+node_dir="$HOME/.local/share/node/$node_version"
+if [[ ! -x "$node_dir/bin/node" ]]; then
+  mkdir -p "$node_dir"
+  curl -fsSL "https://nodejs.org/dist/$node_version/node-$node_version-linux-x64.tar.xz" |
+    tar -xJ --strip-components=1 -C "$node_dir"
+fi
+mkdir -p "$HOME/.local/bin"
+for bin in node npm npx corepack; do
+  ln -sfn "$node_dir/bin/$bin" "$HOME/.local/bin/$bin"
+done
+export PATH="$HOME/.local/bin:$PATH"
+node --version
+
+step "bun install"
+time bun install --frozen-lockfile
